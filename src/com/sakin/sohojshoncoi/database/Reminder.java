@@ -1,16 +1,15 @@
 package com.sakin.sohojshoncoi.database;
 
 import java.util.Date;
-
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-enum Status {paid, non_paid};
 
 @DatabaseTable(tableName = "reminder")
 public class Reminder {
 
+	public enum Status {PAID, NON_PAID};
 	@DatabaseField(generatedId = true)
     private int reminder_id;
     @DatabaseField(canBeNull = false, foreign = true)

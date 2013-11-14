@@ -1,10 +1,12 @@
 package com.sakin.sohojshoncoi.database;
 
+import java.sql.SQLException;
+
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 
 import android.app.Activity;
-import android.app.Application;
 
 public class SSDAO {
 	//properties
@@ -88,5 +90,11 @@ public class SSDAO {
 	        OpenHelperManager.releaseHelper();
 	        databaseHelper = null;
 	    }
+	}
+	
+	public void deleteAccountByName(String name) throws SQLException{
+		DeleteBuilder<Account, Integer> deleteBuilder = getAccountDAO().deleteBuilder();
+		deleteBuilder.where().eq("name", name);
+		deleteBuilder.delete();
 	}
 }

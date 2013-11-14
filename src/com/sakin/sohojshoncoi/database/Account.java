@@ -30,10 +30,22 @@ public class Account {
         this.balance = balance;
         this.space_used = space_used;
     }
+    public Account(int id, String name, double balance, double space_used) {
+    	this.account_id = id;
+        this.name = name;
+        this.balance = balance;
+        this.space_used = space_used;
+    }
     
 	//================================================================================
     // Accessors
     //================================================================================
+    public int getAccountId() {
+        return account_id;
+    }
+    public void setAccountId(int id) {
+        this.account_id = id;
+    }
     public String getName() {
         return name;
     }

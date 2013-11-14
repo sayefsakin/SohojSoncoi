@@ -4,11 +4,12 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-enum CategoryType {income, expense, media};
 
 @DatabaseTable(tableName = "category")
 public class Category {
 
+	public enum CategoryType {INCOME, EXPENSE};
+	
 	@DatabaseField(generatedId = true)
     private int category_id;
     @DatabaseField
@@ -26,12 +27,20 @@ public class Category {
     public Category() {
         // ORMLite needs a no-arg constructor 
     }
-    public Category(String name, CategoryType type, String url, int pid) {
+    public Category(String name, CategoryType type, String icon_url, int pid) {
         this.name = name;
         this.type = type;
-        this.icon_url = url;
+        this.icon_url = icon_url;
         this.parent_id = pid;
     }
+    public Category(int id, String name, CategoryType type, String icon_url, int pid) {
+    	this.category_id = id;
+        this.name = name;
+        this.type = type;
+        this.icon_url = icon_url;
+        this.parent_id = pid;
+    }
+
 
 	//================================================================================
     // Accessors

@@ -4,11 +4,11 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-enum MediaType {audio, video, picture};
 
 @DatabaseTable(tableName = "media")
 public class Media {
 
+	public enum MediaType {AUDIO, VIDEO, PICTURE};
 	@DatabaseField(generatedId = true)
     private int media_id;
 	@DatabaseField(canBeNull = false, foreign = true)

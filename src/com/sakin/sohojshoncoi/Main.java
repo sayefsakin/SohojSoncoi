@@ -1,7 +1,10 @@
 package com.sakin.sohojshoncoi;
 
+import java.sql.SQLException;
+
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.daylihisab.DayliHisabMain;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -38,6 +41,14 @@ public class Main extends Activity {
 	private void init(){
 		// all initialization code goes here
 		SSDAO.getSSdao().init(this);
+		Utils.createCustomCategory();
+//		try {
+//			SSDAO.getSSdao().deleteAccountByName("User");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		Utils.createSingleAccount();
 	}
 
 	@Override
