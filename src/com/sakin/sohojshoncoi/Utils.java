@@ -3,6 +3,8 @@ package com.sakin.sohojshoncoi;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import com.sakin.sohojshoncoi.database.Account;
 import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
@@ -10,6 +12,7 @@ import com.sakin.sohojshoncoi.database.SSDAO;
 public class Utils {
 	//properties
 	public static final boolean DEBUG = true;
+	public static Account userAccount = null;
 	public static void createCustomCategory(){
 		//default categories
 		List<Category> categories = new ArrayList<Category>();
@@ -40,5 +43,12 @@ public class Utils {
 		//I tried to insest user as id=1 but I failed. will check later
 		Account ac = new Account(28, "User", 0.0, 0.0);
 		SSDAO.getSSdao().getAccountDAO().createOrUpdate(ac);
+		userAccount = ac;
+	}
+	
+	public static void print(String ss){
+		if(Utils.DEBUG){
+			Log.i("testing", ss);
+		}
 	}
 }

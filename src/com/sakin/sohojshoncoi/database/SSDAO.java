@@ -1,10 +1,15 @@
 package com.sakin.sohojshoncoi.database;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.sakin.sohojshoncoi.Utils;
 
 import android.app.Activity;
 
@@ -66,6 +71,7 @@ public class SSDAO {
 	public void setReminderDAO(RuntimeExceptionDao<Reminder, Integer> reminderDAO) {
 		this.reminderDAO = reminderDAO;
 	}
+	
 	//singleton pattern
 	public SSDAO(){}
 	private static SSDAO ssdao = null;
@@ -92,9 +98,117 @@ public class SSDAO {
 	    }
 	}
 	
+	//Account table related methods
 	public void deleteAccountByName(String name) throws SQLException{
 		DeleteBuilder<Account, Integer> deleteBuilder = getAccountDAO().deleteBuilder();
 		deleteBuilder.where().eq("name", name);
 		deleteBuilder.delete();
 	}
+	
+	//Category table related methods
+	public List<Category> getCategories() {
+//		List<Category> categories = new ArrayList<Category>();
+//		CloseableWrappedIterable<Category> wrappedIterable = getCategoryDAO().getWrappedIterable();
+//		try {
+//		    for (Category category : wrappedIterable) {
+//		    	categories.add(category);
+//		    }
+//		} finally {
+//		    wrappedIterable.close();
+//		}
+//		return categories;
+		return getCategoryDAO().queryForAll();
+	}
+	
+	//MediaCategory table related methods
+	public List<MediaCategory> getMediaCategories() {
+		return getMediaCategoryDAO().queryForAll();
+	}
+	
+	//Transaction table related methods
+	public List<Transaction> getTransaction() throws SQLException{
+		return getTransactionDAO().queryForAll();
+	}
+	public List<Transaction> getTransactionBetweenDate(Account account, Date start, Date end) throws SQLException {
+		if(end.before(start))return null;
+		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
+		qb.orderBy("date", true);
+	    qb.where().eq("account_id", account).and().between("date", start, end);
+	    return qb.query();
+	}
+	public String getTransactionSumBetweenDate(Account account, Date start, Date end) throws SQLException {
+		if(end.before(start))return null;
+		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
+		qb.orderBy("date", true);
+	    qb.where().eq("account_id", account).and().between("date", start, end);
+	    qb.selectRaw("SUM(amount)");
+	    GenericRawResults<String[]> results = qb.queryRaw();
+	    return results.getFirstResult()[0];
+	}
+	public List<Transaction> getTransactionOfCategory(Account account, Category category) throws SQLException {
+		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
+		qb.orderBy("date", true);
+		qb.where().eq("account_id", account).and().eq("category_id", category);
+		return qb.query();
+	}
+	public List<Transaction> getTransactionOfCategoryBetweenDate(Account account, Category category, Date start, Date end) throws SQLException {
+		if(end.before(start))return null;
+		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
+		qb.orderBy("date", true);
+		qb.where().eq("account_id", account).and().eq("category_id", category).and().between("date", start, end);
+	    return qb.query();
+	}
+	public String getTransactionSumOfCategoryBetweenDate(Account account, Category category, Date start, Date end) throws SQLException {
+		if(end.before(start))return null;
+		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
+		qb.orderBy("date", true);
+	    qb.where().eq("account_id", account).and().eq("category_id", category).and().between("date", start, end);
+	    qb.selectRaw("SUM(amount)");
+	    GenericRawResults<String[]> results = qb.queryRaw();
+	    return results.getFirstResult()[0];
+	}
+	
+	//Reminder table related methods
+	public List<Reminder> getReminder() throws SQLException{
+		return getReminderDAO().queryForAll();
+	}
+	public List<Reminder> getReminderBetweenDate(Account account, Date start, Date end) throws SQLException{
+		if(end.before(start))return null;
+		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
+		qb.orderBy("date", true);
+		qb.where().eq("account_id", account).and().between("date", start, end);
+		return qb.query();
+	}
+	public String getReminderSumBetweenDate(Account account, Date start, Date end) throws SQLException {
+		if(end.before(start))return null;
+		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
+		qb.orderBy("date", true);
+	    qb.where().eq("account_id", account).and().between("date", start, end);
+	    qb.selectRaw("SUM(amount)");
+	    GenericRawResults<String[]> results = qb.queryRaw();
+	    return results.getFirstResult()[0];
+	}
+	public List<Reminder> getReminderOfCategory(Account account, Category category) throws SQLException {
+		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
+		qb.orderBy("date", true);
+		qb.where().eq("account_id", account).and().eq("category_id", category);
+		return qb.query();
+	}
+	public List<Reminder> getReminderOfCategoryBetweenDate(Account account, Category category, Date start, Date end) throws SQLException {
+		if(end.before(start))return null;
+		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
+		qb.orderBy("date", true);
+		qb.where().eq("account_id", account).and().eq("category_id", category).and().between("date", start, end);
+	    return qb.query();
+	}
+	public String getReminderSumOfCategoryBetweenDate(Account account, Category category, Date start, Date end) throws SQLException {
+		if(end.before(start))return null;
+		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
+		qb.orderBy("date", true);
+	    qb.where().eq("account_id", account).and().eq("category_id", category).and().between("date", start, end);
+	    qb.selectRaw("SUM(amount)");
+	    GenericRawResults<String[]> results = qb.queryRaw();
+	    return results.getFirstResult()[0];
+	}
+	
 }
