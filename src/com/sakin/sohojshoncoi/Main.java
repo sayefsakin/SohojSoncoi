@@ -14,11 +14,14 @@ import com.sakin.sohojshoncoi.daylihisab.DayliHisabMain;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class Main extends Activity {
 
@@ -50,6 +53,9 @@ public class Main extends Activity {
 		// all initialization code goes here
 		SSDAO.getSSdao().init(this);
 		Utils.createCustomCategory();
+		
+		//include bangla font
+		Utils.banglaTypeFace = Typeface.createFromAsset(getAssets(), getString(R.string.font_solaimanlipi));
 //		try {
 //			SSDAO.getSSdao().deleteAccountByName("User");
 //		} catch (SQLException e) {
@@ -66,6 +72,13 @@ public class Main extends Activity {
 	}
 	
 	private void testing() {
+		TextView tv = (TextView) findViewById(R.id.textView1);
+		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setText("hello");
+		
+		EditText ed = (EditText) findViewById(R.id.editText1);
+		ed.setTypeface(Utils.banglaTypeFace);
+		ed.setText("আমি বাংলায় গান গাই");
 //		try {
 //			Calendar cal = Calendar.getInstance();
 //			cal.setTime(new Date());

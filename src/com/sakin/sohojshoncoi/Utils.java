@@ -3,6 +3,7 @@ package com.sakin.sohojshoncoi;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Typeface;
 import android.util.Log;
 
 import com.sakin.sohojshoncoi.database.Account;
@@ -13,6 +14,7 @@ public class Utils {
 	//properties
 	public static final boolean DEBUG = true;
 	public static Account userAccount = null;
+	public static Typeface banglaTypeFace = null;
 	public static void createCustomCategory(){
 		//default categories
 		List<Category> categories = new ArrayList<Category>();

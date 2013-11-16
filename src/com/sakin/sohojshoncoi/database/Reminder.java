@@ -9,7 +9,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "reminder")
 public class Reminder {
 
-	public enum Status {PAID, NON_PAID};
+	public enum Status {PAID, NON_PAID, ALARM};
+	//in ALARM mode it prompts alarm and definitely it is also non_paid
+	
 	@DatabaseField(generatedId = true)
     private int reminder_id;
     @DatabaseField(canBeNull = false, foreign = true)
