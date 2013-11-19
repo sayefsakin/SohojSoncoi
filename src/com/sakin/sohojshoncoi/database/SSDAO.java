@@ -9,7 +9,6 @@ import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.sakin.sohojshoncoi.Utils;
 
 import android.app.Activity;
 
