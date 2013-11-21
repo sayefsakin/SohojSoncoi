@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="14"
         android:targetSdkVersion="16" />
     <uses-feature android:name="android.hardware.camera" />
 
@@ -25,14 +25,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".daylihisab.DayliHisabMain"
-            android:screenOrientation="portrait"
-   			android:configChanges="orientation|keyboardHidden" >
-        </activity>
     </application>
-<!-- 	<application 
-	    android:name=".SSDAO"
-	    android:icon="@drawable/ic_launcher" >
-	    
-	</application> -->
 </manifest>
