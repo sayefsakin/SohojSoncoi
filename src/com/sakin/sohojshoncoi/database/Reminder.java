@@ -24,6 +24,8 @@ public class Reminder {
     private Status status;
     @DatabaseField(dataType = DataType.DATE_LONG)
     private Date due_date;
+    @DatabaseField
+    private Boolean repeated;
     
 	//================================================================================
     // Constructors
@@ -32,12 +34,13 @@ public class Reminder {
         // ORMLite needs a no-arg constructor 
     }
     public Reminder(Category category, String description, double amount, Status status,
-    		Date due_date) {
+    		Date due_date, Boolean r) {
         this.category = category;
         this.description = description;
         this.amount = amount;
         this.status = status;
         this.due_date = due_date;
+        this.repeated = r;
     }
 
 	//================================================================================
@@ -76,5 +79,12 @@ public class Reminder {
     }
     public void setDueDate(Date date) {
         this.due_date = date;
+    }
+    
+    public Boolean getRepeated(){
+    	return repeated;
+    }
+    public void setRepeated(Boolean r){
+    	this.repeated = r;
     }
 }

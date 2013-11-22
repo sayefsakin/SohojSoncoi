@@ -21,6 +21,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private RuntimeExceptionDao<MediaCategory, Integer> mediaCategoryDAO = null;
 	private RuntimeExceptionDao<Reminder, Integer> reminderDAO = null;
 	private RuntimeExceptionDao<Media, Integer> mediaDAO = null;
+	private RuntimeExceptionDao<Planning, Integer> planningDAO = null;
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
@@ -36,6 +37,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, MediaCategory.class);
 			TableUtils.createTable(connectionSource, Reminder.class);
 			TableUtils.createTable(connectionSource, Media.class);
+			TableUtils.createTable(connectionSource, Planning.class);
 		} catch (SQLException e) {
 			Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
 			throw new RuntimeException(e);
@@ -52,6 +54,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, MediaCategory.class, true);
 			TableUtils.dropTable(connectionSource, Reminder.class, true);
 			TableUtils.dropTable(connectionSource, Media.class, true);
+			TableUtils.dropTable(connectionSource, Planning.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -96,6 +99,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 		return mediaDAO;
 	}
+	public RuntimeExceptionDao<Planning, Integer> getPlanningDAO() {
+		if (planningDAO == null) {
+			planningDAO = getRuntimeExceptionDao(Planning.class);
+		}
+		return planningDAO;
+	}
 	
 	@Override
 	public void close() {
@@ -107,5 +116,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		mediaCategoryDAO = null;
 		reminderDAO = null;
 		mediaDAO = null;
+		planningDAO = null;
 	}
 }
