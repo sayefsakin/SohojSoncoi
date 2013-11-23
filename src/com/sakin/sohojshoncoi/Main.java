@@ -15,11 +15,13 @@ import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
 import com.sakin.sohojshoncoi.daylihisab.DailyHisab;
+import com.sakin.sohojshoncoi.sofol.Sofol;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+//import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -38,7 +40,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class Main extends Activity {
+public class Main extends FragmentActivity {
 
 	private String[] drawerItems;
     private DrawerLayout mDrawerLayout;
@@ -182,12 +184,14 @@ public class Main extends Activity {
 			case 1:
 				fragment = new BazarDor();
 				break;
+//			case 2:
+//				fragment = new Sofol();
+//				break;
 			default:
 				fragment = new DailyHisab();
 				break;
 		}
-
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
 //        // update selected item and title, then close the drawer

@@ -4,8 +4,11 @@ import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,13 +24,26 @@ public class DailyHisab extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.dailyhisab, container, false);
 		setText(view, "ব্যালেন্সঃ ৩০০");
-		Button addNewButton;
-		addNewButton = (Button) view.findViewById(R.id.addNewButton);
+		Button addNewButton = (Button) view.findViewById(R.id.addNewButton);
 		addNewButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				Intent addNewHisabIntent = new Intent(getActivity(), AddNewHisab.class);
 				startActivity(addNewHisabIntent);
+			}
+		});
+		
+		Button reminderButon = (Button) view.findViewById(R.id.reminderButon);
+		reminderButon.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Log.i("Testing","Reminder Button tapped");
+				Fragment reminder = new ViewReminder();
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.remove(DailyHisab.this);
+                ft.add(R.id.content_frame, reminder);
+                ft.addToBackStack("dailyhisab");
+                ft.commit();
 			}
 		});
 	    return view;
