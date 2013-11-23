@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="12"
         android:targetSdkVersion="16" />
     <uses-feature android:name="android.hardware.camera" />
 
@@ -25,5 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.sakin.sohojshoncoi.daylihisab.AddNewHisab" android:noHistory="true" />
+        <activity android:name="com.sakin.sohojshoncoi.daylihisab.AddPlan" android:noHistory="true" />
+        <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewCategory" />
+        <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewReminder" />
+        <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewReport" />
     </application>
 </manifest>

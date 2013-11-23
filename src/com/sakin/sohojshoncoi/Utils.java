@@ -3,9 +3,13 @@ package com.sakin.sohojshoncoi;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 
+import com.sakin.sohojshoncoi.custom.TypefaceSpan;
 import com.sakin.sohojshoncoi.database.Account;
 import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
@@ -52,5 +56,12 @@ public class Utils {
 		if(Utils.DEBUG){
 			Log.i("testing", ss);
 		}
+	}
+	
+	public static void setActionBarTitle(Activity ac, String ss){
+		SpannableString s = new SpannableString(ss);
+		s.setSpan(new TypefaceSpan(ac, Utils.banglaTypeFace, "banglaTypeFace"), 0, s.length(),
+		        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		ac.getActionBar().setTitle(s);
 	}
 }

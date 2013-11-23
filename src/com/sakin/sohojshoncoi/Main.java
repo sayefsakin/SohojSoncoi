@@ -137,10 +137,7 @@ public class Main extends Activity {
 		Utils.createSingleAccount();
 		
 		//set the title
-		SpannableString s = new SpannableString("সহজ সঞ্চয়");
-		s.setSpan(new TypefaceSpan(this, Utils.banglaTypeFace, "banglaTypeFace"), 0, s.length(),
-		        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		getActionBar().setTitle(s);
+		Utils.setActionBarTitle(this, "সহজ সঞ্চয়");
 
 	}
 	
@@ -178,11 +175,17 @@ public class Main extends Activity {
 	
 	private void selectItem(int position) {
 		Fragment fragment = null;
-    	if(position == 1){
-    		fragment = new DailyHisab();
-    	} else {
-    		fragment = new BazarDor();
-    	}
+		switch (position) {
+			case 0:
+				fragment = new DailyHisab();
+				break;
+			case 1:
+				fragment = new BazarDor();
+				break;
+			default:
+				fragment = new DailyHisab();
+				break;
+		}
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
