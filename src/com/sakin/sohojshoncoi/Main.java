@@ -18,7 +18,6 @@ import com.sakin.sohojshoncoi.daylihisab.DailyHisab;
 import com.sakin.sohojshoncoi.sofol.Sofol;
 
 import android.os.Bundle;
-//import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -184,9 +183,9 @@ public class Main extends FragmentActivity {
 			case 1:
 				fragment = new BazarDor();
 				break;
-//			case 2:
-//				fragment = new Sofol();
-//				break;
+			case 2:
+				fragment = new Sofol();
+				break;
 			default:
 				fragment = new DailyHisab();
 				break;

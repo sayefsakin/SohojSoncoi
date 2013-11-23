@@ -5,9 +5,6 @@ import com.sakin.sohojshoncoi.Utils;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 public class AddNewHisab extends Activity {
