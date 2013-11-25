@@ -1,6 +1,6 @@
 package com.sakin.sohojshoncoi.custom;
 
-import com.sakin.sohojshoncoi.sofol.VideosFragment;
+import com.sakin.sohojshoncoi.sofol.SofolVideosFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,11 +15,10 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 	 
 	 @Override
 	 public Fragment getItem(int i) {
-		 Fragment fragment = new VideosFragment();
-	     Bundle args = new Bundle();
-	     // Our object is just an integer :-P
-	     args.putInt(VideosFragment.ARG_OBJECT, i + 1);
-	     fragment.setArguments(args);
+		 Fragment fragment = new SofolVideosFragment();
+//	     Bundle args = new Bundle();
+//	     args.putInt(VideosFragment.ARG_OBJECT, i + 1);
+//	     fragment.setArguments(args);
 	     return fragment;
 	 }
 
