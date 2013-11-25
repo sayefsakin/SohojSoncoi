@@ -11,6 +11,7 @@ import java.util.List;
 import com.sakin.sohojshoncoi.bazardor.BazarDor;
 import com.sakin.sohojshoncoi.custom.DrawerListAdapter;
 import com.sakin.sohojshoncoi.custom.TypefaceSpan;
+import com.sakin.sohojshoncoi.custom.VideoElement;
 import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
@@ -139,7 +140,6 @@ public class Main extends FragmentActivity {
 		
 		//set the title
 		Utils.setActionBarTitle(this, "সহজ সঞ্চয়");
-
 	}
 	
 	private void testing() {

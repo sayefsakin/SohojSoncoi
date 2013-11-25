@@ -3,6 +3,9 @@ package com.sakin.sohojshoncoi.custom;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,10 +24,20 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import android.app.Activity;
+import android.os.AsyncTask;
+
+import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 
-public class XMLParser {
+public class XMLParser extends AsyncTask<String, Void, Document>{
 
+	private VideoFragmentAdapter adapter;
+	private List<VideoElement> videoList;
+	public XMLParser(Activity ac){
+		this.videoList = new ArrayList<VideoElement>();
+		this.adapter = new VideoFragmentAdapter(ac, R.layout.sofol_item, videoList);
+	}
 	// Getting XML content by making HTTP request
 	public String getXmlFromUrl(String url) {
         String xml = null;
@@ -91,5 +104,54 @@ public class XMLParser {
 		    }
 		}
 		return "";
-	} 
+	}
+
+	@Override
+	protected Document doInBackground(String... urls) {
+		for(String url : urls) {
+//			String xml = getXmlFromUrl(url);
+//			Document doc = getDomElement(xml);
+//			return doc;
+		}
+		try {
+			while(true){
+				TimeUnit.SECONDS.sleep(5);
+				publishProgress();
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	protected void onProgressUpdate(Void... v) {
+		videoList.add(new VideoElement("another", "video elemnt", "add", "hoice"));
+		adapter.notifyDataSetChanged();
+	}
+	
+	@Override
+    protected void onCancelled() {
+		
+    }
+	
+	@Override
+	protected void onPostExecute(Document doc ) {
+//		Utils.XMLDoc = doc;
+//		videoList.add(new VideoElement("another", "video elemnt", "add", "hoice"));
+//		adapter.notifyDataSetChanged();
+    }
+	public VideoFragmentAdapter getAdapter() {
+		return adapter;
+	}
+	public void setAdapter(VideoFragmentAdapter adapter) {
+		this.adapter = adapter;
+	}
+	public List<VideoElement> getVideoList() {
+		return videoList;
+	}
+	public void setVideoList(List<VideoElement> videoList) {
+		this.videoList = videoList;
+	}
 }

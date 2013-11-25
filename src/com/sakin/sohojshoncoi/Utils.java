@@ -3,6 +3,8 @@ package com.sakin.sohojshoncoi;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.w3c.dom.Document;
+
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.text.Spannable;
@@ -10,6 +12,8 @@ import android.text.SpannableString;
 import android.util.Log;
 
 import com.sakin.sohojshoncoi.custom.TypefaceSpan;
+import com.sakin.sohojshoncoi.custom.VideoElement;
+import com.sakin.sohojshoncoi.custom.VideoFragmentAdapter;
 import com.sakin.sohojshoncoi.database.Account;
 import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
@@ -19,6 +23,8 @@ public class Utils {
 	public static final boolean DEBUG = true;
 	public static Account userAccount = null;
 	public static Typeface banglaTypeFace = null;
+	public static Document XMLDoc = null;
+	public final static int MAX_Video_Fragment = 5;
 	public static void createCustomCategory(){
 		//default categories
 		List<Category> categories = new ArrayList<Category>();

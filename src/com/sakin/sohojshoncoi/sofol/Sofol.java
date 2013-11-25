@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sakin.sohojshoncoi.R;
+import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.CollectionPagerAdapter;
 
 public class Sofol extends Fragment {
@@ -21,7 +22,7 @@ public class Sofol extends Fragment {
 		collectionPagerAdapter = new CollectionPagerAdapter(getFragmentManager());
         sofolPager = (ViewPager) view.findViewById(R.id.pager);
         sofolPager.setAdapter(collectionPagerAdapter);
-
+        sofolPager.setOffscreenPageLimit(Utils.MAX_Video_Fragment);
 	    return view;
 	}
 }
