@@ -2,6 +2,7 @@ package com.sakin.sohojshoncoi.daylihisab;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
+import com.sakin.sohojshoncoi.custom.NetworkActivity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -42,6 +43,17 @@ public class DailyHisab extends Fragment {
                 ft.add(R.id.content_frame, reminder);
                 ft.addToBackStack("dailyhisab");
                 ft.commit();
+			}
+		});
+		
+		Button agerhisabButton = (Button) view.findViewById(R.id.agerHisabButton);
+		agerhisabButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent addNewHisabIntent = new Intent(getActivity(), NetworkActivity.class);
+				startActivity(addNewHisabIntent);
 			}
 		});
 	    return view;

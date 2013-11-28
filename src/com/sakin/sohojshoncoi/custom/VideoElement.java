@@ -5,8 +5,8 @@ public class VideoElement {
 	private String videoUrl;
 	private String videoThumbnailUrl;
 	private String videoTitle;
-	private String videoDuration;
-	public VideoElement(String url, String turl, String title, String duration){
+	private int videoDuration;
+	public VideoElement(String url, String turl, String title, int duration){
 		this.setVideoUrl(url);
 		this.setVideoThumbnailUrl(turl);
 		this.setVideoTitle(title);
@@ -30,10 +30,10 @@ public class VideoElement {
 	public void setVideoTitle(String videoTitle) {
 		this.videoTitle = videoTitle;
 	}
-	public String getVideoDuration() {
+	public int getVideoDuration() {
 		return videoDuration;
 	}
-	public void setVideoDuration(String videoDuration) {
+	public void setVideoDuration(int videoDuration) {
 		this.videoDuration = videoDuration;
 	}
 }

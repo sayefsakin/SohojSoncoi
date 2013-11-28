@@ -1,9 +1,15 @@
 package com.sakin.sohojshoncoi.custom;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +22,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,112 +30,58 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParserException;
 
-import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
+import com.sakin.sohojshoncoi.sofol.SofolVideosFragment;
 
-public class XMLParser extends AsyncTask<String, Void, Document>{
-
-	private VideoFragmentAdapter adapter;
-	private List<VideoElement> videoList;
-	public XMLParser(Activity ac){
-		this.videoList = new ArrayList<VideoElement>();
-		this.adapter = new VideoFragmentAdapter(ac, R.layout.sofol_item, videoList);
-	}
+public class XMLParser extends AsyncTask<String, Void, List<VideoElement>>{
+	
 	// Getting XML content by making HTTP request
-	public String getXmlFromUrl(String url) {
-        String xml = null;
- 
-        try {
-            // defaultHttpClient
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
- 
-            HttpResponse httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            xml = EntityUtils.toString(httpEntity);
- 
-        } catch (UnsupportedEncodingException e) {
-        	Utils.print(e.getMessage());
-        } catch (ClientProtocolException e) {
-        	Utils.print(e.getMessage());
-        } catch (IOException e) {
-        	Utils.print(e.getMessage());
-        }
-        return xml;
-    }
-	
-	// Parsing XML content and getting DOM element of xml
-	public Document getDomElement(String xml){
-        Document doc = null;
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
- 
-            DocumentBuilder db = dbf.newDocumentBuilder();
- 
-            InputSource is = new InputSource();
-            is.setCharacterStream(new StringReader(xml));
-            doc = db.parse(is); 
- 
-        } catch (ParserConfigurationException e) {
-        	Utils.print(e.getMessage());
-            return null;
-        } catch (SAXException e) {
-        	Utils.print(e.getMessage());
-            return null;
-        } catch (IOException e) {
-        	Utils.print(e.getMessage());
-            return null;
-        }
-        return doc;
+	FragmentActivity ac;
+	int id;
+	public XMLParser(FragmentActivity ac, int id){
+		this.ac = ac;
+		this.id = id;
 	}
 	
-	// Get each xml child element value by passing element node name
-	public String getValue(Element item, String str) {      
-	    NodeList n = item.getElementsByTagName(str);        
-	    return this.getElementValue(n.item(0));
-	}
-	 
-	public final String getElementValue( Node elem ) {
-		Node child;
-		if( elem != null){
-		    if (elem.hasChildNodes()){
-		        for( child = elem.getFirstChild(); child != null; child = child.getNextSibling() ){
-		           if( child.getNodeType() == Node.TEXT_NODE  ){
-		                return child.getNodeValue();
-		            }
-		        }
-		    }
-		}
-		return "";
-	}
 
 	@Override
-	protected Document doInBackground(String... urls) {
-		for(String url : urls) {
-//			String xml = getXmlFromUrl(url);
-//			Document doc = getDomElement(xml);
-//			return doc;
-		}
+	protected List<VideoElement> doInBackground(String... urls) {
+		if(urls[0].length()<2)return null;
+		
 		try {
-			while(true){
-				TimeUnit.SECONDS.sleep(5);
-				publishProgress();
-			}
-		} catch (InterruptedException e) {
+			return loadXmlFromNetwork(urls[0]);
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		try {
+//			while(true){
+//				TimeUnit.SECONDS.sleep(5);
+//				publishProgress();
+//				Utils.print("New data added");
+//			}
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		return null;
 	}
 	
 	@Override
 	protected void onProgressUpdate(Void... v) {
-		videoList.add(new VideoElement("another", "video elemnt", "add", "hoice"));
-		adapter.notifyDataSetChanged();
+
 	}
 	
 	@Override
@@ -137,21 +90,57 @@ public class XMLParser extends AsyncTask<String, Void, Document>{
     }
 	
 	@Override
-	protected void onPostExecute(Document doc ) {
-//		Utils.XMLDoc = doc;
-//		videoList.add(new VideoElement("another", "video elemnt", "add", "hoice"));
-//		adapter.notifyDataSetChanged();
+	protected void onPostExecute(List<VideoElement> result) {
+		Utils.print("xml parser finished");
+		
+		String tagString = "android:switcher:" + Integer.toString(R.id.pager)+":"+Integer.toString(id);
+		Utils.print(tagString);
+		SofolVideosFragment fragment = (SofolVideosFragment) ac.getSupportFragmentManager()
+																.findFragmentByTag(tagString);
+		if(fragment != null) {
+			if(fragment.getView() != null) {
+				// no need to call if fragment's onDestroyView() 
+				//	has since been called.
+		        fragment.updateDisplayWithList(result);
+			}
+		}
+		
+		super.onPostExecute(result);
+	}
+	
+	
+	private List<VideoElement> loadXmlFromNetwork(String urlString) throws XmlPullParserException, IOException {
+        InputStream stream = null;
+        YouTubeGdataParser youTubeGdataParser = new YouTubeGdataParser();
+        List<VideoElement> videoElementList = null;
+
+        try {
+            stream = downloadUrl(urlString);
+            videoElementList = youTubeGdataParser.parse(stream);
+        // Makes sure that the InputStream is closed after the app is
+        // finished using it.
+        } finally {
+            if (stream != null) {
+                stream.close();
+            }
+        }
+        
+        return videoElementList;
     }
-	public VideoFragmentAdapter getAdapter() {
-		return adapter;
-	}
-	public void setAdapter(VideoFragmentAdapter adapter) {
-		this.adapter = adapter;
-	}
-	public List<VideoElement> getVideoList() {
-		return videoList;
-	}
-	public void setVideoList(List<VideoElement> videoList) {
-		this.videoList = videoList;
-	}
+
+    // Given a string representation of a URL, sets up a connection and gets
+    // an input stream.
+    private InputStream downloadUrl(String urlString) throws IOException {
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000 /* milliseconds */);
+        conn.setConnectTimeout(15000 /* milliseconds */);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        // Starts the query
+        conn.connect();
+        InputStream stream = conn.getInputStream();
+        return stream;
+    }
+	
 }

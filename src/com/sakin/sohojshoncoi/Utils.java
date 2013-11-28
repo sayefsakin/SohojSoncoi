@@ -3,8 +3,6 @@ package com.sakin.sohojshoncoi;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.Document;
-
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.text.Spannable;
@@ -12,8 +10,6 @@ import android.text.SpannableString;
 import android.util.Log;
 
 import com.sakin.sohojshoncoi.custom.TypefaceSpan;
-import com.sakin.sohojshoncoi.custom.VideoElement;
-import com.sakin.sohojshoncoi.custom.VideoFragmentAdapter;
 import com.sakin.sohojshoncoi.database.Account;
 import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
@@ -23,8 +19,20 @@ public class Utils {
 	public static final boolean DEBUG = true;
 	public static Account userAccount = null;
 	public static Typeface banglaTypeFace = null;
-	public static Document XMLDoc = null;
+	
+	public static final String TAB_TITLE_ID = "video_tab_title";
+	public static final String TAB_URL_ID = "playlist_url";
+	public static final String TAB_ID = "tab_id";
+
 	public final static int MAX_Video_Fragment = 5;
+	
+	public static final String WIFI = "Wi-Fi";
+    public static final String ANY = "Any";
+    public static boolean wifiConnected = false;
+    public static boolean mobileConnected = false;
+    public static boolean refreshDisplay = true;
+    public static String sPref = null;//users current network preference setting
+    
 	public static void createCustomCategory(){
 		//default categories
 		List<Category> categories = new ArrayList<Category>();

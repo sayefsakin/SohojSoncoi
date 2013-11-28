@@ -19,9 +19,10 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 	 @Override
 	 public Fragment getItem(int i) {
 		 Fragment fragment = new SofolVideosFragment();
-//	     Bundle args = new Bundle();
+	     Bundle args = new Bundle();
 //	     args.putInt(VideosFragment.ARG_OBJECT, i + 1);
-//	     fragment.setArguments(args);
+//	     args.putStringArray("array_list", getResources().getStringArray(R.array.list));
+	     fragment.setArguments(args);
 	     return fragment;
 	 }
 

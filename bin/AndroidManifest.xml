@@ -5,11 +5,12 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="12"
         android:targetSdkVersion="16" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	
     <application
         android:allowBackup="true"
@@ -31,6 +32,7 @@
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.AddPlan" android:noHistory="true" />
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewCategory" />
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewReport" />
+        <activity android:name="com.sakin.sohojshoncoi.custom.NetworkActivity" />
     </application>
     
     <application android:name="MyApplication">

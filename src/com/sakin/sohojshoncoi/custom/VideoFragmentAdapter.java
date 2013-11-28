@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sakin.sohojshoncoi.R;
+import com.sakin.sohojshoncoi.Utils;
 
 public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
 
@@ -43,11 +44,13 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         holder = (ViewHolder) mView.getTag();
         
         title = holder.getTitle();
+        title.setTypeface(Utils.banglaTypeFace);
         title.setText(video.getVideoTitle());
         
         duration = holder.getDuration();
-        duration.setText(video.getVideoDuration());
-
+        duration.setTypeface(Utils.banglaTypeFace);
+        duration.setText(Integer.toString(video.getVideoDuration()));
+        
         thumbnail = holder.getThumb();
         thumbnail.setImageResource(R.drawable.jogajog);
         
