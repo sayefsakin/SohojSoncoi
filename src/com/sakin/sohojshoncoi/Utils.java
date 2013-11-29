@@ -23,7 +23,8 @@ public class Utils {
 	public static final String TAB_TITLE_ID = "video_tab_title";
 	public static final String TAB_URL_ID = "playlist_url";
 	public static final String TAB_ID = "tab_id";
-
+	public static final String VIDEO_ELEMENT_ID = "video_element";
+	
 	public final static int MAX_Video_Fragment = 5;
 	
 	public static final String WIFI = "Wi-Fi";
@@ -32,6 +33,8 @@ public class Utils {
     public static boolean mobileConnected = false;
     public static boolean refreshDisplay = true;
     public static String sPref = null;//users current network preference setting
+    
+    public static String DEVELOPER_KEY = "AIzaSyCGDUyXYA7PeLXbj5Sv29hYjDAzi8unYA8";
     
 	public static void createCustomCategory(){
 		//default categories

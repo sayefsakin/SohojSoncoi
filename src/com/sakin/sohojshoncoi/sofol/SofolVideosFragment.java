@@ -1,12 +1,11 @@
 package com.sakin.sohojshoncoi.sofol;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,14 @@ import android.widget.ListView;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
+import com.sakin.sohojshoncoi.YouTubeFullScreen;
 import com.sakin.sohojshoncoi.custom.VideoElement;
 import com.sakin.sohojshoncoi.custom.VideoFragmentAdapter;
 import com.sakin.sohojshoncoi.custom.XMLParser;
 
 public class SofolVideosFragment extends ListFragment {
 	public static final String ARG_OBJECT = "object";
-	String playlistUrl = "http://gdata.youtube.com/feeds/api/playlists/PL55713C70BA91BD6E";
+	String playlistUrl = "";
 	XMLParser xmlParser;
 	String[] list_items;
 	private VideoFragmentAdapter adapter;
@@ -54,22 +54,15 @@ public class SofolVideosFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
-//	    VideoElement ve = new VideoElement("hello","nai","Testing","Duration");
-//	    Utils.videoList.add(ve);
-//	    VideoFragmentAdapter adapter = new VideoFragmentAdapter(getActivity(),
-//	        R.layout.sofol_item, Utils.videoList);
-//	    setListAdapter(adapter);
-//	    Utils.videoListAdapter = adapter;
-//		Utils.print("new fragment created");
-	    
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	  	// do something with the data
-		String item = (String) getListAdapter().getItem(position);
-		Utils.print(item);
+		VideoElement item = (VideoElement) getListAdapter().getItem(position);
+		Intent youTubeFullScreen = new Intent(getActivity(), YouTubeFullScreen.class);
+		youTubeFullScreen.putExtra(Utils.VIDEO_ELEMENT_ID, item);
+		startActivity(youTubeFullScreen);
 	}
 	
 	public VideoFragmentAdapter getAdapter() {

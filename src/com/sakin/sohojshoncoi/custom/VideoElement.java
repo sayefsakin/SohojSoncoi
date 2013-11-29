@@ -1,16 +1,21 @@
 package com.sakin.sohojshoncoi.custom;
 
-public class VideoElement {
+import java.io.Serializable;
+
+@SuppressWarnings("serial") 
+public class VideoElement implements Serializable {
 	
 	private String videoUrl;
 	private String videoThumbnailUrl;
 	private String videoTitle;
+	private String videoDescription;
 	private int videoDuration;
-	public VideoElement(String url, String turl, String title, int duration){
+	public VideoElement(String url, String turl, String title, String desc, int duration){
 		this.setVideoUrl(url);
 		this.setVideoThumbnailUrl(turl);
 		this.setVideoTitle(title);
 		this.setVideoDuration(duration);
+		this.setVideoDescription(desc);
 	}
 	public String getVideoUrl() {
 		return videoUrl;
@@ -35,5 +40,11 @@ public class VideoElement {
 	}
 	public void setVideoDuration(int videoDuration) {
 		this.videoDuration = videoDuration;
+	}
+	public String getVideoDescription() {
+		return videoDescription;
+	}
+	public void setVideoDescription(String videoDescription) {
+		this.videoDescription = videoDescription;
 	}
 }

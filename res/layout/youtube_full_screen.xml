@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/youtube_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+  <com.google.android.youtube.player.YouTubePlayerView
+      android:id="@+id/player"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+  <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+  <LinearLayout
+      android:id="@+id/other_views"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dp"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/video_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text=""/>
+      
+    <TextView
+        android:id="@+id/video_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:textSize="12sp"
+        android:text=""/>
+
+    <CheckBox
+        android:id="@+id/landscape_fullscreen_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/landscape_fullscreen"/>
+
+    <Button
+        android:id="@+id/fullscreen_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/enter_fullscreen"/>
+
+  </LinearLayout>
+  </ScrollView>
+</LinearLayout>

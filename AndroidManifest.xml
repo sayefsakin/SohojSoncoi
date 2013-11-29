@@ -32,7 +32,7 @@
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.AddPlan" android:noHistory="true" />
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewCategory" />
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewReport" />
-        <activity android:name="com.sakin.sohojshoncoi.custom.NetworkActivity" />
+        <activity android:name="com.sakin.sohojshoncoi.YouTubeFullScreen" />
     </application>
     
     <application android:name="MyApplication">

@@ -1,8 +1,9 @@
 package com.sakin.sohojshoncoi.daylihisab;
 
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
-import com.sakin.sohojshoncoi.custom.NetworkActivity;
+import com.sakin.sohojshoncoi.YouTubeFullScreen;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -51,9 +52,8 @@ public class DailyHisab extends Fragment {
 			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent addNewHisabIntent = new Intent(getActivity(), NetworkActivity.class);
-				startActivity(addNewHisabIntent);
+				Intent youTubeFullScreen = new Intent(getActivity(), YouTubeFullScreen.class);
+				startActivity(youTubeFullScreen);
 			}
 		});
 	    return view;
