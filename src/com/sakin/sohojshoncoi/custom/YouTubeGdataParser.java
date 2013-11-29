@@ -91,7 +91,7 @@ public class YouTubeGdataParser {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
-            Utils.print("found media:group");
+//            Utils.print("found media:group");
             String name = parser.getName();
             if (name.equals("media:thumbnail")) {
             	thumbnail = readMediaThumbnail(parser);
@@ -114,6 +114,7 @@ public class YouTubeGdataParser {
         parser.require(XmlPullParser.START_TAG, ns, "media:title");
         String title = readText(parser);
         parser.require(XmlPullParser.END_TAG, ns, "media:title");
+//        Utils.print(title);
         return title;
     }
     
@@ -175,7 +176,7 @@ public class YouTubeGdataParser {
         parser.require(XmlPullParser.END_TAG, ns, "media:thumbnail");
         if(h.equals("90"))
         	ret = url;
-        return url;
+        return ret;
     }
 
 }

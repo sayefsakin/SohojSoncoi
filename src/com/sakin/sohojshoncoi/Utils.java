@@ -26,6 +26,7 @@ public class Utils {
 	public static final String VIDEO_ELEMENT_ID = "video_element";
 	
 	public final static int MAX_Video_Fragment = 5;
+	public static int SELECTED_ITEM = -1; 
 	
 	public static final String WIFI = "Wi-Fi";
     public static final String ANY = "Any";

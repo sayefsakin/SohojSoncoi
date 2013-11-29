@@ -6,6 +6,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import android.app.Application;
 
 public class MyApplication extends Application {
+	
+	int ITEM;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -15,5 +17,13 @@ public class MyApplication extends Application {
 								        		.Builder(getApplicationContext())
 								            	.build();
         ImageLoader.getInstance().init(config);
+        setValue(-1);
+    }
+    
+    public synchronized int getValue(){
+        return ITEM;
+    }
+    public synchronized void setValue(int Value){
+        this.ITEM = Value;
     }
 }

@@ -6,6 +6,8 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -45,6 +47,10 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    
 	    setContentView(R.layout.youtube_full_screen);
 		
+	    Utils.setActionBarTitle(this, "সহজ সঞ্চয়");
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
+	    getActionBar().setHomeButtonEnabled(true);
+	    
 	    baseLayout = (LinearLayout) findViewById(R.id.youtube_layout);
 	    playerView = (YouTubePlayerView) findViewById(R.id.player);
 	    fullscreenButton = (Button) findViewById(R.id.fullscreen_button);
@@ -64,7 +70,9 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    videoElement = (VideoElement) getIntent().getSerializableExtra(Utils.VIDEO_ELEMENT_ID);
 	    Utils.print("from new activity: " + videoElement.getVideoDescription());
 	    videoTitle.setText(videoElement.getVideoTitle());
+	    videoTitle.setTypeface(Utils.banglaTypeFace);
 	    videoDetails.setText(videoElement.getVideoDescription());
+	    videoDetails.setTypeface(Utils.banglaTypeFace);
 	}
 	
 	@Override
@@ -157,6 +165,17 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		doLayout();
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    // Respond to the action bar's Up/Home button
+	    case android.R.id.home:
+	        NavUtils.navigateUpFromSameTask(this);
+	        return true;
+	    }
+	    return super.onOptionsItemSelected(item);
 	}
 
 }

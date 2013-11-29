@@ -4,6 +4,7 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.YouTubeFullScreen;
+import com.sakin.sohojshoncoi.custom.VideoElement;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,9 @@ public class DailyHisab extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				Intent youTubeFullScreen = new Intent(getActivity(), YouTubeFullScreen.class);
+				VideoElement item = new VideoElement("www.youtube.com/watch?v=7JXWXG3hsRg",
+						"","hello","Honey Bunny", 2);
+				youTubeFullScreen.putExtra(Utils.VIDEO_ELEMENT_ID, item);
 				startActivity(youTubeFullScreen);
 			}
 		});

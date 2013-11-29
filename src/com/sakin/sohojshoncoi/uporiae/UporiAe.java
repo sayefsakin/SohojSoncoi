@@ -1,4 +1,5 @@
-package com.sakin.sohojshoncoi.sofol;
+package com.sakin.sohojshoncoi.uporiae;
+
 
 import android.app.ActionBar;
 import android.content.IntentFilter;
@@ -17,9 +18,10 @@ import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.TabsAdapter;
 import com.sakin.sohojshoncoi.custom.NetworkReceiver;
+import com.sakin.sohojshoncoi.sofol.SofolVideosFragment;
 
-public class Sofol extends Fragment {
-	ViewPager sofolPager;
+public class UporiAe extends Fragment {
+	ViewPager uporiaePager;
 	TabsAdapter mTabsAdapter;
 	String[] playlist_url;
 	String[] tab_title;
@@ -27,7 +29,7 @@ public class Sofol extends Fragment {
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.sofol, container, false);
+		View view = inflater.inflate(R.layout.uporiae, container, false);
 
 		init();
 		if (Utils.refreshDisplay) {
@@ -60,19 +62,19 @@ public class Sofol extends Fragment {
 		final ActionBar bar = getActivity().getActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS );
 		bar.removeAllTabs();
-        sofolPager = (ViewPager) view.findViewById(R.id.pager);
+        uporiaePager = (ViewPager) view.findViewById(R.id.uporiae_pager);
 
-        mTabsAdapter = new TabsAdapter(getActivity(), sofolPager);
-        playlist_url = getResources().getStringArray(R.array.sofol_tab_url);
-        tab_title = getResources().getStringArray(R.array.sofol_tab_title);
+        mTabsAdapter = new TabsAdapter(getActivity(), uporiaePager);
+        playlist_url = getResources().getStringArray(R.array.uporiae_tab_url);
+        tab_title = getResources().getStringArray(R.array.uporiae_tab_title);
         int totalTabs = tab_title.length;
-        sofolPager.setOffscreenPageLimit(totalTabs);
+        uporiaePager.setOffscreenPageLimit(totalTabs);
         
         Bundle args = null;
         for(int i=0; i<totalTabs; i++){
         	args = new Bundle();
         	args.putString(Utils.TAB_URL_ID, playlist_url[i]);
-    		args.putInt(Utils.TAB_ID, i);
+    		args.putInt(Utils.TAB_ID, i + totalTabs);
     		mTabsAdapter.addTab(bar.newTab().setText(tab_title[i]), SofolVideosFragment.class, args);
         }
         
@@ -102,4 +104,3 @@ public class Sofol extends Fragment {
 	}
 
 }
-

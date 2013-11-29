@@ -17,11 +17,13 @@ import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
 import com.sakin.sohojshoncoi.daylihisab.DailyHisab;
 import com.sakin.sohojshoncoi.sofol.Sofol;
+import com.sakin.sohojshoncoi.uporiae.UporiAe;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -39,6 +41,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Main extends FragmentActivity {
 
@@ -46,6 +49,7 @@ public class Main extends FragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private int ITEM;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +66,9 @@ public class Main extends FragmentActivity {
                 R.layout.drawer_list_item, new ArrayList<String>(Arrays.asList(drawerItems))));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        
      // enable ActionBar app icon to behave as action to toggle nav drawer
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
         getActionBar().setHomeButtonEnabled(true);
         
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -85,9 +90,12 @@ public class Main extends FragmentActivity {
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        if (savedInstanceState == null) {
+        int ITEM = Utils.SELECTED_ITEM;
+        if (ITEM == -1) {
+        	Utils.print("instance not saved");
             selectItem(0);
-        }
+        } else 
+        	selectItem(ITEM);
 		
 	}
 
@@ -122,6 +130,20 @@ public class Main extends FragmentActivity {
 	    super.onDestroy();
 	    SSDAO.getSSdao().close();
 	}
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	super.onSaveInstanceState(outState);
+    	
+    	outState.putInt("selected_item", ITEM);
+    }
+    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    	super.onRestoreInstanceState(savedInstanceState);
+    	
+    	   ITEM = savedInstanceState.getInt("selected_item");
+    }
     
 	private void init(){
 		// all initialization code goes here
@@ -186,17 +208,23 @@ public class Main extends FragmentActivity {
 			case 2:
 				fragment = new Sofol();
 				break;
+			case 4:
+				fragment = new UporiAe();
+				break;
 			default:
 				fragment = new DailyHisab();
 				break;
 		}
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
+        
+        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 //        // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
 //        setTitle(position);
         mDrawerLayout.closeDrawer(mDrawerList);
+        ITEM = position;
+        Utils.SELECTED_ITEM = ITEM;
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

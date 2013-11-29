@@ -43,6 +43,7 @@ public class SofolVideosFragment extends ListFragment {
 		playlistUrl = getArguments().getString(Utils.TAB_URL_ID);
 		xmlParser = new XMLParser(getActivity(), id);
 		xmlParser.execute(playlistUrl);
+//		Utils.print("in the fragment of sofol");
 	    return rootView;
 	}
 

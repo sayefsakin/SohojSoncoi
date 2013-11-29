@@ -49,11 +49,25 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         
         duration = holder.getDuration();
         duration.setTypeface(Utils.banglaTypeFace);
-        duration.setText(Integer.toString(video.getVideoDuration()));
+        int d = video.getVideoDuration();
+        String time = "";
+        int h = 0, m = 0, s = d;
+        if(s>=60){
+        	m = s / 60;
+        	if(m>=60){
+        		h = m / 60;
+        		time += Integer.toString(h) + " ঘন্টা ";
+        	}
+        	m = m % 60;
+        	time += Integer.toString(m) + " মিনিট ";
+        }
+        s = d % 60;
+        time += Integer.toString(s) + " সেকেন্ড";
+        duration.setText(time);
         
-        thumbnail = holder.getThumb();
-        thumbnail.setImageResource(R.drawable.jogajog);
-        
+//        thumbnail = holder.getThumb();
+//        thumbnail.setImageResource(R.drawable.jogajog);
+//        
         return mView;
     }
     
