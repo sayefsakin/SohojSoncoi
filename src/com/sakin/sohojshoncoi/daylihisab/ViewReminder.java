@@ -25,19 +25,4 @@ public class ViewReminder extends Fragment {
 		tv.setTypeface(Utils.banglaTypeFace);
 		tv.setText(item);
 	}
-	
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.reminder);
-//		
-//		TextView tv = (TextView) findViewById(R.id.reminderText);
-//		tv.setText("Add New Hisab Page");
-//		Utils.setActionBarTitle(this, "ক্যাটেগরি");
-//	}
-//    
-//    @Override
-//	protected void onDestroy() {
-//	    super.onDestroy();
-//	}
 }

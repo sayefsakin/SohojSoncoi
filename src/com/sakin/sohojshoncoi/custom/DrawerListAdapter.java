@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
+import com.sakin.sohojshoncoi.R.color;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -43,7 +44,7 @@ public class DrawerListAdapter extends ArrayAdapter {
         if(items.get(position) != null )
         {
             text.setTextColor(Color.WHITE);
-            text.setBackgroundColor(Color.RED); 
+            text.setBackgroundColor(color.custom_color); 
             text.setTypeface(Utils.banglaTypeFace);
 
             text.setText(items.get(position));
