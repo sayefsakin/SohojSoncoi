@@ -1,19 +1,24 @@
 package com.sakin.sohojshoncoi.custom;
 
 import com.sakin.sohojshoncoi.R;
+import com.sakin.sohojshoncoi.Utils;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-
-    public ImageAdapter(Context c) {
+    private String[] mThumbTitle;
+    private Integer[] mThumbIds;
+    public ImageAdapter(Context c, String[] title, Integer[] ids) {
         mContext = c;
+        mThumbIds = ids;
+        mThumbTitle = title;
     }
 
     public int getCount() {
@@ -30,34 +35,23 @@ public class ImageAdapter extends BaseAdapter {
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+    	LayoutInflater inflater = (LayoutInflater) mContext
+    			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View gridView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(200, 200));
+        	gridView = new View(mContext);
+        	gridView = inflater.inflate(R.layout.image_adapter_item, null);
+        	TextView title = (TextView) gridView.findViewById(R.id.grid_item_label);
+        	title.setTypeface(Utils.banglaTypeFace);
+        	title.setText(mThumbTitle[position]);
+        	
+            ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
+            imageView.setImageResource(mThumbIds[position]);
         } else {
-            imageView = (ImageView) convertView;
-        }
+			gridView = (View) convertView;
+		}
 
-        imageView.setImageResource(mThumbIds[position]);
-        return imageView;
+        return gridView;
     }
-
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.khabar,
-            R.drawable.poshak,
-            R.drawable.basosthan,
-            R.drawable.jogajog,
-            R.drawable.shikkha,
-            R.drawable.khela,
-            R.drawable.binodon,
-            R.drawable.mobile,
-            R.drawable.gari,
-            R.drawable.doctor,
-            R.drawable.social,
-            R.drawable.biniyog,
-            R.drawable.onnano
-    };
 }

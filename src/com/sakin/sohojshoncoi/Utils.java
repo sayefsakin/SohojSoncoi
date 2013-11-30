@@ -25,6 +25,8 @@ public class Utils {
 	public static final String TAB_ID = "tab_id";
 	public static final String VIDEO_ELEMENT_ID = "video_element";
 	
+	public static final String ADDNEWHISABTAG = "add_new_hisab_fragment";
+	
 	public final static int MAX_Video_Fragment = 5;
 	public static int SELECTED_ITEM = -1; 
 	
@@ -39,24 +41,27 @@ public class Utils {
     
 	public static void createCustomCategory(){
 		//default categories
+		int i = 1;
 		List<Category> categories = new ArrayList<Category>();
-		categories.add(new Category(1,"food", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(2,"cloth", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(3,"home", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(4,"transport", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(5,"education", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(6,"car", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(7,"Bills & Utilites", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(8,"Deposit to Savings", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(9,"Gift", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(10,"Donations", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(11,"Others", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"food", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"cloth", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"home", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"transport", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"education", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"play", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"entertainment", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"car", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"medical", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"Bills", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"Deposit to Savings", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"Donations", Category.CategoryType.EXPENSE, "", -1));
+		categories.add(new Category(i++,"Others", Category.CategoryType.EXPENSE, "", -1));
 		
-		categories.add(new Category(12,"Net Salary", Category.CategoryType.INCOME, "", -1));
-		categories.add(new Category(13,"Bank Withdrawl", Category.CategoryType.INCOME, "", -1));
-		categories.add(new Category(14,"Interest", Category.CategoryType.INCOME, "", -1));
-		categories.add(new Category(15,"Loan", Category.CategoryType.INCOME, "", -1));
-		categories.add(new Category(16,"Others", Category.CategoryType.INCOME, "", -1));
+		categories.add(new Category(i++,"Net Salary", Category.CategoryType.INCOME, "", -1));
+		categories.add(new Category(i++,"Bank Withdrawl", Category.CategoryType.INCOME, "", -1));
+		categories.add(new Category(i++,"Interest", Category.CategoryType.INCOME, "", -1));
+		categories.add(new Category(i++,"Loan", Category.CategoryType.INCOME, "", -1));
+		categories.add(new Category(i++,"Others", Category.CategoryType.INCOME, "", -1));
 
 		for(Category thisCategory : categories){
 			SSDAO.getSSdao().getCategoryDAO().createOrUpdate(thisCategory);

@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class AddNewHisab extends Fragment {
+public class AddNewHisab extends Fragment 
+				implements CategoryFragment.OnCategorySelectedListener	{
 
 	private EditText mulloEditText, descriptionEditText;
 	private Button categoryButton, dateButton, pictureButton;
@@ -41,11 +43,11 @@ public class AddNewHisab extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				Fragment categoryFragment = new CategoryFragment();
+				Fragment categoryFragment = new CategoryFragment(AddNewHisab.this);
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ft.remove(AddNewHisab.this);
                 ft.add(R.id.content_frame, categoryFragment);
-                ft.addToBackStack("dailyhisab");
+                ft.addToBackStack(null);
                 ft.commit();
 			}
 		});
@@ -71,6 +73,16 @@ public class AddNewHisab extends Fragment {
 	
 	public void showDatePickerDialog(View v) {
 	    DialogFragment newFragment = new DatePickerFragment();
-	    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+	    newFragment.show(getFragmentManager(), "datePicker");
+	}
+
+	@Override
+	public void onCategorySelected(String cat) {
+		Utils.print("category selected" + cat);
+//		categoryButton.setText("new cat");
+		TextView tv = (TextView) view.findViewById(R.id.categoryLabel);
+		tv.setTextColor(Color.WHITE);
+		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setText("নাইরে");
 	}
 }

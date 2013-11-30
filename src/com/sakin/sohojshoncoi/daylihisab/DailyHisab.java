@@ -36,10 +36,10 @@ public class DailyHisab extends Fragment {
 			public void onClick(View v) {
 //				Intent addNewHisabIntent = new Intent(getActivity(), AddNewHisab.class);
 //				startActivity(addNewHisabIntent);
-				Fragment reminder = new AddNewHisab();
+				Fragment addNewHisab = new AddNewHisab();
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ft.remove(DailyHisab.this);
-                ft.add(R.id.content_frame, reminder);
+                ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
                 ft.addToBackStack("dailyhisab");
                 ft.commit();
 			}
