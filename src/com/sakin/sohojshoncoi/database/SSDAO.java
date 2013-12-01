@@ -126,6 +126,13 @@ public class SSDAO {
 //		return categories;
 		return getCategoryDAO().queryForAll();
 	}
+	public Category getCategoryFromName(String name) throws SQLException{
+		Category cat = null;
+		QueryBuilder<Category, Integer> qb = getCategoryDAO().queryBuilder();
+		qb.where().eq("name", name);
+		cat = qb.query().get(0);
+		return cat;
+	}
 	
 	//MediaCategory table related methods
 	public List<MediaCategory> getMediaCategories() {

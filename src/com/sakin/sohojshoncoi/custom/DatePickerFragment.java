@@ -1,10 +1,8 @@
 package com.sakin.sohojshoncoi.custom;
 
 import java.util.Calendar;
-
 import com.sakin.sohojshoncoi.Utils;
-import com.sakin.sohojshoncoi.daylihisab.CategoryFragment.OnCategorySelectedListener;
-
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -12,27 +10,29 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.widget.DatePicker;
 
+@SuppressLint("ValidFragment")
 public class DatePickerFragment extends DialogFragment
 								implements DatePickerDialog.OnDateSetListener {
 
 	OnDateSelectedListener mCallback;
-
+	private Calendar date;
     // Container Activity must implement this interface
     public interface OnDateSelectedListener {
-        public void onDateSelected(int year, int month, int day);
+        public void onDateSelected(Calendar date);
     }
     
-    public DatePickerFragment(Fragment caller){
+    public DatePickerFragment(Fragment caller, Calendar date){
     	mCallback = (OnDateSelectedListener) caller;
+    	this.date = date;
     }
     
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// Use the current date as the default date in the picker
-		final Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH);
-		int day = c.get(Calendar.DAY_OF_MONTH);
+		
+		int year = date.get(Calendar.YEAR);
+		int month = date.get(Calendar.MONTH);
+		int day = date.get(Calendar.DAY_OF_MONTH);
 		
 		// Create a new instance of DatePickerDialog and return it
 		return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -40,6 +40,8 @@ public class DatePickerFragment extends DialogFragment
 	
 	public void onDateSet(DatePicker view, int year, int month, int day) {
 		Utils.print("Date set");
-		mCallback.onDateSelected(year, month, day);
+		Calendar c = Calendar.getInstance();
+		c.set(year, month, day);
+		mCallback.onDateSelected(c);
 	}
 }

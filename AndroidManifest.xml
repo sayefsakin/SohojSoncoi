@@ -31,8 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sakin.sohojshoncoi.daylihisab.AddNewHisab" android:noHistory="true" />
-        <activity android:name="com.sakin.sohojshoncoi.daylihisab.AddPlan" android:noHistory="true" />
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewCategory" />
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewReport" />
         <activity android:name="com.sakin.sohojshoncoi.YouTubeFullScreen"

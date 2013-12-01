@@ -11,11 +11,10 @@
 	    android:id="@+id/aeBaeButton"
 	    android:layout_width="fill_parent"
 	    android:layout_height="45dip"
-	    android:textOn="Vibrate on"
-	    android:textOff="Vibrate off"
+	    android:textOn="Bae"
+	    android:textOff="Ae"
 	    android:layout_marginLeft="15dip"
-	    android:layout_marginRight="15dip"
-	    android:onClick="onToggleClicked" />
+	    android:layout_marginRight="15dip" />
 
     <TextView
         android:id="@+id/mulloLabel"
@@ -102,6 +101,7 @@
 		android:maxLength="100"
 		android:text="@string/test_text"
 		android:background="@color/light_gray"
+		android:gravity="top"
 		android:textSize="14sp" />
     
     <TextView
@@ -114,13 +114,22 @@
         android:text="@string/test_text"
         android:textSize="20sp" />
     
-    <Button
-		android:id="@+id/pictureButton"
-		android:layout_width="180dip"
-		android:layout_height="100dip"
+    <ImageView
+		android:id="@+id/imgPreview"
+		android:layout_width="120dip"
+		android:layout_height="160dip"
 		android:layout_below="@id/descriptionEditText"
 		android:layout_marginTop="10dip"
 		android:layout_alignRight="@id/mulloEditText"
+		android:contentDescription="@string/autoplay" />
+    
+    <Button
+		android:id="@+id/pictureButton"
+		android:layout_width="45dip"
+		android:layout_height="45dip"
+		android:layout_alignBottom="@id/imgPreview"
+		android:layout_toLeftOf="@id/imgPreview"
+		android:layout_marginRight="10dip"
 		android:text="@string/test_text"
 		android:background="@color/light_gray"
 		android:textSize="14sp" />
@@ -129,7 +138,7 @@
 		android:id="@+id/saveButton"
 		android:layout_width="80dip"
 		android:layout_height="30dip"
-		android:layout_below="@id/pictureButton"
+		android:layout_below="@id/imgPreview"
 		android:layout_marginTop="20dip"
 		android:layout_marginLeft="20dip"
 		android:layout_alignLeft="@id/mulloLabel"
@@ -141,7 +150,7 @@
 		android:id="@+id/resetButton"
 		android:layout_width="80dip"
 		android:layout_height="30dip"
-		android:layout_below="@id/pictureButton"
+		android:layout_below="@id/imgPreview"
 		android:layout_marginTop="20dip"
 		android:layout_marginRight="20dip"
 		android:layout_alignRight="@id/mulloEditText"

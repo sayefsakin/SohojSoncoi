@@ -148,7 +148,7 @@ public class Main extends FragmentActivity {
 	private void init(){
 		// all initialization code goes here
 		SSDAO.getSSdao().init(this);
-		Utils.createCustomCategory();
+		Utils.createCustomCategory(Main.this);
 		
 		//include bangla font
 		Utils.banglaTypeFace = Typeface.createFromAsset(getAssets(), getString(R.string.font_solaimanlipi));

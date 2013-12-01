@@ -26,7 +26,7 @@ public class CategoryFragment extends Fragment {
     }
     
 	View view;
-	private Integer[] mThumbIds = {
+	private Integer[] mThumbIdsBae = {
             R.drawable.khabar,
             R.drawable.poshak,
             R.drawable.basosthan,
@@ -41,10 +41,17 @@ public class CategoryFragment extends Fragment {
             R.drawable.biniyog,
             R.drawable.onnano
     };
-	private String[] title;
-	
-	public CategoryFragment(Fragment caller){
+	private Integer[] mThumbIdsAe = {
+            R.drawable.khabar,
+            R.drawable.poshak,
+            R.drawable.basosthan,
+            R.drawable.jogajog,
+            R.drawable.shikkha
+    };	
+	private Boolean aeOrBae;
+	public CategoryFragment(Fragment caller, Boolean aeOrBae){
 		mCallback = (OnCategorySelectedListener) caller;
+		this.aeOrBae = aeOrBae;
 	}
 	
 	@Override
@@ -53,28 +60,25 @@ public class CategoryFragment extends Fragment {
 		view = inflater.inflate(R.layout.category_view, container, false);
 		
 		GridView gridview = (GridView) view.findViewById(R.id.gridview);
-		title = getResources().getStringArray(R.array.category_title);
+		Integer[] thumbs;
+		final String[] title;
+		if(aeOrBae) {
+			title = getResources().getStringArray(R.array.category_title_bae);
+			thumbs = mThumbIdsBae;
+		} else {
+			title = getResources().getStringArray(R.array.category_title_ae);
+			thumbs = mThumbIdsAe;
+		}
 	    gridview.setAdapter(new ImageAdapter(getActivity(),
 	    						title,
-	    						mThumbIds));
+	    						thumbs));
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-//	        	Bundle args = new Bundle();
-//	        	args.putString("selected_category", title[position]);
-	        	
-//	        	addNewHisab.setArguments(args);
 	        	mCallback.onCategorySelected(title[position]);
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				
-//				Fragment addNewHisabOld = getFragmentManager().findFragmentByTag(Utils.ADDNEWHISABTAG);
-//				ft.remove(addNewHisabOld);
-				
-//				Fragment addNewHisab = new AddNewHisab();
-//                ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
-				ft.hide(CategoryFragment.this);
+				ft.remove(CategoryFragment.this);
                 ft.commit();
                 getFragmentManager().popBackStack();
-//	            Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
 	        }
 	    });
 	    

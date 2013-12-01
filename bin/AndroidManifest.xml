@@ -8,6 +8,7 @@
         android:minSdkVersion="12"
         android:targetSdkVersion="16" />
     <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -30,8 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sakin.sohojshoncoi.daylihisab.AddNewHisab" android:noHistory="true" />
-        <activity android:name="com.sakin.sohojshoncoi.daylihisab.AddPlan" android:noHistory="true" />
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewCategory" />
         <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewReport" />
         <activity android:name="com.sakin.sohojshoncoi.YouTubeFullScreen"

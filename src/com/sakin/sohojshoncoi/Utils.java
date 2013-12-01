@@ -3,11 +3,18 @@ package com.sakin.sohojshoncoi;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.color;
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sakin.sohojshoncoi.custom.TypefaceSpan;
 import com.sakin.sohojshoncoi.database.Account;
@@ -39,29 +46,23 @@ public class Utils {
     
     public static String DEVELOPER_KEY = "AIzaSyCGDUyXYA7PeLXbj5Sv29hYjDAzi8unYA8";
     
-	public static void createCustomCategory(){
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    public static final int CAMERA_RESULT_OK = -1;
+    public static final int CAMERA_RESULT_CANCELED = 0;
+    public static final String IMAGE_DIRECTORY_NAME = "sohojsoncoi";
+    
+	public static void createCustomCategory(Activity ac){
 		//default categories
 		int i = 1;
 		List<Category> categories = new ArrayList<Category>();
-		categories.add(new Category(i++,"food", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"cloth", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"home", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"transport", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"education", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"play", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"entertainment", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"car", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"medical", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"Bills", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"Deposit to Savings", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"Donations", Category.CategoryType.EXPENSE, "", -1));
-		categories.add(new Category(i++,"Others", Category.CategoryType.EXPENSE, "", -1));
-		
-		categories.add(new Category(i++,"Net Salary", Category.CategoryType.INCOME, "", -1));
-		categories.add(new Category(i++,"Bank Withdrawl", Category.CategoryType.INCOME, "", -1));
-		categories.add(new Category(i++,"Interest", Category.CategoryType.INCOME, "", -1));
-		categories.add(new Category(i++,"Loan", Category.CategoryType.INCOME, "", -1));
-		categories.add(new Category(i++,"Others", Category.CategoryType.INCOME, "", -1));
+		String[] baeTitle = ac.getResources().getStringArray(R.array.category_title_bae);
+		String[] aeTitle = ac.getResources().getStringArray(R.array.category_title_ae);
+		for(int j = 0;j<baeTitle.length;j++){
+			categories.add(new Category(i++,baeTitle[j], Category.CategoryType.EXPENSE, "", -1));
+		}
+		for(int j = 0;j<aeTitle.length;j++){
+			categories.add(new Category(i++,aeTitle[j], Category.CategoryType.INCOME, "", -1));
+		}
 
 		for(Category thisCategory : categories){
 			SSDAO.getSSdao().getCategoryDAO().createOrUpdate(thisCategory);
@@ -86,5 +87,25 @@ public class Utils {
 		s.setSpan(new TypefaceSpan(ac, Utils.banglaTypeFace, "banglaTypeFace"), 0, s.length(),
 		        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		ac.getActionBar().setTitle(s);
+	}
+	
+	public static void showToast(Activity ac, String msg){
+		RelativeLayout toastView = new RelativeLayout(ac.getApplicationContext());
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(400,200);
+		toastView.setLayoutParams(params);
+		toastView.setBackgroundColor(Color.DKGRAY);
+		
+		TextView tv = new TextView(ac.getApplicationContext());
+		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setText(msg);
+		tv.setTextSize(16);
+//		tv.setBackgroundColor(color.darker_gray);
+		toastView.addView(tv);
+		
+		
+		Toast toast = new Toast(ac.getApplicationContext());
+		toast.setView(toastView);
+		toast.setDuration(Toast.LENGTH_SHORT);
+		toast.show();
 	}
 }
