@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <Switch 
+	    android:id="@+id/statusButton"
+	    android:layout_width="fill_parent"
+	    android:layout_height="45dip"
+	    android:textOn="Paid"
+	    android:textOff="Non-Paid"
+	    android:layout_alignParentRight="true"
+	    android:layout_marginRight="15dip" />
+
+    <TextView
+        android:id="@+id/mulloLabelReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/statusButton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dip"
+        android:layout_marginLeft="30dip"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <EditText
+		android:id="@+id/mulloEditTextReminder"
+		android:layout_width="180dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/statusButton"
+		android:layout_marginTop="15dip"
+		android:layout_alignParentRight="true"
+		android:layout_marginRight="30dip"
+		android:inputType="numberDecimal"
+		android:background="@color/light_gray"
+		android:textSize="20sp" />
+    
+    <TextView
+        android:id="@+id/timeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/mulloLabelReminder"
+        android:layout_marginTop="10dip"
+        android:layout_alignLeft="@id/mulloLabelReminder"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <Button
+		android:id="@+id/timeButton"
+		android:layout_width="180dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/mulloEditTextReminder"
+		android:layout_marginTop="10dip"
+		android:layout_alignRight="@id/mulloEditTextReminder"
+		android:text="@string/category_choose"
+		android:textSize="14sp" />
+    
+    <TextView
+        android:id="@+id/dateLabelReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/timeLabel"
+        android:layout_marginTop="10dip"
+        android:layout_alignLeft="@id/mulloLabelReminder"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <Button
+		android:id="@+id/dateButtonReminder"
+		android:layout_width="180dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/timeButton"
+		android:layout_marginTop="10dip"
+		android:layout_alignRight="@id/mulloEditTextReminder"
+		android:text="@string/pick_date"
+		android:textSize="14sp" />
+    
+    <TextView
+        android:id="@+id/descriptionLabelReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/dateLabelReminder"
+        android:layout_marginTop="10dip"
+        android:layout_alignLeft="@id/mulloLabelReminder"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <EditText
+		android:id="@+id/descriptionEditTextReminder"
+		android:inputType="textMultiLine"
+		android:layout_width="180dip"
+		android:layout_height="100dip"
+		android:layout_below="@id/dateButtonReminder"
+		android:layout_marginTop="10dip"
+		android:layout_alignRight="@id/mulloEditTextReminder"
+		android:scrollHorizontally="true"
+		android:maxLength="100"
+		android:text="@string/test_text"
+		android:background="@color/light_gray"
+		android:gravity="top"
+		android:textSize="14sp" />
+    
+    <TextView
+        android:id="@+id/repeatedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/descriptionEditTextReminder"
+        android:layout_marginTop="10dip"
+        android:layout_alignLeft="@id/mulloLabelReminder"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <Button
+		android:id="@+id/repeatedButton"
+		android:layout_width="180dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/descriptionEditTextReminder"
+		android:layout_marginTop="10dip"
+		android:layout_alignRight="@id/mulloEditTextReminder"
+		android:text="@string/pick_date"
+		android:textSize="14sp" />
+    
+    <TextView
+        android:id="@+id/alarmLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/repeatedLabel"
+        android:layout_marginTop="10dip"
+        android:layout_alignLeft="@id/mulloLabelReminder"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <CheckBox 
+        android:id="@+id/alarmSwitch"
+	    android:layout_width="wrap_content"
+	    android:layout_height="45dip"
+	    android:layout_below="@id/repeatedLabel"
+	    android:layout_alignLeft="@id/repeatedButton" />
+    
+    <Button
+		android:id="@+id/saveButtonReminder"
+		android:layout_width="80dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/alarmSwitch"
+		android:layout_marginTop="20dip"
+		android:layout_marginLeft="20dip"
+		android:layout_alignLeft="@id/mulloLabelReminder"
+		android:text="@string/test_text"
+		android:background="@color/green"
+		android:textSize="14sp" />
+    
+    <Button
+		android:id="@+id/resetButtonReminder"
+		android:layout_width="80dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/alarmSwitch"
+		android:layout_marginTop="20dip"
+		android:layout_marginRight="20dip"
+		android:layout_alignRight="@id/mulloEditTextReminder"
+		android:text="@string/test_text"
+		android:background="@color/red"
+		android:textSize="14sp" />
+
+</RelativeLayout>
+</ScrollView>

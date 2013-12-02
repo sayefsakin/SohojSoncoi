@@ -9,26 +9,21 @@ import java.util.Locale;
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.DatePickerFragment;
-import com.sakin.sohojshoncoi.custom.PhotoHandler;
 import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
-import android.R.color;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +39,8 @@ import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
 public class AddNewHisab extends Fragment 
-				implements CategoryFragment.OnCategorySelectedListener, DatePickerFragment.OnDateSelectedListener	{
+				implements CategoryFragment.OnCategorySelectedListener,
+				DatePickerFragment.OnDateSelectedListener	{
 
 	private EditText mulloEditText, descriptionEditText;
 	private Button categoryButton, dateButton, pictureButton, saveButton, resetButton;
@@ -282,7 +278,7 @@ public class AddNewHisab extends Fragment
 		description = descriptionEditText.getText().toString();
 		amount = Double.parseDouble(mulloEditText.getText().toString());
 		if(categoryName.length() == 0 ||
-				descriptionEditText.getText().toString().length() == 0 ||
+				descriptionEditText.length() == 0 ||
 				Double.compare(amount, 0.0) == 0) {
 			
 			Utils.showToast(getActivity(), "সকল ঘড় পুরন করুন");
@@ -301,10 +297,11 @@ public class AddNewHisab extends Fragment
 						amount,
 						filePath, size, date.getTime());
 				SSDAO.getSSdao().getTransactionDAO().create(transaction);
+				Utils.showToast(getActivity(), "হিসাব সংরক্ষিত");
 			} catch (SQLException e) {
 				Utils.print("SQL error in adding new transaction");
+				Utils.showToast(getActivity(), "সংরক্ষিত হয়নি, আবার চেষ্টা করুনf");
 			}
-			Utils.showToast(getActivity(), "হিসাব সংরক্ষিত");
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ft.remove(AddNewHisab.this);
 	        ft.commit();

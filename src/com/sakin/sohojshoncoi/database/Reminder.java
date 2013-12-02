@@ -10,12 +10,27 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Reminder {
 
 	public enum Status {PAID, NON_PAID, ALARM};
+	public enum Repeat {MONTHLY ("MONTHLY"), DAILY ("DAILY"), NONE ("NONE");
+		private final String name;       
+
+	    private Repeat(String s) {
+	        name = s;
+	    }
+	
+	    public boolean equalsName(String otherName){
+	        return (otherName == null)? false:name.equals(otherName);
+	    }
+	
+	    public String toString(){
+	       return name;
+	    }
+	};
 	//in ALARM mode it prompts alarm and definitely it is also non_paid
 	
 	@DatabaseField(generatedId = true)
     private int reminder_id;
-    @DatabaseField(canBeNull = false, foreign = true)
-    private Category category;
+//    @DatabaseField(canBeNull = false, foreign = true)
+//    private Category category;
     @DatabaseField
     private String description;
     @DatabaseField
@@ -25,7 +40,7 @@ public class Reminder {
     @DatabaseField(dataType = DataType.DATE_LONG)
     private Date due_date;
     @DatabaseField
-    private Boolean repeated;
+    private Repeat repeated;
     
 	//================================================================================
     // Constructors
@@ -33,9 +48,9 @@ public class Reminder {
     public Reminder() {
         // ORMLite needs a no-arg constructor 
     }
-    public Reminder(Category category, String description, double amount, Status status,
-    		Date due_date, Boolean r) {
-        this.category = category;
+    public Reminder(String description, double amount, Status status,
+    		Date due_date, Repeat r) {
+//        this.category = category;
         this.description = description;
         this.amount = amount;
         this.status = status;
@@ -46,12 +61,12 @@ public class Reminder {
 	//================================================================================
     // Accessors
     //================================================================================
-    public Category getCategory() {
-        return category;
-    }
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+//    public Category getCategory() {
+//        return category;
+//    }
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
     
     public String getDescription() {
         return description;
@@ -81,10 +96,10 @@ public class Reminder {
         this.due_date = date;
     }
     
-    public Boolean getRepeated(){
+    public Repeat getRepeated(){
     	return repeated;
     }
-    public void setRepeated(Boolean r){
+    public void setRepeated(Repeat r){
     	this.repeated = r;
     }
 }
