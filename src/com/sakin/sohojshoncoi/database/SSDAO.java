@@ -126,6 +126,13 @@ public class SSDAO {
 //		return categories;
 		return getCategoryDAO().queryForAll();
 	}
+	public Category getCategoryFromID(int id) throws SQLException{
+		Category cat = null;
+		QueryBuilder<Category, Integer> qb = getCategoryDAO().queryBuilder();
+		qb.where().eq("category_id", id);
+		cat = qb.query().get(0);
+		return cat;
+	}
 	public Category getCategoryFromName(String name) throws SQLException{
 		Category cat = null;
 		QueryBuilder<Category, Integer> qb = getCategoryDAO().queryBuilder();
@@ -141,7 +148,9 @@ public class SSDAO {
 	
 	//Transaction table related methods
 	public List<Transaction> getTransaction() throws SQLException{
-		return getTransactionDAO().queryForAll();
+		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
+		qb.orderBy("date", true);
+		return qb.query();
 	}
 	public List<Transaction> getTransactionBetweenDate(Account account, Date start, Date end) throws SQLException {
 		if(end.before(start))return null;

@@ -63,11 +63,12 @@ public class DailyHisab extends Fragment {
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent youTubeFullScreen = new Intent(getActivity(), YouTubeFullScreen.class);
-				VideoElement item = new VideoElement("www.youtube.com/watch?v=7JXWXG3hsRg",
-						"","hello","Honey Bunny", 2);
-				youTubeFullScreen.putExtra(Utils.VIDEO_ELEMENT_ID, item);
-				startActivity(youTubeFullScreen);
+				Fragment hisabList = new HisabList();
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.remove(DailyHisab.this);
+                ft.add(R.id.content_frame, hisabList);
+                ft.addToBackStack("dailyhisab");
+                ft.commit();
 			}
 		});
 		

@@ -45,6 +45,9 @@ public class Category {
 	//================================================================================
     // Accessors
     //================================================================================
+    public int getCategoryID() {
+        return category_id;     
+    }
     public String getName() {
         return name;     
     }

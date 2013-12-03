@@ -32,8 +32,6 @@ public class SofolVideosFragment extends ListFragment {
 			Bundle savedInstanceState) {
 	     // The last two arguments ensure LayoutParams are inflated properly.
 		View rootView = inflater.inflate(R.layout.sofol_videos_fragment, container, false);
-//		list_items = getArguments().getStringArray("array_list");
-//		setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list_items));
 		
 		videoList = new ArrayList<VideoElement>();
 		adapter = new VideoFragmentAdapter(getActivity(), R.layout.sofol_item, videoList);
@@ -43,7 +41,6 @@ public class SofolVideosFragment extends ListFragment {
 		playlistUrl = getArguments().getString(Utils.TAB_URL_ID);
 		xmlParser = new XMLParser(getActivity(), id);
 		xmlParser.execute(playlistUrl);
-//		Utils.print("in the fragment of sofol");
 	    return rootView;
 	}
 

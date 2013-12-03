@@ -5,8 +5,15 @@ import java.sql.SQLException;
 import java.util.Calendar;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -208,11 +215,33 @@ public class AddReminder extends Fragment
 			SSDAO.getSSdao().getReminderDAO().create(reminder);
 			Utils.showToast(getActivity(), "রিমাইন্ডার সংরক্ষিত");
 			
+			if(alarm){
+				setAlarm();
+			}
+			
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ft.remove(AddReminder.this);
 	        ft.commit();
 	        getFragmentManager().popBackStack();
 		}
+	}
+	
+	private void setAlarm(){
+		Utils.broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent i) {
+            	Utils.showToast(getActivity(), "Rise and Shine!");
+            	Utils.runAudio();
+            	Utils.startVibrate(getActivity());
+            }
+		};
+		getActivity().registerReceiver(Utils.broadcastReceiver, new IntentFilter("com.sakin.sohojshoncoi"));
+		Utils.pendingIntent = PendingIntent.getBroadcast( getActivity(), 
+				0, new Intent("com.sakin.sohojshoncoi"), 0 );
+		Utils.alarmManagerm = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
+		Utils.alarmManagerm.set( AlarmManager.ELAPSED_REALTIME_WAKEUP,
+								dateTime.getTimeInMillis(),
+								Utils.pendingIntent );
 	}
 	
 	@Override

@@ -1,12 +1,19 @@
 package com.sakin.sohojshoncoi;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.R.color;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
@@ -26,6 +33,10 @@ public class Utils {
 	public static final boolean DEBUG = true;
 	public static Account userAccount = null;
 	public static Typeface banglaTypeFace = null;
+	public static PendingIntent pendingIntent;
+    public static BroadcastReceiver broadcastReceiver;
+    public static AlarmManager alarmManagerm;
+    public static Vibrator vibrator;
 	
 	public static final String TAB_TITLE_ID = "video_tab_title";
 	public static final String TAB_URL_ID = "playlist_url";
@@ -50,6 +61,8 @@ public class Utils {
     public static final int CAMERA_RESULT_OK = -1;
     public static final int CAMERA_RESULT_CANCELED = 0;
     public static final String IMAGE_DIRECTORY_NAME = "sohojsoncoi";
+    
+    public static String ALARM_TONE_DIRECTORY = "";
     
 	public static void createCustomCategory(Activity ac){
 		//default categories
@@ -108,4 +121,33 @@ public class Utils {
 		toast.setDuration(Toast.LENGTH_SHORT);
 		toast.show();
 	}
+	
+	
+	public static void runAudio(){
+		MediaPlayer mp = new MediaPlayer();
+		try {
+			mp.setDataSource(Utils.ALARM_TONE_DIRECTORY);
+			mp.prepare();
+			mp.start();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void startVibrate(Activity ac) {
+        long pattern[]={0,200,100,300,400};
+ 
+        vibrator = (Vibrator)ac.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(pattern, 0);        
+    }
+	
+    public static void stopVibrate() {
+        vibrator.cancel();
+    }
 }

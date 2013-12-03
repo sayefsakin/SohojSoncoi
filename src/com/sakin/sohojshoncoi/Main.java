@@ -24,7 +24,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.app.ActionBar;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -129,6 +134,8 @@ public class Main extends FragmentActivity {
 	protected void onDestroy() {
 	    super.onDestroy();
 	    SSDAO.getSSdao().close();
+	    Utils.alarmManagerm.cancel(Utils.pendingIntent);
+	    unregisterReceiver(Utils.broadcastReceiver);
 	}
     
     @Override
@@ -162,6 +169,20 @@ public class Main extends FragmentActivity {
 		
 		//set the title
 		Utils.setActionBarTitle(this, "সহজ সঞ্চয়");
+//		setupAlarm();
+	}
+	
+	private void setupAlarm() {
+	      Utils.broadcastReceiver = new BroadcastReceiver() {
+	             @Override
+	             public void onReceive(Context c, Intent i) {
+	                    Toast.makeText(c, "Rise and Shine!", Toast.LENGTH_LONG).show();
+	                    Utils.runAudio();
+	                    }
+	             };
+	      registerReceiver(Utils.broadcastReceiver, new IntentFilter("com.sakin.sohojshoncoi") );
+	      Utils.pendingIntent = PendingIntent.getBroadcast( this, 0, new Intent("com.sakin.sohojshoncoi"),	0 );
+	      Utils.alarmManagerm = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
 	}
 	
 	private void testing() {
