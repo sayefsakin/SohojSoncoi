@@ -75,6 +75,23 @@ public class AddReminder extends Fragment
 		this.repeated = repeated;
 	}
 	
+	public AddReminder(Reminder reminder) {
+		Reminder.Status st = reminder.getStatus();
+		if(st.toString().equals("PAID")) {
+			this.status = true;
+			this.alarm = false;
+		} else if(st.toString().equals("NON_PAID")) {
+			this.status = false;
+			this.alarm = false;
+		} else {
+			this.status = false;
+			this.alarm = true;
+		}
+		this.amount = reminder.getAmount();
+		this.description = reminder.getDescription();
+		this.dateTime = Utils.dateToCalendar(reminder.getDueDate());
+		this.repeated = reminder.getRepeated();
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {

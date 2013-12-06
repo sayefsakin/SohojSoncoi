@@ -31,8 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewCategory" />
-        <activity android:name="com.sakin.sohojshoncoi.daylihisab.ViewReport" />
         <activity android:name="com.sakin.sohojshoncoi.YouTubeFullScreen"
             android:parentActivityName="com.sakin.sohojshoncoi.Main" >
 	        <!-- Parent activity meta-data to support 4.0 and lower -->

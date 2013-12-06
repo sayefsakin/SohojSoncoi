@@ -23,7 +23,7 @@
         android:layout_marginLeft="5dip"
         android:layout_marginTop="5dip"
         android:textColor="@color/white"
-        android:text="hei" />
+        android:text="@string/test_text" />
     
     <TextView
         android:id="@+id/item_amount"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="5dip"
-        android:text="hei"
+        android:text="@string/test_text"
         android:textColor="@color/white"
         android:layout_marginRight="5dip" />
     
@@ -42,7 +42,7 @@
         android:layout_below="@id/item_description"
         android:layout_alignLeft="@id/item_description"
         android:textColor="@color/light_gray"
-        android:text="hei" />
+        android:text="@string/test_text" />
     
     <TextView
         android:id="@+id/item_date"
@@ -51,6 +51,6 @@
         android:layout_below="@id/item_category"
         android:layout_alignLeft="@id/item_description"
         android:textColor="@color/light_gray"
-        android:text="hei" />
+        android:text="@string/test_text" />
 
 </RelativeLayout>

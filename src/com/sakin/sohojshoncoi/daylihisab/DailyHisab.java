@@ -53,7 +53,7 @@ public class DailyHisab extends Fragment {
 		reminderButon.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				Fragment reminder = new AddReminder();
+				Fragment reminder = new ReminderList();
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ft.remove(DailyHisab.this);
                 ft.add(R.id.content_frame, reminder);

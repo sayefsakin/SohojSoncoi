@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/reminder_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="10dip"
+        android:textColor="@color/white"
+        android:text="@string/test_text" />
+    
+    <TextView
+        android:id="@+id/reminder_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:layout_toRightOf="@id/reminder_date"
+        android:layout_marginLeft="10dip"
+        android:text="@string/test_text"
+        android:textColor="@color/white" />
+    
+    <TextView
+        android:id="@+id/due_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reminder_description"
+        android:layout_alignLeft="@id/reminder_description"
+        android:textColor="@color/light_gray"
+        android:text="@string/test_text" />
+    
+    <TextView
+        android:id="@+id/amount_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dip"
+        android:textColor="@color/white"
+        android:text="@string/test_text" />
+    
+    <ImageView
+        android:id="@+id/repeatedImage"
+        android:layout_width="20dip"
+        android:layout_height="20dip"
+        android:layout_toRightOf="@id/reminder_description"
+        android:layout_alignBottom="@id/reminder_description"
+        android:layout_marginLeft="5dip"
+        android:contentDescription="@string/action_settings" />
+    
+    <ImageView
+        android:id="@+id/alarmImage"
+        android:layout_width="20dip"
+        android:layout_height="20dip"
+        android:layout_toRightOf="@id/repeatedImage"
+        android:layout_alignBottom="@id/reminder_description"
+        android:layout_marginLeft="5dip"
+        android:contentDescription="@string/action_settings" />
+
+</RelativeLayout>

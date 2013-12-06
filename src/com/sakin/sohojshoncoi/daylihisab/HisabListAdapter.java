@@ -33,8 +33,6 @@ public class HisabListAdapter extends ArrayAdapter<Transaction>{
     @Override
     public View getView(int position, View v, ViewGroup parent) {
     	ViewHolder holder = null;
-//    	TextView descriptionView = null, amountView = null, categoryView = null, dateView = null;
-//    	ImageView categoryTypeImage = null;
     	
         Transaction transaction = getItem(position);
         
