@@ -14,6 +14,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ public class DailyHisab extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.dailyhisab, container, false);
+		
 		setText(view, "ব্যালেন্সঃ ৩০০");
 		Button addNewButton = (Button) view.findViewById(R.id.addNewButton);
 		addNewButton.setOnClickListener(new OnClickListener() {
@@ -154,6 +158,23 @@ public class DailyHisab extends Fragment {
 		TextView tv = (TextView) view.findViewById(R.id.dailyhisabText);
 		tv.setTypeface(Utils.banglaTypeFace);
 		tv.setText(item);
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
+		super.onCreate(savedInstanceState);
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.main, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return super.onOptionsItemSelected(item);
 	}
 
 }

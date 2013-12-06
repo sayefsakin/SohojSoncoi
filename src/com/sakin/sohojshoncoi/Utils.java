@@ -64,6 +64,14 @@ public class Utils {
     
     public static String ALARM_TONE_DIRECTORY = "";
     
+    public static int CURRENT_VISIBLE_PAGE;
+    public static int HOME_PAGE = 1;
+    public static int ADD_NEW_HISAB_PAGE = 2;
+    public static int SHOW_HISAB_PAGE = 3;
+    public static int ADD_NEW_REMINDER_PAGE = 4;
+    public static int SHOW_REMINDER_PAGE = 5;
+    public static int DAILY_HISAB_PAGE = 6;
+    
 	public static void createCustomCategory(Activity ac){
 		//default categories
 		int i = 1;

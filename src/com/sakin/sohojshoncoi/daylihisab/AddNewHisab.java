@@ -74,6 +74,36 @@ public class AddNewHisab extends Fragment
 		this.fileUri = file;
 	}
 	
+	public AddNewHisab(Transaction transaction) {
+		this.amount = transaction.getAmount();
+		this.date = DateToCalendar(transaction.getDate());
+		this.description = transaction.getDescription();
+		String pictureUrl = transaction.getPictureUrl();
+		if(pictureUrl.length() > 0) {
+			this.fileUri = Uri.fromFile(new File(pictureUrl));
+		} else {
+			this.fileUri = null;
+		}
+		
+		try {
+			Category cat = SSDAO.getSSdao().getCategoryFromID(transaction.getCategory().getCategoryID());
+			this.categoryName = cat.getName();
+			if(cat.getType().toString().equals("INCOME")) {
+				this.aeOrBae = false;
+			} else {
+				this.aeOrBae = true;
+			}
+		} catch (SQLException e) {
+			Utils.print(e.toString());
+		}
+	}
+	
+	private Calendar DateToCalendar(Date date){ 
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
@@ -255,7 +285,7 @@ public class AddNewHisab extends Fragment
 	}
 	
 	private void doReset(){
-		aeBaeSwitch.setChecked(true);
+		aeBaeSwitch.setChecked(this.aeOrBae);
 		mulloEditText.setText(Double.toString(amount));
 		descriptionEditText.setText(description);
 		
@@ -320,7 +350,7 @@ public class AddNewHisab extends Fragment
 	public void onDateSelected(Calendar date) {
 		this.date = date;
 		String dt = Integer.toString(date.get(Calendar.DAY_OF_MONTH)) + "-" + 
-					Integer.toString(date.get(Calendar.MONTH)) + "-" +
+					Integer.toString(date.get(Calendar.MONTH)+1) + "-" +
 					Integer.toString(date.get(Calendar.YEAR));
 		dateButton.setText(dt);
 	}

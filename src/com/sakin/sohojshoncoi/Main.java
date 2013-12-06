@@ -23,7 +23,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.app.ActionBar;
+import android.support.v7.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -106,8 +106,8 @@ public class Main extends FragmentActivity {
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -156,7 +156,6 @@ public class Main extends FragmentActivity {
 		// all initialization code goes here
 		SSDAO.getSSdao().init(this);
 		Utils.createCustomCategory(Main.this);
-		
 		//include bangla font
 		Utils.banglaTypeFace = Typeface.createFromAsset(getAssets(), getString(R.string.font_solaimanlipi));
 //		try {
@@ -245,7 +244,6 @@ public class Main extends FragmentActivity {
 //        setTitle(position);
         mDrawerLayout.closeDrawer(mDrawerList);
         ITEM = position;
-        Utils.SELECTED_ITEM = ITEM;
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
