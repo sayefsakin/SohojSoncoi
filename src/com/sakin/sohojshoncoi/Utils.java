@@ -2,6 +2,8 @@ package com.sakin.sohojshoncoi;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.R.color;
@@ -158,4 +160,10 @@ public class Utils {
     public static void stopVibrate() {
         vibrator.cancel();
     }
+    
+    public static Calendar dateToCalendar(Date date){ 
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
 }

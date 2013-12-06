@@ -16,14 +16,20 @@ public class DatePickerFragment extends DialogFragment
 
 	OnDateSelectedListener mCallback;
 	private Calendar date;
+	private boolean stEnd;//true start, false end
     // Container Activity must implement this interface
     public interface OnDateSelectedListener {
-        public void onDateSelected(Calendar date);
+        public void onDateSelected(Calendar date, boolean se);
     }
     
     public DatePickerFragment(Fragment caller, Calendar date){
     	mCallback = (OnDateSelectedListener) caller;
     	this.date = date;
+    }
+    public DatePickerFragment(Fragment caller, Calendar date, boolean t){
+    	mCallback = (OnDateSelectedListener) caller;
+    	this.date = date;
+    	this.stEnd = t;
     }
     
 	@Override
@@ -42,6 +48,6 @@ public class DatePickerFragment extends DialogFragment
 		Utils.print("Date set");
 		Calendar c = Calendar.getInstance();
 		c.set(year, month, day);
-		mCallback.onDateSelected(c);
+		mCallback.onDateSelected(c, stEnd);
 	}
 }

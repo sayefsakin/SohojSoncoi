@@ -189,7 +189,7 @@ public class AddReminder extends Fragment
 		mulloEditText.setText(Double.toString(amount));
 		descriptionEditText.setText(description);
 		
-		onDateSelected(dateTime);
+		onDateSelected(dateTime, false);
 		onTimeSelected(dateTime.get(Calendar.HOUR_OF_DAY), dateTime.get(Calendar.MINUTE));
 		onItemSelected(repeated.name());
 	}
@@ -251,7 +251,7 @@ public class AddReminder extends Fragment
 	}
 
 	@Override
-	public void onDateSelected(Calendar date) {
+	public void onDateSelected(Calendar date, boolean se) {
 		this.dateTime = date;
 		String dt = Integer.toString(date.get(Calendar.DAY_OF_MONTH)) + "-" + 
 					Integer.toString(date.get(Calendar.MONTH)) + "-" +

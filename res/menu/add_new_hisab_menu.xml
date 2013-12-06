@@ -5,6 +5,10 @@
           android:icon="@drawable/ic_action_new"
           android:title="@string/action_add"
           android:showAsAction="ifRoom|withText" />
+	<item android:id="@+id/action_filter"
+          android:icon="@drawable/ic_action_overflow"
+          android:title="@string/action_filter"
+          android:showAsAction="ifRoom|withText" />
     <item android:id="@+id/action_edit"
           android:icon="@drawable/ic_action_discard"
           android:title="@string/action_edit"

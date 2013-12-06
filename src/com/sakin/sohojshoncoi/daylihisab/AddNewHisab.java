@@ -76,7 +76,7 @@ public class AddNewHisab extends Fragment
 	
 	public AddNewHisab(Transaction transaction) {
 		this.amount = transaction.getAmount();
-		this.date = DateToCalendar(transaction.getDate());
+		this.date = Utils.dateToCalendar(transaction.getDate());
 		this.description = transaction.getDescription();
 		String pictureUrl = transaction.getPictureUrl();
 		if(pictureUrl.length() > 0) {
@@ -96,12 +96,6 @@ public class AddNewHisab extends Fragment
 		} catch (SQLException e) {
 			Utils.print(e.toString());
 		}
-	}
-	
-	private Calendar DateToCalendar(Date date){ 
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		return cal;
 	}
 	
 	@Override
@@ -300,7 +294,7 @@ public class AddNewHisab extends Fragment
 		} else {
 			previewCapturedImage();
 		}
-		onDateSelected(date);
+		onDateSelected(date, false);
 	}
 	
 	private void doSave(){
@@ -347,7 +341,7 @@ public class AddNewHisab extends Fragment
 	}
 
 	@Override
-	public void onDateSelected(Calendar date) {
+	public void onDateSelected(Calendar date, boolean se) {
 		this.date = date;
 		String dt = Integer.toString(date.get(Calendar.DAY_OF_MONTH)) + "-" + 
 					Integer.toString(date.get(Calendar.MONTH)+1) + "-" +

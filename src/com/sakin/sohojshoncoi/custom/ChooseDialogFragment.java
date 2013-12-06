@@ -1,7 +1,5 @@
 package com.sakin.sohojshoncoi.custom;
 
-import com.sakin.sohojshoncoi.Utils;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;

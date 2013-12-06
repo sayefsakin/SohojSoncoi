@@ -2,12 +2,14 @@ package com.sakin.sohojshoncoi.daylihisab;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.YouTubeFullScreen;
 import com.sakin.sohojshoncoi.custom.VideoElement;
+import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
 import com.sakin.sohojshoncoi.custom.SwipeDismissListViewTouchListener;
@@ -28,27 +30,44 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 @SuppressLint("UseValueOf")
-public class HisabList extends ListFragment {
+public class HisabList extends ListFragment 
+						implements ChooseFilter.OnFilterSelectedListener {
 	
 	private HisabListAdapter adapter;
 	private List<Transaction> hisabList;
 	ListView listView;
 	SwipeDismissListViewTouchListener touchListener;
 	private boolean editMode = false;
+	private Calendar startDate, endDate;
+	private String categoryName;
+	View view;
+	
+	public void HisabList() { 
+		editMode = false;
+		startDate = null;
+		endDate = null;
+		categoryName = "Both";
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-	     // The last two arguments ensure LayoutParams are inflated properly.
-		View rootView = inflater.inflate(R.layout.hisab_list, container, false);
-		
-		try {
-			hisabList = SSDAO.getSSdao().getTransaction();
-		} catch (SQLException e) {
-			Utils.print("getting transaction error: " + e.toString());
+		if(view == null){
+			view = inflater.inflate(R.layout.hisab_list, container, false);
+			
+			try {
+				hisabList = SSDAO.getSSdao().getTransaction();
+			} catch (SQLException e) {
+				Utils.print("getting transaction error: " + e.toString());
+			}
+			adapter = new HisabListAdapter(getActivity(), R.layout.hisab_list_item, hisabList);
+			setListAdapter(adapter);
+		} else {
+			Utils.print(" view already created ");
+			ViewGroup parent = (ViewGroup) view.getParent();
+			parent.removeView(view);
 		}
-		adapter = new HisabListAdapter(getActivity(), R.layout.hisab_list_item, hisabList);
-		setListAdapter(adapter);
-		return rootView;
+		return view;
 	}
 	
 	@Override
@@ -67,10 +86,6 @@ public class HisabList extends ListFragment {
                                 adapter.notifyDataSetChanged();
                             }
                         });
-//        if(editMode){
-//        	listView.setOnTouchListener(touchListener);
-//        	listView.setOnScrollListener(touchListener.makeScrollListener());
-//        }
         
 		super.onViewCreated(view, savedInstanceState);
 	}
@@ -109,8 +124,14 @@ public class HisabList extends ListFragment {
 	public void onPrepareOptionsMenu(Menu menu) {
 		MenuItem editItem = menu.findItem(R.id.action_edit);
 		if(editMode) {
+			menu.findItem(R.id.action_add).setVisible(false);
+			menu.findItem(R.id.action_filter).setVisible(false);
+			
 			editItem.setIcon(R.drawable.ic_action_discard);
 		} else {
+			menu.findItem(R.id.action_add).setVisible(true);
+			menu.findItem(R.id.action_filter).setVisible(true);
+			
 			editItem.setIcon(R.drawable.ic_action_edit);
 		}
 		super.onPrepareOptionsMenu(menu);
@@ -124,6 +145,9 @@ public class HisabList extends ListFragment {
 	            return true;
 	        case R.id.action_edit:
 	            editModeToggle();
+	            return true;
+	        case R.id.action_filter:
+	            goToFilter();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -151,5 +175,47 @@ public class HisabList extends ListFragment {
         	listView.setOnScrollListener(null);
         	Utils.showToast(getActivity(), "Normal Mode");
 		}
+	}
+	
+	private void goToFilter() {
+		Fragment chooseFilter = new ChooseFilter(HisabList.this);
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		ft.remove(HisabList.this);
+        ft.add(R.id.content_frame, chooseFilter);
+        ft.addToBackStack(null);
+        ft.commit();
+	}
+
+	@Override
+	public void onFilterSelectedListener(String name, Calendar std, Calendar ed, boolean onOff) {
+		categoryName = name;
+		startDate = std;
+		endDate = ed;
+		Utils.print("filter selected " + categoryName);
+		try {
+			hisabList.clear();
+			if(onOff){
+				if(categoryName.equals("Both")) {
+					hisabList.addAll(SSDAO.getSSdao()
+								.getTransactionBetweenDate(Utils.userAccount, 
+														startDate.getTime(), 
+														endDate.getTime()));
+				} else {
+					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
+					Utils.print(Integer.toString(cat.getCategoryID()));
+					hisabList.addAll(SSDAO.getSSdao()
+								.getTransactionOfCategoryBetweenDate(
+											Utils.userAccount,
+											cat.getCategoryID(), 
+											startDate.getTime(), endDate.getTime()));
+				}
+			} else {
+				hisabList.addAll(SSDAO.getSSdao().getTransaction());
+			}
+			adapter.notifyDataSetChanged();
+		} catch (SQLException e) {
+			Utils.print(e.toString());
+		}
+		
 	}
 }
