@@ -37,12 +37,12 @@ public class HisabList extends ListFragment
 	private List<Transaction> hisabList;
 	ListView listView;
 	SwipeDismissListViewTouchListener touchListener;
-	private boolean editMode = false;
+	private boolean editMode = false, isRefresh = false;
 	private Calendar startDate, endDate;
 	private String categoryName;
 	View view;
 	
-	public void HisabList() { 
+	public HisabList() { 
 		editMode = false;
 		startDate = null;
 		endDate = null;
@@ -66,6 +66,18 @@ public class HisabList extends ListFragment
 			Utils.print(" view already created ");
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
+			
+			if(isRefresh){
+				Utils.print("view refreshing....");
+				hisabList.clear();
+				try {
+					hisabList.addAll(SSDAO.getSSdao().getTransaction());
+					adapter.notifyDataSetChanged();
+				} catch (SQLException e) {
+					Utils.print(e.toString());
+				}
+			}
+		
 		}
 		return view;
 	}
@@ -94,6 +106,7 @@ public class HisabList extends ListFragment
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	  	Utils.print("clicked");
 	  	if(!editMode) {
+	  		isRefresh = true;
 		  	Fragment addNewHisab = new AddNewHisab((Transaction)l.getItemAtPosition(position));
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ft.remove(HisabList.this);
@@ -155,6 +168,7 @@ public class HisabList extends ListFragment
 	}
 	
 	private void goToAddNewPage() {
+		isRefresh = true;
 		Fragment addNewHisab = new AddNewHisab();
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		ft.remove(HisabList.this);
@@ -178,6 +192,7 @@ public class HisabList extends ListFragment
 	}
 	
 	private void goToFilter() {
+		isRefresh = false;
 		Fragment chooseFilter = new ChooseFilter(HisabList.this);
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		ft.remove(HisabList.this);
@@ -197,7 +212,7 @@ public class HisabList extends ListFragment
 			if(onOff){
 				if(categoryName.equals("Both")) {
 					hisabList.addAll(SSDAO.getSSdao()
-								.getTransactionBetweenDate(Utils.userAccount, 
+								.getTransactionBetweenDate(/*Utils.userAccount,*/ 
 														startDate.getTime(), 
 														endDate.getTime()));
 				} else {
@@ -205,7 +220,7 @@ public class HisabList extends ListFragment
 					Utils.print(Integer.toString(cat.getCategoryID()));
 					hisabList.addAll(SSDAO.getSSdao()
 								.getTransactionOfCategoryBetweenDate(
-											Utils.userAccount,
+											/*Utils.userAccount,*/
 											cat.getCategoryID(), 
 											startDate.getTime(), endDate.getTime()));
 				}
@@ -216,6 +231,5 @@ public class HisabList extends ListFragment
 		} catch (SQLException e) {
 			Utils.print(e.toString());
 		}
-		
 	}
 }

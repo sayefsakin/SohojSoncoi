@@ -52,9 +52,9 @@ public class ChooseFilter extends Fragment
 		this.mCallback = (OnFilterSelectedListener) caller;
 		this.filterOnOff = false;
 		this.aeOrBae = true;
+		this.categoryName = "Both";
 		this.startDate = Calendar.getInstance();
 		this.endDate = Calendar.getInstance();
-		this.categoryName = "Both";
 	}
 	
 	public ChooseFilter(Fragment caller, boolean filter, boolean aeOrBae, 
@@ -128,6 +128,10 @@ public class ChooseFilter extends Fragment
 			});
 			
 			saveButton = (Button) view.findViewById(R.id.saveButton);
+			saveButton.setTypeface(Utils.banglaTypeFace);
+			saveButton.setBackgroundResource(R.drawable.save_button);
+			saveButton.setTextColor(Color.WHITE);
+			saveButton.setText("দেখুন");
 			saveButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -140,6 +144,8 @@ public class ChooseFilter extends Fragment
 			Utils.print(" view already created ");
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
+			
+			doReset();
 		}
 		return view;
 	}
@@ -187,8 +193,8 @@ public class ChooseFilter extends Fragment
 			}
 			categoryButton.setText("পছন্দ করুন");
 		}
-		onDateSelected(startDate, false);
-		onDateSelected(endDate, true);
+		onDateSelected(startDate, true);
+		onDateSelected(endDate, false);
 		
 	}
 	
@@ -198,6 +204,9 @@ public class ChooseFilter extends Fragment
 			return;
 		}
 		//need to handle date inclusion problem
+		
+		Utils.print("start date: " + startDate.toString());
+		Utils.print("end date: " + endDate.toString());
 		
 		mCallback.onFilterSelectedListener(categoryName, startDate, endDate, this.filterOnOff);
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -218,10 +227,21 @@ public class ChooseFilter extends Fragment
 		String dt = Integer.toString(date.get(Calendar.DAY_OF_MONTH)) + "-" + 
 				Integer.toString(date.get(Calendar.MONTH)+1) + "-" +
 				Integer.toString(date.get(Calendar.YEAR));
+		Utils.print(dt);
 		if(se){
+			date.set(Calendar.HOUR_OF_DAY, 0);
+			date.set(Calendar.MINUTE, 0);
+			date.set(Calendar.SECOND, 0);
+			
 			this.startDate = date;
 			startDateButton.setText(dt);
 		} else {
+			date.set(Calendar.HOUR_OF_DAY, 
+					date.getActualMaximum(Calendar.HOUR_OF_DAY));
+			date.set(Calendar.MINUTE, 
+					date.getActualMaximum(Calendar.MINUTE));
+			date.set(Calendar.SECOND, 
+					date.getActualMaximum(Calendar.SECOND));
 			this.endDate = date;
 			endDateButton.setText(dt);
 		}

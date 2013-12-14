@@ -43,17 +43,18 @@ public class AddNewHisab extends Fragment
 				DatePickerFragment.OnDateSelectedListener	{
 
 	private EditText mulloEditText, descriptionEditText;
-	private Button categoryButton, dateButton, pictureButton, saveButton, resetButton;
-	private Switch aeBaeSwitch;
+	private Button categoryButton, dateButton, saveButton, resetButton;
+	private Button aeBaeSwitch;
 	private View view = null;
 	private ImageView imgPreview;
 	
 	private Uri fileUri;
-	private Boolean aeOrBae; //true = bae, false = ae
+	private Boolean aeOrBae, isEdit; //true = bae, false = ae
 	private String categoryName;
 	private Calendar date;
 	private double amount;
 	private String description;
+	private Transaction transaction;
 	
 	public AddNewHisab(){
 		this.aeOrBae = true;
@@ -62,6 +63,7 @@ public class AddNewHisab extends Fragment
 		this.date = Calendar.getInstance();
 		this.description = "";
 		this.fileUri = null;
+		this.isEdit = false;
 	}
 	
 	public AddNewHisab(Boolean aeOrBae, double amount, String cat,
@@ -72,9 +74,12 @@ public class AddNewHisab extends Fragment
 		this.date = date;
 		this.description = description;
 		this.fileUri = file;
+		this.isEdit = true;
 	}
 	
 	public AddNewHisab(Transaction transaction) {
+		this.isEdit = true;
+		this.transaction = transaction;
 		this.amount = transaction.getAmount();
 		this.date = Utils.dateToCalendar(transaction.getDate());
 		this.description = transaction.getDescription();
@@ -114,14 +119,33 @@ public class AddNewHisab extends Fragment
 			mulloEditText = (EditText) view.findViewById(R.id.mulloEditText);
 			descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditText);
 			imgPreview = (ImageView) view.findViewById(R.id.imgPreview);
-			aeBaeSwitch = (Switch) view.findViewById(R.id.aeBaeButton);
-			
-			aeBaeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			imgPreview.setOnClickListener(new OnClickListener() {
 				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					aeOrBae = isChecked;
+				public void onClick(View v) {
+					if(!isDeviceSupportCamera()){
+						Toast.makeText(getActivity(), "No camera found", Toast.LENGTH_SHORT).show();
+					} else {
+						Utils.print("camera found");
+						captureImage();
+					}
 				}
 			});
+			
+			aeBaeSwitch = (Button) view.findViewById(R.id.aeBaeButton);
+			aeBaeSwitch.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					aeOrBae = !aeOrBae;
+					if(aeOrBae){
+						aeBaeSwitch.setBackgroundResource(R.drawable.baebutton);
+					} else {
+						aeBaeSwitch.setBackgroundResource(R.drawable.aebutton);
+					}
+					categoryName = "";
+					categoryButton.setText("পছন্দ করুন");
+				}
+			});
+			
 			categoryButton = (Button) view.findViewById(R.id.categoryButton);
 			categoryButton.setTypeface(Utils.banglaTypeFace);
 			categoryButton.setOnClickListener(new OnClickListener() {
@@ -144,21 +168,11 @@ public class AddNewHisab extends Fragment
 					showDatePickerDialog(v);
 				}
 			});
-			
-			pictureButton = (Button) view.findViewById(R.id.pictureButton);
-			pictureButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if(!isDeviceSupportCamera()){
-						Toast.makeText(getActivity(), "No camera found", Toast.LENGTH_SHORT).show();
-					} else {
-						Utils.print("camera found");
-						captureImage();
-					}
-				}
-			});
-			
+
 			saveButton = (Button) view.findViewById(R.id.saveButton);
+			saveButton.setBackgroundResource(R.drawable.save_button);
+			saveButton.setTypeface(Utils.banglaTypeFace);
+			saveButton.setText("সেভ");
 			saveButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -167,6 +181,9 @@ public class AddNewHisab extends Fragment
 			});
 			
 			resetButton = (Button) view.findViewById(R.id.resetButton);
+			resetButton.setBackgroundResource(R.drawable.reset_button);
+			resetButton.setTypeface(Utils.banglaTypeFace);
+			resetButton.setText("রিসেট");
 			resetButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -279,7 +296,12 @@ public class AddNewHisab extends Fragment
 	}
 	
 	private void doReset(){
-		aeBaeSwitch.setChecked(this.aeOrBae);
+		aeOrBae = true;
+		if(aeOrBae){
+			aeBaeSwitch.setBackgroundResource(R.drawable.baebutton);
+		} else {
+			aeBaeSwitch.setBackgroundResource(R.drawable.aebutton);
+		}
 		mulloEditText.setText(Double.toString(amount));
 		descriptionEditText.setText(description);
 		
@@ -290,7 +312,7 @@ public class AddNewHisab extends Fragment
 		}
 		
 		if(this.fileUri == null) {
-			imgPreview.setImageResource(R.drawable.jogajog);
+			imgPreview.setImageResource(R.drawable.image_placeholder);
 		} else {
 			previewCapturedImage();
 		}
@@ -308,20 +330,44 @@ public class AddNewHisab extends Fragment
 			Utils.showToast(getActivity(), "সকল ঘড় পুরন করুন");
 		} else {
 			try {
-				Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
-				String filePath = "";
-				long size = 0;
-				if(fileUri != null){
-					filePath = fileUri.getPath();
-					File f = new File(fileUri.getPath());
-					size = f.length();
+				if(isEdit){
+					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
+					transaction.setCategory(cat);
+
+					String filePath = "";
+					long size = 0;
+					if(fileUri != null){
+						File f = new File(fileUri.getPath());
+						
+						filePath = fileUri.getPath();
+						size = f.length();
+						
+						transaction.setPictureUrl(filePath);
+						transaction.setPictureSize(size);
+					}
+					transaction.setAccount(Utils.userAccount);
+					transaction.setDescription(description);
+					transaction.setAmount(amount);
+					transaction.setDate(date.getTime());
+					
+					SSDAO.getSSdao().getTransactionDAO().update(transaction);
+					Utils.showToast(getActivity(), "হিসাব পরিবর্তন সংরক্ষিত");
+				} else {
+					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
+					String filePath = "";
+					long size = 0;
+					if(fileUri != null){
+						filePath = fileUri.getPath();
+						File f = new File(fileUri.getPath());
+						size = f.length();
+					}
+					Transaction transaction = new Transaction(cat, Utils.userAccount, 
+							description, 
+							amount,
+							filePath, size, date.getTime());
+					SSDAO.getSSdao().getTransactionDAO().create(transaction);
+					Utils.showToast(getActivity(), "হিসাব সংরক্ষিত");
 				}
-				Transaction transaction = new Transaction(cat, Utils.userAccount, 
-						description, 
-						amount,
-						filePath, size, date.getTime());
-				SSDAO.getSSdao().getTransactionDAO().create(transaction);
-				Utils.showToast(getActivity(), "হিসাব সংরক্ষিত");
 			} catch (SQLException e) {
 				Utils.print("SQL error in adding new transaction");
 				Utils.showToast(getActivity(), "সংরক্ষিত হয়নি, আবার চেষ্টা করুনf");

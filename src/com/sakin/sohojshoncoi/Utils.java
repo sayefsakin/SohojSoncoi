@@ -74,19 +74,25 @@ public class Utils {
     public static int SHOW_REMINDER_PAGE = 5;
     public static int DAILY_HISAB_PAGE = 6;
     
+    public static String MONTH_ID = "month_id";
+    public static String YEAR_ID = "year_id";
+    
+    public static int MAX_AE_INDEX;
+    public static int MAX_BAE_INDEX;
 	public static void createCustomCategory(Activity ac){
 		//default categories
-		int i = 1;
+		int i = 1, j;
 		List<Category> categories = new ArrayList<Category>();
 		String[] baeTitle = ac.getResources().getStringArray(R.array.category_title_bae);
 		String[] aeTitle = ac.getResources().getStringArray(R.array.category_title_ae);
-		for(int j = 0;j<baeTitle.length;j++){
+		for(j = 0;j<baeTitle.length;j++){
 			categories.add(new Category(i++,baeTitle[j], Category.CategoryType.EXPENSE, "", -1));
 		}
-		for(int j = 0;j<aeTitle.length;j++){
+		MAX_BAE_INDEX = i;
+		for(j = 0;j<aeTitle.length;j++){
 			categories.add(new Category(i++,aeTitle[j], Category.CategoryType.INCOME, "", -1));
 		}
-
+		MAX_AE_INDEX = i;
 		for(Category thisCategory : categories){
 			SSDAO.getSSdao().getCategoryDAO().createOrUpdate(thisCategory);
 		}

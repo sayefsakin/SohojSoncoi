@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+		<TextView
+	        android:id="@+id/ajLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:text="@string/test_text"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="10dp" />    
+    
+	    
+	    <TextView
+	        android:id="@+id/totalLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/test_text"
+	        android:layout_below="@id/ajLabel"
+	        android:layout_marginLeft="10dp" />
+	    
+	    <TextView 
+	        android:id="@+id/amountText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/test_text"
+	        android:layout_marginLeft="5dp"
+	        android:layout_alignTop="@id/totalLabel"
+	        android:layout_toRightOf="@id/totalLabel" />
+	    
+	    <TextView 
+	        android:id="@+id/planText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/test_text"
+	        android:layout_alignTop="@id/totalLabel"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginRight="10dp" />
+	    
+	    <ProgressBar 
+	        android:id="@+id/totalProgressBar"
+	        style="?android:attr/progressBarStyleHorizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@id/totalLabel"
+	        android:layout_alignRight="@id/planText"
+	        android:progressDrawable="@drawable/total_progress_bar"
+	        android:layout_below="@id/totalLabel" />
+
+
+</RelativeLayout>

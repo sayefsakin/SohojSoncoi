@@ -5,7 +5,7 @@
     <RelativeLayout
         android:id="@+id/dailyhisab_back_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="313dp" >
         
     
 	    <TextView
@@ -20,34 +20,45 @@
 	
 	    <Button
 	        android:id="@+id/addNewButton"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:background="@drawable/notun_ay_o_bay"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
+	        android:background="@drawable/aeobae"
 	        android:layout_centerHorizontal="true"
 	        android:layout_below="@id/dailyhisabText"
 	        android:layout_marginTop="10dp"
 	        android:height="30dip" />
 	
 	    <Button
-	        android:id="@+id/reminderButon"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignLeft="@+id/addNewButton"
-	        android:layout_below="@+id/addNewButton"
-	        android:layout_marginLeft="44dp"
-	        android:layout_marginTop="20dp"
-	        android:background="@drawable/add_reminder"
+	        android:id="@+id/aeBaeRiportButton"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
+	        android:layout_below="@id/addNewButton"
+	        android:layout_alignLeft="@id/addNewButton"
+	        android:layout_marginLeft="50dp"
+	        android:layout_marginTop="0dp"
+	        android:background="@drawable/aebaerriport"
 	        android:height="30dip" />
 	
 	    <Button
 	        android:id="@+id/agerHisabButton"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignBaseline="@+id/reminderButon"
-	        android:layout_alignBottom="@+id/reminderButon"
-	        android:layout_alignRight="@+id/addNewButton"
-	        android:layout_marginRight="44dp"
-	        android:background="@drawable/ager_hisab"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
+	        android:layout_below="@id/addNewButton"
+	        android:layout_alignBottom="@id/aeBaeRiportButton"
+	        android:layout_alignRight="@id/addNewButton"
+	        android:layout_marginRight="50dp"
+	        android:layout_marginTop="0dp"
+	        android:background="@drawable/agerhisab"
+	        android:height="30dip" />
+	
+	    <Button
+	        android:id="@+id/reminderButon"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
+	        android:layout_alignLeft="@id/addNewButton"
+	        android:layout_below="@id/aeBaeRiportButton"
+	        android:layout_marginTop="0dp"
+	        android:background="@drawable/reminder"
 	        android:height="30dip" />
 	    
 	</RelativeLayout>

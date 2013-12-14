@@ -66,6 +66,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 
 	@Override
 	public void onPageSelected(int position) {
+		Utils.print(Integer.toString(position));
 		mActionBar.setSelectedNavigationItem(position);
 		
 	}

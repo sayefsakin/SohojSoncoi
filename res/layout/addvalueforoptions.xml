@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/custom_color"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/dailydatebutton"
+        android:layout_width="100dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="20dip"
+        android:background="@color/red"
+        android:text="@string/test_text"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@color/custom_color" >
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/custom_color"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/optionbuttonay"
+            android:layout_width="100dip"
+            android:layout_height="40dip"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="20dip"
+            android:background="@color/red"
+            android:text="@string/test_text"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/optionbuttonbey"
+            android:layout_width="100dip"
+            android:layout_height="40dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="20dip"
+            android:background="@color/red"
+            android:text="@string/test_text"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/plansavebutton"
+        android:layout_width="100dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="20dip"
+        android:background="@color/red"
+        android:text="@string/test_text"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

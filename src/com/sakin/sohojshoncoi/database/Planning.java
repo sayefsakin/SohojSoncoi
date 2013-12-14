@@ -1,8 +1,5 @@
 package com.sakin.sohojshoncoi.database;
 
-import java.util.Date;
-
-import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -17,10 +14,10 @@ public class Planning {
     private Account account;
     @DatabaseField
     private double amount;
-    @DatabaseField(dataType = DataType.DATE_LONG)
-    private Date start_date;
-    @DatabaseField(dataType = DataType.DATE_LONG)
-    private Date end_date;
+    @DatabaseField
+    private int month;
+    @DatabaseField
+    private int year;
     
 	//================================================================================
     // Constructors
@@ -28,12 +25,12 @@ public class Planning {
     public Planning() {
         // ORMLite needs a no-arg constructor 
     }
-    public Planning(Account ac, Category cat, double amount, Date st, Date end) {
+    public Planning(Account ac, Category cat, double amount, int month, int year) {
     	this.account = ac;
     	this.category = cat;
     	this.amount = amount;
-    	this.start_date = st;
-    	this.end_date = end;
+    	this.month = month;
+    	this.year = year;
     }
     
 	//================================================================================
@@ -65,17 +62,17 @@ public class Planning {
         this.amount = amount;
     }
     
-    public Date getStartDate() {
-        return start_date;
+    public int getMonth() {
+        return month;
     }
-    public void setStartDate(Date st) {
-        this.start_date = st;
+    public void setMonth(int mn) {
+        this.month = mn;
     }
     
-    public Date getEndDate() {
-        return end_date;
+    public int getYear() {
+        return year;
     }
-    public void setEndDate(Date end) {
-        this.end_date = end;
+    public void setYear(int yr) {
+        this.year = yr;
     }
 }

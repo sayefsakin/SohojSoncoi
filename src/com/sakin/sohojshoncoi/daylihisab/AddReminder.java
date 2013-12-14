@@ -38,7 +38,7 @@ import com.sakin.sohojshoncoi.database.Reminder;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
 
-@SuppressLint("ValidFragment")
+@SuppressLint({ "ValidFragment", "InlinedApi" })
 public class AddReminder extends Fragment 
 						implements TimePickerFragment.OnTimeSelectedListener,
 									DatePickerFragment.OnDateSelectedListener,
@@ -50,7 +50,7 @@ public class AddReminder extends Fragment
 	private CheckBox alarmSwitch;
 	View view = null;
 	
-	private Boolean status, alarm;
+	private Boolean status, alarm, isEdit;
 	private double amount;
 	private String description;
 	private Calendar dateTime;
@@ -63,6 +63,7 @@ public class AddReminder extends Fragment
 		description = "";
 		dateTime = Calendar.getInstance();
 		repeated = Reminder.Repeat.NONE;
+		this.isEdit = false;
 	}
 	
 	public AddReminder(Boolean status, Boolean alarm, double amount,
@@ -73,6 +74,7 @@ public class AddReminder extends Fragment
 		this.description = desc;
 		this.dateTime = dateTime;
 		this.repeated = repeated;
+		this.isEdit = true;
 	}
 	
 	public AddReminder(Reminder reminder) {
@@ -91,6 +93,7 @@ public class AddReminder extends Fragment
 		this.description = reminder.getDescription();
 		this.dateTime = Utils.dateToCalendar(reminder.getDueDate());
 		this.repeated = reminder.getRepeated();
+		this.isEdit = true;
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
@@ -98,12 +101,12 @@ public class AddReminder extends Fragment
 		if(view == null){
 			view = inflater.inflate(R.layout.add_new_reminder, container, false);
 			
-			setText(R.id.mulloLabelReminder,"মূল্য");
-			setText(R.id.descriptionLabelReminder,"বর্ণনা");
-			setText(R.id.dateLabelReminder,"তারিখ");
-			setText(R.id.timeLabel,"সময়");
-			setText(R.id.alarmLabel,"এলার্ম");
-			setText(R.id.repeatedLabel,"রিপিটেড");
+			setText(R.id.mulloLabelReminder,"মূল্যঃ");
+			setText(R.id.descriptionLabelReminder,"বর্ণনাঃ");
+			setText(R.id.dateLabelReminder,"তারিখঃ");
+			setText(R.id.timeLabel,"সময়ঃ");
+			setText(R.id.alarmLabel,"এলার্মঃ");
+			setText(R.id.repeatedLabel,"রিপিটেডঃ");
 			
 			mulloEditText = (EditText) view.findViewById(R.id.mulloEditTextReminder);
 			descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditTextReminder);
@@ -115,6 +118,11 @@ public class AddReminder extends Fragment
 					status = isChecked;
 				}
 			});
+			if(isEdit == true){
+				statusSwitch.setVisibility(Switch.VISIBLE);
+			} else {
+				statusSwitch.setVisibility(Switch.INVISIBLE);
+			}
 			
 			alarmSwitch = (CheckBox) view.findViewById(R.id.alarmSwitch);
 			alarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -152,6 +160,9 @@ public class AddReminder extends Fragment
 			});
 			
 			saveButton = (Button) view.findViewById(R.id.saveButtonReminder);
+			saveButton.setBackgroundResource(R.drawable.save_button);
+			saveButton.setTypeface(Utils.banglaTypeFace);
+			saveButton.setText("সেভ");
 			saveButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -160,6 +171,9 @@ public class AddReminder extends Fragment
 			});
 			
 			resetButton = (Button) view.findViewById(R.id.resetButtonReminder);
+			resetButton.setBackgroundResource(R.drawable.reset_button);
+			resetButton.setTypeface(Utils.banglaTypeFace);
+			resetButton.setText("রিসেট");
 			resetButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

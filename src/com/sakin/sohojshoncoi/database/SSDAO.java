@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.sakin.sohojshoncoi.Utils;
 
 import android.app.Activity;
 
@@ -152,18 +153,28 @@ public class SSDAO {
 		qb.orderBy("date", false);
 		return qb.query();
 	}
-	public List<Transaction> getTransactionBetweenDate(Account account, Date start, Date end) throws SQLException {
+	public List<Transaction> getTransactionBetweenDate(/*Account account, */Date start, Date end) throws SQLException {
 		if(end.before(start))return null;
 		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
 		qb.orderBy("date", false);
-	    qb.where().eq("account_id", account.getAccountId()).and().between("date", start, end);
+	    qb.where()/*.eq("account_id", account.getAccountId()).and()*/.between("date", start, end);
 	    return qb.query();
 	}
-	public String getTransactionSumBetweenDate(Account account, Date start, Date end) throws SQLException {
-		if(end.before(start))return null;
+	public String getTransactionSumBetweenDate(/*Account account, */Date start, Date end, boolean aeOrBae) throws SQLException {
+		//true bae, false ae
+		if(end.before(start)){
+			Utils.print("date format error!");
+			return null;
+		}
 		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
 		qb.orderBy("date", true);
-	    qb.where().eq("account_id", account.getAccountId()).and().between("date", start, end);
+//	    qb.where()/*.eq("account_id", account.getAccountId()).and()*/.between("date", start, end);
+		int low = 1, high = Utils.MAX_BAE_INDEX - 1;
+		if(aeOrBae == false){
+			low = Utils.MAX_BAE_INDEX;
+			high = Utils.MAX_AE_INDEX - 1;
+		}
+		qb.where().between("date", start, end).and().between("category_id", low, high);
 	    qb.selectRaw("SUM(amount)");
 	    GenericRawResults<String[]> results = qb.queryRaw();
 	    return results.getFirstResult()[0];
@@ -174,18 +185,18 @@ public class SSDAO {
 		qb.where().eq("account_id", account.getAccountId()).and().eq("category_id", category);
 		return qb.query();
 	}
-	public List<Transaction> getTransactionOfCategoryBetweenDate(Account account, int category, Date start, Date end) throws SQLException {
+	public List<Transaction> getTransactionOfCategoryBetweenDate(/*Account account, */int category, Date start, Date end) throws SQLException {
 		if(end.before(start))return null;
 		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
 		qb.orderBy("date", false);
-		qb.where().eq("account_id", account.getAccountId()).and().eq("category_id", category).and().between("date", start, end);
+		qb.where()./*eq("account_id", account.getAccountId()).and().*/eq("category_id", category).and().between("date", start, end);
 	    return qb.query();
 	}
-	public String getTransactionSumOfCategoryBetweenDate(Account account, String category, Date start, Date end) throws SQLException {
+	public String getTransactionSumOfCategoryBetweenDate(/*Account account, */String category, Date start, Date end) throws SQLException {
 		if(end.before(start))return null;
 		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
 		qb.orderBy("date", true);
-	    qb.where().eq("account_id", account.getAccountId()).and().eq("name", category).and().between("date", start, end);
+	    qb.where()/*.eq("account_id", account.getAccountId()).and()*/.eq("name", category).and().between("date", start, end);
 	    qb.selectRaw("SUM(amount)");
 	    GenericRawResults<String[]> results = qb.queryRaw();
 	    return results.getFirstResult()[0];

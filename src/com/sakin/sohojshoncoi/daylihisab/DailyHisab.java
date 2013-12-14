@@ -76,15 +76,29 @@ public class DailyHisab extends Fragment {
 			}
 		});
 		
+		Button aeBaeReportButton = (Button) view.findViewById(R.id.aeBaeRiportButton);
+		aeBaeReportButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Fragment monthlyReport = new MonthlyReport();
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.remove(DailyHisab.this);
+                ft.add(R.id.content_frame, monthlyReport);
+                ft.addToBackStack("dailyhisab");
+                ft.commit();
+			}
+		});
+		
 		// creating bokea bil table
 		mainLayout = (RelativeLayout) view.findViewById(R.id.dailyhisab_back_layout);
 		
 		currentViewID = 1;
-		addTitleView(R.id.agerHisabButton);
-		for(int i=1; i<5;i++){
-			currentViewID++;
-			addRowsToBill(i);
-		}
+		addTitleView(R.id.reminderButon);
+//		for(int i=1; i<5;i++){
+//			currentViewID++;
+//			addRowsToBill(i);
+//		}
 
 		return view;
 	}
@@ -174,7 +188,21 @@ public class DailyHisab extends Fragment {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+        case R.id.action_settings:
+            goToMonthlyReport();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+		}
 	}
-
+	
+	private void goToMonthlyReport() {
+//		Fragment monthlyReport = new MonthlyReport();
+//		FragmentTransaction ft = getFragmentManager().beginTransaction();
+//		ft.remove(DailyHisab.this);
+//        ft.add(R.id.content_frame, monthlyReport);
+//        ft.addToBackStack("dailyhisab");
+//        ft.commit();
+	}
 }

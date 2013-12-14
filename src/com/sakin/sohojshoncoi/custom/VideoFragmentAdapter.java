@@ -3,6 +3,7 @@ package com.sakin.sohojshoncoi.custom;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,11 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         title = holder.getTitle();
         title.setTypeface(Utils.banglaTypeFace);
         title.setText(video.getVideoTitle());
+        title.setTextColor(Color.WHITE);
         
         duration = holder.getDuration();
         duration.setTypeface(Utils.banglaTypeFace);
+        duration.setTextColor(Color.WHITE);
         int d = video.getVideoDuration();
         String time = "";
         int h = 0, m = 0, s = d;
