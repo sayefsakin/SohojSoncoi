@@ -1,16 +1,20 @@
 package com.sakin.sohojshoncoi.daylihisab;
 
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.SwipeDismissListViewTouchListener;
+import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.Reminder;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
 
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,13 +28,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 @SuppressLint("UseValueOf")
-public class ReminderList extends ListFragment {
+public class ReminderList extends ListFragment
+							implements ChooseFilter.OnFilterSelectedListener {
 	
 	private ReminderListAdapter adapter;
 	private List<Reminder> reminderList;
 	ListView listView;
 	SwipeDismissListViewTouchListener touchListener;
-	private boolean editMode = false;
+	private boolean editMode = false, isRefresh = false;
 	View view;
 	
 	public ReminderList() {
@@ -54,6 +59,17 @@ public class ReminderList extends ListFragment {
 			Utils.print(" view already created ");
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
+			
+			if(isRefresh){
+				Utils.print("view refreshing....");
+				reminderList.clear();
+				try {
+					reminderList.addAll(SSDAO.getSSdao().getReminder());
+					adapter.notifyDataSetChanged();
+				} catch (SQLException e) {
+					Utils.print(e.toString());
+				}
+			}
 		}
 		return view;
 	}
@@ -68,6 +84,7 @@ public class ReminderList extends ListFragment {
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
                                 	Reminder selectedReminder = adapter.getItem(position);
+                                	removeAlarm(selectedReminder.getReminderID());
                                 	SSDAO.getSSdao().getReminderDAO().delete(selectedReminder);
                                 	adapter.remove(selectedReminder);
                                 }
@@ -78,10 +95,22 @@ public class ReminderList extends ListFragment {
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
+	private void removeAlarm(int id) {
+		PendingIntent pi = Utils.pendingIntents.get(id);
+		if(pi == null) {
+			Utils.print("map elemnt doesnt exist");
+		} else {
+			Utils.alarmManagerm.cancel(pi);
+			pi.cancel();
+			Utils.pendingIntents.remove(id);
+		}
+	}
+	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	  	Utils.print("clicked");
 	  	if(!editMode) {
+	  		isRefresh = true;
 		  	Fragment addReminder = new AddReminder((Reminder)l.getItemAtPosition(position));
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ft.remove(ReminderList.this);
@@ -113,9 +142,13 @@ public class ReminderList extends ListFragment {
 		MenuItem editItem = menu.findItem(R.id.action_edit);
 		if(editMode) {
 			menu.findItem(R.id.action_add).setVisible(false);
+			menu.findItem(R.id.action_filter).setVisible(false);
+			
 			editItem.setIcon(R.drawable.ic_action_discard);
 		} else {
 			menu.findItem(R.id.action_add).setVisible(true);
+			menu.findItem(R.id.action_filter).setVisible(true);
+			
 			editItem.setIcon(R.drawable.ic_action_edit);
 		}
 		super.onPrepareOptionsMenu(menu);
@@ -130,12 +163,16 @@ public class ReminderList extends ListFragment {
 	        case R.id.action_edit:
 	            editModeToggle();
 	            return true;
+	        case R.id.action_filter:
+	            goToFilter();
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
 	
 	private void goToAddNewPage() {
+		isRefresh = true;
 		Fragment addReminder = new AddReminder();
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		ft.remove(ReminderList.this);
@@ -150,11 +187,53 @@ public class ReminderList extends ListFragment {
 		if(editMode){
 			listView.setOnTouchListener(touchListener);
         	listView.setOnScrollListener(touchListener.makeScrollListener());
-        	Utils.showToast(getActivity(), "Enter in Edit Mode");
+        	Utils.showToast(getActivity(), "Swipe to delete item");
 		} else {
 			listView.setOnTouchListener(null);
         	listView.setOnScrollListener(null);
         	Utils.showToast(getActivity(), "Normal Mode");
 		}
+	}
+	
+	private void goToFilter() {
+		isRefresh = false;
+		Fragment chooseFilter = new ChooseFilter(ReminderList.this);
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		ft.remove(ReminderList.this);
+        ft.add(R.id.content_frame, chooseFilter);
+        ft.addToBackStack(null);
+        ft.commit();
+	}
+
+	@Override
+	public void onFilterSelectedListener(String name, Calendar std, Calendar ed, boolean onOff) {
+//		categoryName = name;
+//		startDate = std;
+//		endDate = ed;
+//		Utils.print("filter selected " + categoryName);
+//		try {
+//			reminderList.clear();
+//			if(onOff){
+//				if(categoryName.equals("Both")) {
+//					hisabList.addAll(SSDAO.getSSdao()
+//								.getTransactionBetweenDate(/*Utils.userAccount,*/ 
+//														startDate.getTime(), 
+//														endDate.getTime()));
+//				} else {
+//					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
+//					Utils.print(Integer.toString(cat.getCategoryID()));
+//					hisabList.addAll(SSDAO.getSSdao()
+//								.getTransactionOfCategoryBetweenDate(
+//											/*Utils.userAccount,*/
+//											cat.getCategoryID(), 
+//											startDate.getTime(), endDate.getTime()));
+//				}
+//			} else {
+//				reminderList.addAll(SSDAO.getSSdao().getReminder());
+//			}
+//			adapter.notifyDataSetChanged();
+//		} catch (SQLException e) {
+//			Utils.print(e.toString());
+//		}
 	}
 }

@@ -66,7 +66,7 @@ public class HisabListAdapter extends ArrayAdapter<Transaction>{
 
         holder = (ViewHolder) mView.getTag();
         holder.descriptionView.setText(transaction.getDescription());
-        holder.amountView.setText(Double.toString(transaction.getAmount()));
+        holder.amountView.setText(Double.toString(Math.abs(transaction.getAmount())));
         
 		try {
 			Category cat = SSDAO.getSSdao().getCategoryFromID(transaction.getCategory().getCategoryID());

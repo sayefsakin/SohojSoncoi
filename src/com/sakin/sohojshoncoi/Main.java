@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sakin.sohojshoncoi.bazardor.BazarDor;
 import com.sakin.sohojshoncoi.custom.DrawerListAdapter;
@@ -134,7 +136,7 @@ public class Main extends FragmentActivity {
 	protected void onDestroy() {
 	    super.onDestroy();
 	    SSDAO.getSSdao().close();
-	    Utils.alarmManagerm.cancel(Utils.pendingIntent);
+//	    Utils.alarmManagerm.cancel(Utils.pendingIntent);
 	    unregisterReceiver(Utils.broadcastReceiver);
 	}
     
@@ -168,20 +170,26 @@ public class Main extends FragmentActivity {
 		
 		//set the title
 		Utils.setActionBarTitle(this, "সহজ সঞ্চয়");
-//		setupAlarm();
+		Utils.pendingIntents = new HashMap<Integer, PendingIntent>();
+		setupAlarm();
 	}
-	
+
 	private void setupAlarm() {
-	      Utils.broadcastReceiver = new BroadcastReceiver() {
-	             @Override
-	             public void onReceive(Context c, Intent i) {
-	                    Toast.makeText(c, "Rise and Shine!", Toast.LENGTH_LONG).show();
-	                    Utils.runAudio();
-	                    }
-	             };
-	      registerReceiver(Utils.broadcastReceiver, new IntentFilter("com.sakin.sohojshoncoi") );
-	      Utils.pendingIntent = PendingIntent.getBroadcast( this, 0, new Intent("com.sakin.sohojshoncoi"),	0 );
-	      Utils.alarmManagerm = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+		Utils.broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent i) {
+            	Bundle b = i.getExtras();
+            	String msg = b.getString(Utils.ALARM_MSG);
+            	double amount = b.getDouble(Utils.ALARM_AMOUNT);
+            	int rep = b.getInt(Utils.ALARM_REPEATED);
+            	Toast.makeText(c, b.getString("msg") + " " + Double.toString(amount) + "/-", Toast.LENGTH_LONG).show();
+            	Utils.runAudio();
+//            	have to check vibration
+//            	Utils.startVibrate(c);
+            }
+		};
+		registerReceiver(Utils.broadcastReceiver, new IntentFilter("com.sakin.sohojshoncoi"));
+		Utils.alarmManagerm = (AlarmManager)(getSystemService( Context.ALARM_SERVICE ));
 	}
 	
 	private void testing() {

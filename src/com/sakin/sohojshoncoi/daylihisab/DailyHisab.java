@@ -49,7 +49,7 @@ public class DailyHisab extends Fragment {
 			}
 		});
 		
-		Button reminderButon = (Button) view.findViewById(R.id.reminderButon);
+		Button reminderButon = (Button) view.findViewById(R.id.reminderButton);
 		reminderButon.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
@@ -94,7 +94,7 @@ public class DailyHisab extends Fragment {
 		mainLayout = (RelativeLayout) view.findViewById(R.id.dailyhisab_back_layout);
 		
 		currentViewID = 1;
-		addTitleView(R.id.reminderButon);
+		addTitleView(R.id.reminderButton);
 //		for(int i=1; i<5;i++){
 //			currentViewID++;
 //			addRowsToBill(i);

@@ -67,7 +67,9 @@ public class Reminder {
 //    public void setCategory(Category category) {
 //        this.category = category;
 //    }
-    
+    public int getReminderID(){
+    	return reminder_id;
+    }
     public String getDescription() {
         return description;
     }

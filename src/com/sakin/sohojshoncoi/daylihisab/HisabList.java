@@ -183,7 +183,7 @@ public class HisabList extends ListFragment
 		if(editMode){
 			listView.setOnTouchListener(touchListener);
         	listView.setOnScrollListener(touchListener.makeScrollListener());
-        	Utils.showToast(getActivity(), "Enter in Edit Mode");
+        	Utils.showToast(getActivity(), "Swipe to delete item");
 		} else {
 			listView.setOnTouchListener(null);
         	listView.setOnScrollListener(null);
@@ -216,13 +216,30 @@ public class HisabList extends ListFragment
 														startDate.getTime(), 
 														endDate.getTime()));
 				} else {
-					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
-					Utils.print(Integer.toString(cat.getCategoryID()));
-					hisabList.addAll(SSDAO.getSSdao()
+					if(categoryName.equals("সকল আয়")) {
+						hisabList.addAll(SSDAO.getSSdao()
+									.getTransactionOfCategoryBetweenDate(
+												/*Utils.userAccount,*/
+												0, 
+												startDate.getTime(), endDate.getTime(),
+												true));
+					} else if(categoryName.equals("সকল ব্যয়")) {
+						hisabList.addAll(SSDAO.getSSdao()
 								.getTransactionOfCategoryBetweenDate(
 											/*Utils.userAccount,*/
-											cat.getCategoryID(), 
-											startDate.getTime(), endDate.getTime()));
+											1, 
+											startDate.getTime(), endDate.getTime(),
+											true));
+					} else {
+						Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
+						Utils.print(Integer.toString(cat.getCategoryID()));
+						hisabList.addAll(SSDAO.getSSdao()
+									.getTransactionOfCategoryBetweenDate(
+												/*Utils.userAccount,*/
+												cat.getCategoryID(), 
+												startDate.getTime(), endDate.getTime(),
+												false));
+					}
 				}
 			} else {
 				hisabList.addAll(SSDAO.getSSdao().getTransaction());

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import android.R.color;
 import android.app.Activity;
@@ -35,10 +36,10 @@ public class Utils {
 	public static final boolean DEBUG = true;
 	public static Account userAccount = null;
 	public static Typeface banglaTypeFace = null;
-	public static PendingIntent pendingIntent;
     public static BroadcastReceiver broadcastReceiver;
     public static AlarmManager alarmManagerm;
     public static Vibrator vibrator;
+    public static Map<Integer, PendingIntent> pendingIntents;
 	
 	public static final String TAB_TITLE_ID = "video_tab_title";
 	public static final String TAB_URL_ID = "playlist_url";
@@ -64,7 +65,7 @@ public class Utils {
     public static final int CAMERA_RESULT_CANCELED = 0;
     public static final String IMAGE_DIRECTORY_NAME = "sohojsoncoi";
     
-    public static String ALARM_TONE_DIRECTORY = "";
+    public static String ALARM_TONE_DIRECTORY = "/storage/sdcard0/zedge/ringtones/Fast N Furious_17.mp3";
     
     public static int CURRENT_VISIBLE_PAGE;
     public static int HOME_PAGE = 1;
@@ -79,6 +80,11 @@ public class Utils {
     
     public static int MAX_AE_INDEX;
     public static int MAX_BAE_INDEX;
+    
+    public static String ALARM_MSG = "alarmmsg";
+    public static String ALARM_AMOUNT = "alarmamount";
+    public static String ALARM_REPEATED = "alarmrepeated";
+    
 	public static void createCustomCategory(Activity ac){
 		//default categories
 		int i = 1, j;
@@ -156,7 +162,7 @@ public class Utils {
 		}
 	}
 	
-	public static void startVibrate(Activity ac) {
+	public static void startVibrate(Context ac) {
         long pattern[]={0,200,100,300,400};
  
         vibrator = (Vibrator)ac.getSystemService(Context.VIBRATOR_SERVICE);

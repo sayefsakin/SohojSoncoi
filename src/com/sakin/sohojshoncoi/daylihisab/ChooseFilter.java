@@ -144,8 +144,6 @@ public class ChooseFilter extends Fragment
 			Utils.print(" view already created ");
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
-			
-			doReset();
 		}
 		return view;
 	}
@@ -253,16 +251,17 @@ public class ChooseFilter extends Fragment
 		if(item.equals("Income")) {
 			aeBaeButton.setText("Income");
 			categoryButton.setEnabled(true);
-			categoryButton.setText("অন্যান্য");
+			onCategorySelected("সকল আয়");
 			this.aeOrBae = false;
 		} else if (item.equals("Expense")) {
 			aeBaeButton.setText("Expense");
 			categoryButton.setEnabled(true);
-			categoryButton.setText("অন্যান্য");
+			onCategorySelected("সকল ব্যয়");
 			this.aeOrBae = true;
 		} else {
 			aeBaeButton.setText("Both");
 			categoryButton.setEnabled(false);
+			onCategorySelected("Both");
 			this.aeOrBae = false;
 		}
 	}

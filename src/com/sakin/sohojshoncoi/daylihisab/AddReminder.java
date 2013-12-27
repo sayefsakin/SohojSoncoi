@@ -3,6 +3,7 @@ package com.sakin.sohojshoncoi.daylihisab;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.AlarmClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -27,6 +29,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
@@ -55,6 +58,7 @@ public class AddReminder extends Fragment
 	private String description;
 	private Calendar dateTime;
 	private Reminder.Repeat repeated;
+	private Reminder reminder;
 	
 	public AddReminder(){
 		status = false;
@@ -78,6 +82,8 @@ public class AddReminder extends Fragment
 	}
 	
 	public AddReminder(Reminder reminder) {
+		
+		this.reminder = reminder;
 		Reminder.Status st = reminder.getStatus();
 		if(st.toString().equals("PAID")) {
 			this.status = true;
@@ -226,7 +232,7 @@ public class AddReminder extends Fragment
 	}
 	
 	private void doSave(){
-		Utils.print("transaction saving.......");
+		Utils.print("reminder saving.......");
 		description = descriptionEditText.getText().toString();
 		amount = Double.parseDouble(mulloEditText.getText().toString());
 		if(alarmSwitch.isChecked() && statusSwitch.isChecked()){
@@ -238,18 +244,38 @@ public class AddReminder extends Fragment
 			
 			Utils.showToast(getActivity(), "সকল ঘড় পুরন করুন");
 		} else {
-			Reminder.Status st;
-			if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
-			else if(statusSwitch.isChecked())st = Reminder.Status.PAID;
-			else st = Reminder.Status.NON_PAID;
-			Reminder reminder = new Reminder(description, amount, st, dateTime.getTime(), repeated);
-			SSDAO.getSSdao().getReminderDAO().create(reminder);
-			Utils.showToast(getActivity(), "রিমাইন্ডার সংরক্ষিত");
-			
-			if(alarm){
-				setAlarm();
+			int reminderID = 0;
+			if(isEdit) {
+				removeAlarm(reminder.getReminderID());
+				Reminder.Status st;
+				if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
+				else if(statusSwitch.isChecked())st = Reminder.Status.PAID;
+				else st = Reminder.Status.NON_PAID;
+				
+				reminder.setStatus(st);
+				reminder.setAmount(amount);
+				reminder.setDescription(description);
+				reminder.setDueDate(dateTime.getTime());
+				reminder.setRepeated(repeated);
+				
+				SSDAO.getSSdao().getReminderDAO().update(reminder);
+				reminderID = reminder.getReminderID();
+				Utils.showToast(getActivity(), "রিমাইন্ডার পরিবর্তন সংরক্ষিত");
+			} else {
+				Reminder.Status st;
+				if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
+				else if(statusSwitch.isChecked())st = Reminder.Status.PAID;
+				else st = Reminder.Status.NON_PAID;
+				Reminder rem = new Reminder(description, amount, st, dateTime.getTime(), repeated);
+				SSDAO.getSSdao().getReminderDAO().create(rem);
+				Utils.print("reminder id: " + Integer.toString(rem.getReminderID()));
+				reminderID = rem.getReminderID();
+				this.reminder = rem;
+				Utils.showToast(getActivity(), "রিমাইন্ডার সংরক্ষিত");
 			}
-			
+			if(alarm){
+				setAlarm(reminderID);
+			}
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ft.remove(AddReminder.this);
 	        ft.commit();
@@ -257,22 +283,46 @@ public class AddReminder extends Fragment
 		}
 	}
 	
-	private void setAlarm(){
-		Utils.broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context c, Intent i) {
-            	Utils.showToast(getActivity(), "Rise and Shine!");
-            	Utils.runAudio();
-            	Utils.startVibrate(getActivity());
-            }
-		};
-		getActivity().registerReceiver(Utils.broadcastReceiver, new IntentFilter("com.sakin.sohojshoncoi"));
-		Utils.pendingIntent = PendingIntent.getBroadcast( getActivity(), 
-				0, new Intent("com.sakin.sohojshoncoi"), 0 );
-		Utils.alarmManagerm = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
-		Utils.alarmManagerm.set( AlarmManager.ELAPSED_REALTIME_WAKEUP,
-								dateTime.getTimeInMillis(),
-								Utils.pendingIntent );
+	private void setAlarm(int reqID){
+		Utils.print(this.dateTime.toString());
+		
+		Calendar myAlarmDate = Calendar.getInstance();
+		myAlarmDate.setTimeInMillis(System.currentTimeMillis());
+		myAlarmDate.set(
+				this.dateTime.get(Calendar.YEAR),
+				this.dateTime.get(Calendar.MONTH),
+				this.dateTime.get(Calendar.DAY_OF_MONTH),
+				this.dateTime.get(Calendar.HOUR_OF_DAY),
+				this.dateTime.get(Calendar.MINUTE), 0);
+		
+		Intent ti = new Intent("com.sakin.sohojshoncoi");
+		ti.putExtra(Utils.ALARM_MSG, reminder.getDescription());
+		ti.putExtra(Utils.ALARM_AMOUNT, reminder.getAmount());
+		if(repeated.toString().equals("MONTHLY")) {
+			ti.putExtra(Utils.ALARM_REPEATED, 2);
+		} else if(repeated.toString().equals("DAILY")) {
+			ti.putExtra(Utils.ALARM_REPEATED, 1);
+		} else {
+			ti.putExtra(Utils.ALARM_REPEATED, 0);
+		}
+		PendingIntent pendingIntent = PendingIntent.getBroadcast( getActivity(), 
+				reqID, ti, 0 );
+		
+		Utils.alarmManagerm.set( AlarmManager.RTC_WAKEUP,
+				myAlarmDate.getTimeInMillis(),
+								pendingIntent );
+		Utils.pendingIntents.put(reqID, pendingIntent);
+	}
+	
+	private void removeAlarm(int id) {
+		PendingIntent pi = Utils.pendingIntents.get(id);
+		if(pi == null) {
+			Utils.print("map elemnt doesnt exist");
+		} else {
+			Utils.alarmManagerm.cancel(pi);
+			pi.cancel();
+			Utils.pendingIntents.remove(id);
+		}
 	}
 	
 	@Override

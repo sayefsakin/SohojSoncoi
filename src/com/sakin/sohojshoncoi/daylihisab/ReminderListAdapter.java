@@ -73,12 +73,8 @@ public class ReminderListAdapter extends ArrayAdapter<Reminder>{
         
         String st = new SimpleDateFormat("d-MMM-yyyy").format(reminder.getDueDate());
         holder.dateView.setText(st);
-        
-        Date d = new Date();
-        long currentTimeinMilis = d.getTime();
-        long givenTimeinMilis = reminder.getDueDate().getTime();
-        int diffInDays = (int)((givenTimeinMilis = currentTimeinMilis) / (24*60*60*1000));
-        holder.dueDateView.setText("Due in " + Integer.toString(diffInDays) + " days");
+
+        holder.dueDateView.setText(getDateDifference(new Date(), reminder.getDueDate()));
         
         if(reminder.getRepeated().toString().equals("NONE")) {
         	holder.repeatedImageView.setVisibility(ImageView.INVISIBLE);
@@ -92,6 +88,60 @@ public class ReminderListAdapter extends ArrayAdapter<Reminder>{
         	holder.alarmImageView.setVisibility(ImageView.INVISIBLE);
         }
     	return mView;
+    }
+    
+    
+    String getDateDifference(Date st, Date end) {
+    	String ret = "Due in ";
+    	String last = "";
+    	if(end.before(st)) {
+    		ret = "Time already passed by ";
+    		//swap st, end
+    		Date temp = st;
+    		st = end;
+    		end = temp;
+    	}
+    	long endTimeinMilis = end.getTime();
+    	long stTimeinMilis = st.getTime();
+    	long diff = endTimeinMilis - stTimeinMilis;
+    	
+    	long MILISEC = 1;
+    	long SEC = 1000 * MILISEC;
+    	long MIN = 60 * SEC;
+    	long HOUR = 60 * MIN;
+    	long DAY = 24 * HOUR;
+    	long MONTH = 30 * DAY;
+    	long YEAR = 12 * MONTH;
+    	if(diff >= YEAR ) {
+    		diff /= YEAR;
+    		last = "year";
+    	} else if(diff >= MONTH) {
+    		diff /= MONTH;
+    		last = "month";
+    	} else if(diff >= DAY) {
+    		diff /= DAY;
+    		last = "day";
+    	} else if(diff >= HOUR) {
+    		diff /= HOUR;
+    		last = "hour";
+    	} else if(diff >= MIN) {
+    		diff /= MIN;
+    		last = "minute";
+    	} else {
+    		diff = -1;
+    		last = "seconds";
+    	}
+    	
+    	if(diff == -1) {
+    		ret += "few";
+    	} else {
+    		ret += Long.toString(diff);
+    		if(diff > 1){
+    			last += "s";
+    		}
+    	}
+    	ret = ret + " " + last;
+    	return ret;
     }
     
     

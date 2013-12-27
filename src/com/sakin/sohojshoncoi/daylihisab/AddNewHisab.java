@@ -329,6 +329,9 @@ public class AddNewHisab extends Fragment
 			
 			Utils.showToast(getActivity(), "সকল ঘড় পুরন করুন");
 		} else {
+			if(aeOrBae) {
+				amount *= -1.0;
+			}
 			try {
 				if(isEdit){
 					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
@@ -370,7 +373,7 @@ public class AddNewHisab extends Fragment
 				}
 			} catch (SQLException e) {
 				Utils.print("SQL error in adding new transaction");
-				Utils.showToast(getActivity(), "সংরক্ষিত হয়নি, আবার চেষ্টা করুনf");
+				Utils.showToast(getActivity(), "সংরক্ষিত হয়নি, আবার চেষ্টা করুন!");
 			}
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ft.remove(AddNewHisab.this);
