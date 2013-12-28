@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
@@ -64,8 +66,6 @@ public class OptionAdapter extends ArrayAdapter<OptionList> {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				//Utils.print("cross button print hoise");
 				 avfo.deleteRow(pos);
 			}
 		});
@@ -100,6 +100,16 @@ public class OptionAdapter extends ArrayAdapter<OptionList> {
         public EditText getText() {
             if(null == et){
             	et = (EditText) mRow.findViewById(R.id.OptionEditText);
+            	et.setOnEditorActionListener(new OnEditorActionListener() {
+            	    @Override
+            	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            	        if (actionId == EditorInfo.IME_ACTION_DONE ||
+            	        		actionId == EditorInfo.IME_ACTION_NEXT) {
+            	            avfo.updateList();
+            	        }
+            	        return false;
+            	    }
+            	});
             }
             return et;
         }

@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/com/sakin/sohojshoncoi/Main.java=UTF-8
+encoding//src/com/sakin/sohojshoncoi/Utils.java=UTF-8
 encoding//src/com/sakin/sohojshoncoi/YouTubeFullScreen.java=UTF-8
 encoding//src/com/sakin/sohojshoncoi/custom/ImageAdapter.java=UTF-8
 encoding//src/com/sakin/sohojshoncoi/custom/VideoFragmentAdapter.java=UTF-8
@@ -13,4 +14,5 @@ encoding//src/com/sakin/sohojshoncoi/daylihisab/ChooseFilter.java=UTF-8
 encoding//src/com/sakin/sohojshoncoi/daylihisab/DailyHisab.java=UTF-8
 encoding//src/com/sakin/sohojshoncoi/daylihisab/HisabList.java=UTF-8
 encoding//src/com/sakin/sohojshoncoi/daylihisab/MonthlyReportFragment.java=UTF-8
+encoding//src/com/sakin/sohojshoncoi/daylihisab/PlanningListAdapter.java=UTF-8
 encoding//src/com/sakin/sohojshoncoi/sofol/Sofol.java=UTF-8

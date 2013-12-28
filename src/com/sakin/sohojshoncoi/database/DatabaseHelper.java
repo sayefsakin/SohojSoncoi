@@ -13,7 +13,7 @@ import com.j256.ormlite.table.TableUtils;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	private static final String DATABASE_NAME = "sohojShoncoi.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private RuntimeExceptionDao<Account, Integer> accountDAO = null;
 	private RuntimeExceptionDao<Transaction, Integer> transactionDAO = null;
@@ -22,6 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private RuntimeExceptionDao<Reminder, Integer> reminderDAO = null;
 	private RuntimeExceptionDao<Media, Integer> mediaDAO = null;
 	private RuntimeExceptionDao<Planning, Integer> planningDAO = null;
+	private RuntimeExceptionDao<PlanningDescription, Integer> planningDescriptionDAO = null;
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
@@ -38,6 +39,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, Reminder.class);
 			TableUtils.createTable(connectionSource, Media.class);
 			TableUtils.createTable(connectionSource, Planning.class);
+			TableUtils.createTable(connectionSource, PlanningDescription.class);
 		} catch (SQLException e) {
 			Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
 			throw new RuntimeException(e);
@@ -55,6 +57,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, Reminder.class, true);
 			TableUtils.dropTable(connectionSource, Media.class, true);
 			TableUtils.dropTable(connectionSource, Planning.class, true);
+			TableUtils.dropTable(connectionSource, PlanningDescription.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -105,6 +108,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 		return planningDAO;
 	}
+	public RuntimeExceptionDao<PlanningDescription, Integer> getPlanningDescriptionDAO() {
+		if (planningDescriptionDAO == null) {
+			planningDescriptionDAO = getRuntimeExceptionDao(PlanningDescription.class);
+		}
+		return planningDescriptionDAO;
+	}
 	
 	@Override
 	public void close() {
@@ -117,5 +126,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		reminderDAO = null;
 		mediaDAO = null;
 		planningDAO = null;
+		planningDescriptionDAO = null;
 	}
 }

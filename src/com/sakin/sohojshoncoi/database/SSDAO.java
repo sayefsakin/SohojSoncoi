@@ -23,6 +23,7 @@ public class SSDAO {
 	private RuntimeExceptionDao<Reminder, Integer> reminderDAO = null;
 	private RuntimeExceptionDao<Transaction, Integer> transactionDAO = null;
 	private RuntimeExceptionDao<Planning, Integer> planningDAO = null;
+	private RuntimeExceptionDao<PlanningDescription, Integer> planningDescriptionDAO = null;
 	//getter and setter
 	public DatabaseHelper getDatabaseHelper(){
 		return databaseHelper;
@@ -78,6 +79,12 @@ public class SSDAO {
 	public void setPlanningDAO(RuntimeExceptionDao<Planning, Integer> planningDAO) {
 		this.planningDAO = planningDAO;
 	}
+	public RuntimeExceptionDao<PlanningDescription, Integer> getPlanningDescriptionDAO() {
+		return planningDescriptionDAO;
+	}
+	public void setPlanningDescriptionDAO(RuntimeExceptionDao<PlanningDescription, Integer> planningDescriptionDAO) {
+		this.planningDescriptionDAO = planningDescriptionDAO;
+	}
 	
 	//singleton pattern
 	public SSDAO(){}
@@ -98,6 +105,7 @@ public class SSDAO {
 		setReminderDAO(databaseHelper.getReminderDAO());
 		setTransactionDAO(databaseHelper.getTransactionDAO());
 		setPlanningDAO(databaseHelper.getPlanningDAO());
+		setPlanningDescriptionDAO(databaseHelper.getPlanningDescriptionDAO());
 	}
 	public void close(){
 		if (databaseHelper != null) {
@@ -274,43 +282,41 @@ public class SSDAO {
 	public List<Planning> getPlanning() throws SQLException{
 		return getPlanningDAO().queryForAll();
 	}
-	public List<Planning> getPlanningBetweenDate(Account account, Date start, Date end) throws SQLException{
-		if(end.before(start))return null;
+	public List<Planning> getPlanningOfMonthAndYear(int month, int year) throws SQLException{
 		QueryBuilder<Planning, Integer> qb = getPlanningDAO().queryBuilder();
-		qb.orderBy("date", false);
-		qb.where().eq("account_id", account).and().between("date", start, end);
+		qb.where().eq("month", month).and().eq("year", year);
 		return qb.query();
 	}
-	public String getPlanningSumBetweenDate(Account account, Date start, Date end) throws SQLException {
-		if(end.before(start))return null;
+	public List<Planning> getPlanningOfYear(int year) throws SQLException{
 		QueryBuilder<Planning, Integer> qb = getPlanningDAO().queryBuilder();
-		qb.orderBy("date", true);
-	    qb.where().eq("account_id", account).and().between("date", start, end);
-	    qb.selectRaw("SUM(amount)");
+		qb.where().eq("year", year);
+		return qb.query();
+	}
+	public String getPlanningSumOfYear(int year) throws SQLException{
+		QueryBuilder<Planning, Integer> qb = getPlanningDAO().queryBuilder();
+		qb.where().eq("year", year);
+		qb.selectRaw("SUM(amount)");
 	    GenericRawResults<String[]> results = qb.queryRaw();
 	    return results.getFirstResult()[0];
 	}
-	public List<Planning> getPlanningOfCategory(Account account, Category category) throws SQLException {
-		QueryBuilder<Planning, Integer> qb = getPlanningDAO().queryBuilder();
-		qb.orderBy("date", false);
-		qb.where().eq("account_id", account).and().eq("category_id", category);
-		return qb.query();
-	}
-	public List<Planning> getPlanningOfCategoryBetweenDate(Account account, Category category, Date start, Date end) throws SQLException {
-		if(end.before(start))return null;
-		QueryBuilder<Planning, Integer> qb = getPlanningDAO().queryBuilder();
-		qb.orderBy("date", false);
-		qb.where().eq("account_id", account).and().eq("category_id", category).and().between("date", start, end);
-	    return qb.query();
-	}
-	public String getPlanningSumOfCategoryBetweenDate(Account account, Category category, Date start, Date end) throws SQLException {
-		if(end.before(start))return null;
-		QueryBuilder<Planning, Integer> qb = getPlanningDAO().queryBuilder();
-		qb.orderBy("date", true);
-	    qb.where().eq("account_id", account).and().eq("category_id", category).and().between("date", start, end);
-	    qb.selectRaw("SUM(amount)");
-	    GenericRawResults<String[]> results = qb.queryRaw();
-	    return results.getFirstResult()[0];
-	}	
 	
+	//PlanningDescription related metods
+	public List<PlanningDescription> getPlanningDescription() throws SQLException{
+		return getPlanningDescriptionDAO().queryForAll();
+	}
+	public List<PlanningDescription> getPlanningDescriptionOfPlanning(int planning_id) throws SQLException {
+		QueryBuilder<PlanningDescription, Integer> qb = getPlanningDescriptionDAO().queryBuilder();
+		qb.where().eq("planning_id", planning_id);
+		return qb.query();
+	}
+	public void removePlanningDescriptionOfPlanning(int planning) throws SQLException {
+		DeleteBuilder<PlanningDescription, Integer> qb = getPlanningDescriptionDAO().deleteBuilder();
+		qb.where().eq("planning_id", planning);
+		qb.delete();
+	}
+	public void removePlanningDescriptionOfPlanningAndCategory(int planning, int category) throws SQLException {
+		DeleteBuilder<PlanningDescription, Integer> qb = getPlanningDescriptionDAO().deleteBuilder();
+		qb.where().eq("category_id", category).and().eq("planning_id", planning);
+		qb.delete();
+	}
 }

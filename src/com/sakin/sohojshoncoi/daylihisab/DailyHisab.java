@@ -2,17 +2,11 @@ package com.sakin.sohojshoncoi.daylihisab;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
-import com.sakin.sohojshoncoi.YouTubeFullScreen;
-import com.sakin.sohojshoncoi.custom.DatePickerFragment;
-import com.sakin.sohojshoncoi.custom.VideoElement;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -85,6 +79,20 @@ public class DailyHisab extends Fragment {
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ft.remove(DailyHisab.this);
                 ft.add(R.id.content_frame, monthlyReport);
+                ft.addToBackStack("dailyhisab");
+                ft.commit();
+			}
+		});
+		
+		Button planningButton = (Button) view.findViewById(R.id.planningButton);
+		planningButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Fragment planningList = new PlanningList();
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.remove(DailyHisab.this);
+                ft.add(R.id.content_frame, planningList);
                 ft.addToBackStack("dailyhisab");
                 ft.commit();
 			}

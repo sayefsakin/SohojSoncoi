@@ -1,113 +1,153 @@
 package com.sakin.sohojshoncoi.daylihisab;
 
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.DatePickerFragment;
+import com.sakin.sohojshoncoi.database.Category;
+import com.sakin.sohojshoncoi.database.Planning;
+import com.sakin.sohojshoncoi.database.PlanningDescription;
+import com.sakin.sohojshoncoi.database.SSDAO;
 
+@SuppressLint({ "SimpleDateFormat", "ValidFragment" })
 public class AddValueForOptions extends ListFragment implements 
 						CategoryFragment.OnCategorySelectedListener,
 						DatePickerFragment.OnDateSelectedListener {
 
-	String[] list_items=new String[15];
+	String[] list_items=new String[Utils.MAX_AE_INDEX+1];
 	int count=0,Month=0,Year=0,Day=0;
 	private OptionAdapter adapter;
-	private List <OptionList> Optionlist;
+	private List <OptionList> optionList;
 	Button datebutton, optionbtnay, optionbtnbey, plansave;
-	
+	private Boolean isEdit, keyboardHidden;
+	private Planning planning;
 	View rootView=null;
+	
+	public AddValueForOptions() {
+		this.isEdit = false;
+		this.keyboardHidden = false;
+	}
+	
+	public AddValueForOptions(Planning planning) {
+		this.isEdit = true;
+		this.planning = planning;
+		this.keyboardHidden = false;
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	     // The last two arguments ensure LayoutParams are inflated properly.
 		if(rootView==null){
-		rootView = inflater.inflate(R.layout.addvalueforoptions, container, false);
-//		list_items = getArguments().getStringArray("array_list");
-//		setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list_items));
-		
-		datebutton =(Button) rootView.findViewById (R.id.dailydatebutton);
-		datebutton.setBackgroundResource(R.drawable.date_button);
-		datebutton.setTypeface(Utils.banglaTypeFace);
-		datebutton.setText("à¦•à§�à¦¯à¦¾à¦²à§‡à¦¨à§�à¦¡à¦¾à¦°");
-		datebutton.setOnClickListener(new OnClickListener() {
+			rootView = inflater.inflate(R.layout.addvalueforoptions, container, false);
 			
-			@Override
-			public void onClick(View v) {
-				showDatePickerDialog(v);
-				Utils.print("button click hoise");
-			}
-		});
-		
-		Optionlist = new ArrayList<OptionList>();
-		adapter = new OptionAdapter(getActivity(), R.layout.itemoptions, Optionlist, this);
-		setListAdapter(adapter);
-		
-		optionbtnay =(Button) rootView.findViewById (R.id.optionbuttonay);
-		optionbtnay.setBackgroundResource(R.drawable.optionbtn);
-		optionbtnay.setTypeface(Utils.banglaTypeFace);
-		optionbtnay.setText("à¦†à§Ÿ");
-		optionbtnay.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
+			Calendar cal = Calendar.getInstance();
+			datebutton =(Button) rootView.findViewById (R.id.dailydatebutton);
+			datebutton.setBackgroundResource(R.drawable.date_button);
+			datebutton.setTypeface(Utils.banglaTypeFace);
+			datebutton.setText("তারিখ");
+			datebutton.setOnClickListener(new OnClickListener() {
 				
-				Fragment categoryFragment = new CategoryFragment(AddValueForOptions.this, false);
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ft.remove(AddValueForOptions.this);
-                ft.add(R.id.content_frame, categoryFragment);
-                ft.addToBackStack("addvalueforoptions");
-                ft.commit();
-			}
-		});
-		
-		optionbtnbey =(Button) rootView.findViewById (R.id.optionbuttonbey);
-		optionbtnbey.setBackgroundResource(R.drawable.optionbtn);
-		optionbtnbey.setTypeface(Utils.banglaTypeFace);
-		optionbtnbey.setText("à¦¬à§�à¦¯à§Ÿ");
-		optionbtnbey.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					showDatePickerDialog(v);
+					Utils.print("button click hoise");
+				}
+			});
 			
-			@Override
-			public void onClick(View v) {
-				
-				Fragment categoryFragment = new CategoryFragment(AddValueForOptions.this, true);
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ft.remove(AddValueForOptions.this);
-                ft.add(R.id.content_frame, categoryFragment);
-                ft.addToBackStack("addvalueforoptions");
-                ft.commit();
-			}
-		});
-		
-		plansave= (Button) rootView.findViewById (R.id.plansavebutton);
-		plansave.setBackgroundResource(R.drawable.optionbtn);
-		plansave.setTypeface(Utils.banglaTypeFace);
-		plansave.setText("");
-		plansave.setOnClickListener(new OnClickListener() {
+			optionList = new ArrayList<OptionList>();
+			adapter = new OptionAdapter(getActivity(), R.layout.itemoptions, optionList, this);
+			setListAdapter(adapter);
 			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Utils.print("Save Koro");
-				
+			if(isEdit) {
+				cal.set(Calendar.MONTH, planning.getMonth());
+				cal.set(Calendar.YEAR, planning.getYear());
+				try {
+					optionList.clear();
+					List<PlanningDescription> pdList = SSDAO.getSSdao()
+							.getPlanningDescriptionOfPlanning(planning.getPlanningId());
+					for(PlanningDescription pd : pdList) {
+						Category cat = SSDAO.getSSdao().getCategoryFromID( 
+								pd.getCategory().getCategoryID());
+						optionList.add(new OptionList(cat.getName(), pd.getAmount()));
+					}
+					adapter.notifyDataSetChanged();
+				} catch (SQLException e) {
+					Utils.print(e.toString());
+				}
 			}
-		});
-		
+			
+			optionbtnay =(Button) rootView.findViewById (R.id.optionbuttonay);
+			optionbtnay.setBackgroundResource(R.drawable.optionbtn);
+			optionbtnay.setTypeface(Utils.banglaTypeFace);
+			optionbtnay.setText("আয়");
+			optionbtnay.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					Fragment categoryFragment = new CategoryFragment(AddValueForOptions.this, false);
+					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					ft.remove(AddValueForOptions.this);
+	                ft.add(R.id.content_frame, categoryFragment);
+	                ft.addToBackStack("addvalueforoptions");
+	                ft.commit();
+				}
+			});
+			
+			optionbtnbey =(Button) rootView.findViewById (R.id.optionbuttonbey);
+			optionbtnbey.setBackgroundResource(R.drawable.optionbtn);
+			optionbtnbey.setTypeface(Utils.banglaTypeFace);
+			optionbtnbey.setText("ব্যয়");
+			optionbtnbey.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Fragment categoryFragment = new CategoryFragment(AddValueForOptions.this, true);
+					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					ft.remove(AddValueForOptions.this);
+	                ft.add(R.id.content_frame, categoryFragment);
+	                ft.addToBackStack("addvalueforoptions");
+	                ft.commit();
+				}
+			});
+			
+			plansave= (Button) rootView.findViewById (R.id.plansavebutton);
+			plansave.setBackgroundResource(R.drawable.optionbtn);
+			plansave.setTypeface(Utils.banglaTypeFace);
+			plansave.setText("সেভ");
+			plansave.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					doSave();
+				}
+			});
+			
+			//reset things
+			onDateSelected(cal, false);
 		}
 		else{
 			ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -126,7 +166,6 @@ public class AddValueForOptions extends ListFragment implements
 	}
 	@Override
 	public void onCategorySelected(String cat) {
-		// TODO Auto-generated method stub
 		//Utils.print(cat);
 		//list_items=new String[15];
 		int flag=0,i;
@@ -139,59 +178,130 @@ public class AddValueForOptions extends ListFragment implements
 			list_items[i]=cat;
 			count++;
 			
-			Optionlist.add(new OptionList(cat,0));
+			optionList.add(new OptionList(cat,0));
 			adapter.notifyDataSetChanged();
 		}
 	}
 	public void showDatePickerDialog(View v) {
-		    DatePickerFragment newFragment = new DatePickerFragment(AddValueForOptions.this, Calendar.getInstance());
-		    
-		    try {
-			    Field f[] = newFragment.getClass().getDeclaredFields();
-			    for (Field field : f) {
-			        if (field.getName().equals("mDayPicker")) {
-			            field.setAccessible(true);
-			            DatePicker datePicker = (DatePicker) field.get(newFragment);
-			            Field datePickerFields[] = field.getType().getDeclaredFields();
-			            for (Field datePickerField : datePickerFields) {
-			               if ("mDayPicker".equals(datePickerField.getName())) {
-			                  datePickerField.setAccessible(true);
-			                  Object dayPicker = new Object();
-			                  dayPicker = datePickerField.get(datePicker);
-			                  ((View) dayPicker).setVisibility(View.GONE);
-			               }
-			            }
+	    DatePickerFragment newFragment = new DatePickerFragment(AddValueForOptions.this, Calendar.getInstance());
+	    
+	    try {
+		    Field f[] = newFragment.getClass().getDeclaredFields();
+		    for (Field field : f) {
+		        if (field.getName().equals("mDayPicker")) {
+		            field.setAccessible(true);
+		            DatePicker datePicker = (DatePicker) field.get(newFragment);
+		            Field datePickerFields[] = field.getType().getDeclaredFields();
+		            for (Field datePickerField : datePickerFields) {
+		               if ("mDayPicker".equals(datePickerField.getName())) {
+		                  datePickerField.setAccessible(true);
+		                  Object dayPicker = new Object();
+		                  dayPicker = datePickerField.get(datePicker);
+		                  ((View) dayPicker).setVisibility(View.GONE);
+		               }
+		            }
 //			            Object dayPicker = new Object();
 //			            dayPicker = field.get(datePicker);
 //			            ((View) dayPicker).setVisibility(View.GONE);
-			        }
-			    }
-			} catch (SecurityException e) {
-			   // Log.d("ERROR", e.getMessage());
-			} 
-			catch (IllegalArgumentException e) {
-			    //Log.d("ERROR", e.getMessage());
-			} catch (IllegalAccessException e) {
-			    //Log.d("ERROR", e.getMessage());
-			}
-		    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-		    
+		        }
+		    }
+		} catch (SecurityException e) {
+		   Utils.print(e.toString());
+		} catch (IllegalArgumentException e) {
+			Utils.print(e.toString());
+		} catch (IllegalAccessException e) {
+			Utils.print(e.toString());
 		}
+	    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+	    
+	}
 	@Override
 	public void onDateSelected(Calendar date, boolean se) {
-		// TODO Auto-generated method stub
 		Utils.print(date.toString());
 		Month=date.get(Calendar.MONTH);
 		Year=date.get(Calendar.YEAR);
 		String st = new SimpleDateFormat("MMM-yyyy").format(date.getTime());
-		//String st= ""+Month+" "+Year+"!";
 		datebutton.setText(st);
 	}
 	
-	
 	public void deleteRow(int position){
-		Optionlist.remove(position);
+		optionList.remove(position);
 		adapter.notifyDataSetChanged();
+	}
+	
+	public void updateList() {
+		int i = 0;
+		EditText et;
+		for(OptionList ol : optionList) {
+			ListView ls = (ListView) rootView.findViewById(android.R.id.list);
+			View v = ls.getChildAt(i);
+			et = (EditText) v.findViewById(R.id.OptionEditText);
+			double amount = Double.parseDouble(et.getText().toString());
+			ol.amount = amount;
+			i++;
+		}
+		adapter.notifyDataSetChanged();
+	}
+	
+	private void doSave() {
+		Utils.print("planning saving.......");
+		try {
+			if(isEdit) {
+				SSDAO.getSSdao().removePlanningDescriptionOfPlanning(planning.getPlanningId());
+				double ae, bae;
+				ae = 0.0; bae = 0.0;
+				for(OptionList ol : optionList) {
+					Category cat = SSDAO.getSSdao().getCategoryFromName(ol.category);
+					PlanningDescription pd = new PlanningDescription(planning, cat, ol.amount);
+					SSDAO.getSSdao().getPlanningDescriptionDAO().create(pd);
+					if(cat.getCategoryID() < Utils.MAX_BAE_INDEX) {
+						bae += ol.amount;
+					} else {
+						ae += ol.amount;
+					}
+				}
+				planning.setAeAmount(ae);
+				planning.setBaeAmount(bae);
+				planning.setMonth(Month);
+				planning.setYear(Year);
+				SSDAO.getSSdao().getPlanningDAO().update(planning);
+				Utils.showToast(getActivity(), "পরিকল্পনা পরিবর্তন সংরক্ষিত");
+			} else {
+				Planning plan = new Planning(Utils.userAccount, 0.0, 0.0, Month, Year);
+				SSDAO.getSSdao().getPlanningDAO().create(plan);
+				double ae, bae;
+				ae = 0.0; bae = 0.0;
+				int i = 0;
+				EditText et;
+				for(OptionList ol : optionList) {
+					Category cat = SSDAO.getSSdao().getCategoryFromName(ol.category);
+					
+					ListView ls = (ListView) rootView.findViewById(android.R.id.list);
+					View v = ls.getChildAt(i);
+					et = (EditText) v.findViewById(R.id.OptionEditText);
+					double amount = Double.parseDouble(et.getText().toString());
+					
+					PlanningDescription pd = new PlanningDescription(plan, cat, amount);
+					SSDAO.getSSdao().getPlanningDescriptionDAO().create(pd);
+					if(cat.getCategoryID() < Utils.MAX_BAE_INDEX) {
+						bae += amount;
+					} else {
+						ae += amount;
+					}
+					i++;
+				}
+				plan.setAeAmount(ae);
+				plan.setBaeAmount(bae);
+				SSDAO.getSSdao().getPlanningDAO().update(plan);
+				Utils.showToast(getActivity(), "পরিকল্পনা সংরক্ষিত");
+			}
+		} catch (SQLException e) {
+			Utils.print(e.toString());
+		}
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		ft.remove(AddValueForOptions.this);
+        ft.commit();
+        getFragmentManager().popBackStack();
 	}
 	
 }

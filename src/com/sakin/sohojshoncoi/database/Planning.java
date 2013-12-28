@@ -9,11 +9,11 @@ public class Planning {
 	@DatabaseField(generatedId = true)
     private int planning_id;
 	@DatabaseField(canBeNull = false, foreign = true)
-    private Category category;
-	@DatabaseField(canBeNull = false, foreign = true)
     private Account account;
     @DatabaseField
-    private double amount;
+    private double aeamount;
+    @DatabaseField
+    private double baeamount;
     @DatabaseField
     private int month;
     @DatabaseField
@@ -25,10 +25,10 @@ public class Planning {
     public Planning() {
         // ORMLite needs a no-arg constructor 
     }
-    public Planning(Account ac, Category cat, double amount, int month, int year) {
+    public Planning(Account ac, double aeamount, double baeamount, int month, int year) {
     	this.account = ac;
-    	this.category = cat;
-    	this.amount = amount;
+    	this.aeamount = aeamount;
+    	this.baeamount = baeamount;
     	this.month = month;
     	this.year = year;
     }
@@ -48,18 +48,18 @@ public class Planning {
     public void setAccount(Account ac) {
         this.account = ac;
     }
-    public Category getCategory() {
-        return category;
-    }
-    public void setCategory(Category cat) {
-        this.category = cat;
-    }
 
-    public double getAmount() {
-        return amount;
+    public double getAeAmount() {
+        return aeamount;
     }
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setAeAmount(double amount) {
+        this.aeamount = amount;
+    }
+    public double getBaeAmount() {
+        return baeamount;
+    }
+    public void setBaeAmount(double amount) {
+        this.baeamount = amount;
     }
     
     public int getMonth() {

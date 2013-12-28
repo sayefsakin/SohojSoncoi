@@ -47,6 +47,7 @@ public class Utils {
 	public static final String VIDEO_ELEMENT_ID = "video_element";
 	
 	public static final String ADDNEWHISABTAG = "add_new_hisab_fragment";
+	public static final String ADDNEWPLANNINGTAG = "add_new_planning_fragment";
 	
 	public final static int MAX_Video_Fragment = 5;
 	public static int SELECTED_ITEM = -1; 
@@ -84,6 +85,10 @@ public class Utils {
     public static String ALARM_MSG = "alarmmsg";
     public static String ALARM_AMOUNT = "alarmamount";
     public static String ALARM_REPEATED = "alarmrepeated";
+    
+    public static String[] monthNameBengali = {
+    	"জানুয়ারী", "ফেব্রুয়ারী", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "আক্টোবর", "নভেম্বর", "ডিসেম্বর"
+    };
     
 	public static void createCustomCategory(Activity ac){
 		//default categories

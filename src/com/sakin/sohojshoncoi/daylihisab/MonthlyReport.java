@@ -2,29 +2,17 @@ package com.sakin.sohojshoncoi.daylihisab;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
-import com.sakin.sohojshoncoi.custom.NetworkReceiver;
 import com.sakin.sohojshoncoi.custom.TabsAdapter;
-import com.sakin.sohojshoncoi.sofol.SofolVideosFragment;
-
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 public class MonthlyReport extends Fragment {
 	View view = null;
@@ -44,6 +32,7 @@ public class MonthlyReport extends Fragment {
 	    return view;
 	}
 	
+	@SuppressLint("SimpleDateFormat")
 	private void loadTabs(View view){
 		Utils.print("load Tabs called");
 		final ActionBar bar = getActivity().getActionBar();
