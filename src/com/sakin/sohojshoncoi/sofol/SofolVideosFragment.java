@@ -19,7 +19,6 @@ import com.sakin.sohojshoncoi.custom.VideoFragmentAdapter;
 import com.sakin.sohojshoncoi.custom.XMLParser;
 
 public class SofolVideosFragment extends ListFragment {
-//	public static final String ARG_OBJECT = "object";
 	String playlistUrl = "";
 	XMLParser xmlParser;
 	String[] list_items;

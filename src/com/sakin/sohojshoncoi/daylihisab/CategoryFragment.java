@@ -34,11 +34,11 @@ public class CategoryFragment extends Fragment {
             R.drawable.shikkha,
             R.drawable.khela,
             R.drawable.binodon,
-            R.drawable.mobile,
             R.drawable.gari,
             R.drawable.doctor,
-            R.drawable.social,
+            R.drawable.bill,
             R.drawable.biniyog,
+            R.drawable.social,
             R.drawable.onnano
     };
 	private Integer[] mThumbIdsAe = {

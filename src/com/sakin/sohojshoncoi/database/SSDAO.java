@@ -187,6 +187,14 @@ public class SSDAO {
 	    GenericRawResults<String[]> results = qb.queryRaw();
 	    return results.getFirstResult()[0];
 	}
+	public String getTransactionSumToDate(Date end) throws SQLException {
+		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
+//		qb.orderBy("date", true);
+		qb.where().le("date", end);
+	    qb.selectRaw("SUM(amount)");
+	    GenericRawResults<String[]> results = qb.queryRaw();
+	    return results.getFirstResult()[0];
+	}
 	public List<Transaction> getTransactionOfCategory(Account account, Category category) throws SQLException {
 		QueryBuilder<Transaction, Integer> qb = getTransactionDAO().queryBuilder();
 		qb.orderBy("date", false);
@@ -299,6 +307,24 @@ public class SSDAO {
 	    GenericRawResults<String[]> results = qb.queryRaw();
 	    return results.getFirstResult()[0];
 	}
+	public double getPlanningSumUptoDate(int month, int year) throws SQLException{
+		QueryBuilder<Planning, Integer> qb = getPlanningDAO().queryBuilder();
+		qb.where().le("month", month).and().le("year", year);
+		qb.selectRaw("SUM(baeamount)").selectRaw("SUM(aeamount)");
+	    GenericRawResults<String[]> results = qb.queryRaw();
+	    List<String[]> rr = results.getResults();
+	    if(rr == null || rr.size() == 0) return 0.0;
+//	    Utils.print("planning ae bae value: " + rr.get(0)[0] + " " + rr.get(0)[1]);
+	    double bae = 0;
+	    if(rr.get(0)[0] != null) {
+	    	bae = Double.parseDouble(rr.get(0)[0]);
+	    }
+	    double ae = 0;
+	    if(rr.get(0)[1] != null) {
+	    	ae = Double.parseDouble(rr.get(0)[1]);
+	    }
+	    return (ae - bae);
+	}
 	
 	//PlanningDescription related metods
 	public List<PlanningDescription> getPlanningDescription() throws SQLException{
@@ -306,6 +332,7 @@ public class SSDAO {
 	}
 	public List<PlanningDescription> getPlanningDescriptionOfPlanning(int planning_id) throws SQLException {
 		QueryBuilder<PlanningDescription, Integer> qb = getPlanningDescriptionDAO().queryBuilder();
+		qb.orderBy("category_id", false);
 		qb.where().eq("planning_id", planning_id);
 		return qb.query();
 	}

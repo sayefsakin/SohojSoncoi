@@ -1,11 +1,16 @@
 package com.sakin.sohojshoncoi.daylihisab;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
+import com.sakin.sohojshoncoi.database.Planning;
+import com.sakin.sohojshoncoi.database.PlanningDescription;
 import com.sakin.sohojshoncoi.database.SSDAO;
 
 import android.graphics.Color;
@@ -14,6 +19,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,6 +27,11 @@ public class MonthlyReportFragment extends Fragment {
 	
 	int id, month, year;
 	ProgressBar totalProgressBar;
+	ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+    List<String> listDataHeader;
+    HashMap<String, List<ReportElement>> listDataChild;
+    
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -32,10 +43,9 @@ public class MonthlyReportFragment extends Fragment {
 		month = getArguments().getInt(Utils.MONTH_ID);
 		year = getArguments().getInt(Utils.YEAR_ID);
 		
-		setText(rootView, R.id.ajLabel, "আজ পর্যন্ত");
+		ProgressBar totalProgressBar = (ProgressBar) rootView.findViewById(R.id.totalProgressBar);
+		setText(rootView, R.id.ajLabel, "");
 		setText(rootView, R.id.totalLabel, "সর্বমোট");
-		setText(rootView, R.id.amountText, "700");
-		setText(rootView, R.id.planText, "400");
 		
 		Calendar st = Calendar.getInstance();
 		st.set(year, month, 1, 0, 0, 0);
@@ -48,23 +58,61 @@ public class MonthlyReportFragment extends Fragment {
 		Utils.print(startDate.toString());
 		Utils.print(endDate.toString());
 		
-		getTotalBaeValue(startDate, endDate);
+		double totalAmount = 0.0;
+		double totalPlan = 0.0;
 		
-		ProgressBar totalProgressBar = (ProgressBar) rootView.findViewById(R.id.totalProgressBar);
-		totalProgressBar.setMax(700);
-		totalProgressBar.setProgress(400);
+		//get values here
+		try {
+			String totalAmountString = SSDAO.getSSdao().getTransactionSumToDate(endDate);
+			if(totalAmountString != null) {
+				totalAmount = Double.parseDouble(totalAmountString);
+			}
+			totalPlan = SSDAO.getSSdao().getPlanningSumUptoDate(month, year);
+			
+		} catch (SQLException e) {
+			Utils.print(e.toString());
+		}
+		boolean a,b;
+        a = false; b = false;
+        setText(rootView, R.id.amountText, Double.toString(totalAmount));
+        setText(rootView, R.id.planText, Double.toString(totalPlan));
+        totalProgressBar.setMax((int) totalAmount);
+    	totalProgressBar.setProgress((int) totalAmount);
+    	
+        if(Double.compare(totalAmount, 0.0) != 0){
+        	a = true;
+        }
+        if(Double.compare(totalPlan, 0.0) != 0){
+        	totalProgressBar.setMax((int) totalPlan);
+        	if(totalAmount > totalPlan) {
+        		totalProgressBar.setProgress((int) totalPlan);
+        	}
+        	b = true;
+        }     
+        if(a == false && b == false) {
+        	setText(rootView, R.id.amountText, "No Data Available");
+        	setText(rootView, R.id.planText, "");
+        	totalProgressBar.setVisibility(ProgressBar.INVISIBLE);
+        } else {
+        	totalProgressBar.setVisibility(ProgressBar.VISIBLE);
+        }
 		
+        expListView = (ExpandableListView) rootView.findViewById(R.id.aeBaeLV);
+        prepareListData(startDate, endDate);
+        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+        expListView.setAdapter(listAdapter);
+        
 		return rootView;
 	}
 	
-	public void setText(View view, int id, String item) {
+	private void setText(View view, int id, String item) {
 		TextView tv = (TextView) view.findViewById(id);
 		tv.setTypeface(Utils.banglaTypeFace);
 		tv.setTextColor(Color.WHITE);
 		tv.setText(item);
 	}
 	
-	public void getTotalBaeValue(Date st, Date end) {
+	private void getTotalBaeValue(Date st, Date end) {
 		try {
 			String value = SSDAO.getSSdao().getTransactionSumBetweenDate(st, end, true);
 			if(value == null){
@@ -77,5 +125,70 @@ public class MonthlyReportFragment extends Fragment {
 		} catch (SQLException e) {
 			Utils.print(e.toString());
 		}
+	}
+	
+	private void prepareListData(Date start, Date end) {
+		listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<ReportElement>>();
+        
+        // Adding child data
+        listDataHeader.add("ব্যয়");
+        listDataHeader.add("আয়");
+        
+        String[] baeTitle = getResources().getStringArray(R.array.category_title_bae);
+		String[] aeTitle = getResources().getStringArray(R.array.category_title_ae);
+        // Adding bae data
+        List<ReportElement> baeList = new ArrayList<ReportElement>();
+        List<ReportElement> aeList = new ArrayList<ReportElement>();
+        try {
+        	List<Planning> plannings = SSDAO.getSSdao().getPlanningOfMonthAndYear(month, year);
+        	int planningID;
+        	if(plannings == null || plannings.size() == 0) {
+        		planningID = 0;
+        	} else {
+        		planningID = plannings.get(0).getPlanningId();
+        	}
+        	List<PlanningDescription> cpd = SSDAO.getSSdao()
+        			.getPlanningDescriptionOfPlanning(planningID);
+        	
+        	int i = 1;
+	        for(int j = 0; j < baeTitle.length; j++) {
+	        	String baeString = SSDAO.getSSdao()
+	        			.getTransactionSumOfCategoryBetweenDate(i, start, end, false);
+	        	double bae = 0.0;
+	        	if(baeString != null) {
+	        		bae = Double.parseDouble(baeString);
+	        		if(bae < 0.0) bae *= -1.0;
+	        	}
+	        	double plan = getAmountOfCategoryFromPD(cpd, i);
+	        	baeList.add(new ReportElement(baeTitle[j], bae, plan));
+	        	i++;
+	        }
+	        for(int j = 0; j < aeTitle.length; j++) {
+	        	String aeString = SSDAO.getSSdao()
+	        			.getTransactionSumOfCategoryBetweenDate(i, start, end, false);
+	        	double ae = 0.0;
+	        	if(aeString != null) {
+	        		ae = Double.parseDouble(aeString);
+	        	}
+	        	double plan = getAmountOfCategoryFromPD(cpd, i);
+	        	aeList.add(new ReportElement(aeTitle[j], ae, plan));
+	        	i++;
+	        }
+        } catch (SQLException e) { 
+        	Utils.print(e.toString());
+        }
+        
+        listDataChild.put(listDataHeader.get(0), baeList);
+        listDataChild.put(listDataHeader.get(1), aeList);
+	}
+	
+	private double getAmountOfCategoryFromPD(List<PlanningDescription> cpd, int category) {
+		if(cpd == null) return 0.0;
+		for(int i=0; i<cpd.size(); i++) {
+			PlanningDescription pd = cpd.get(i);
+			if(pd.getCategory().getCategoryID() == category)return pd.getAmount();
+		}
+		return 0.0;
 	}
 }

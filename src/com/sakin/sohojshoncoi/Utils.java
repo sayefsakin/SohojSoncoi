@@ -85,7 +85,7 @@ public class Utils {
     public static String ALARM_MSG = "alarmmsg";
     public static String ALARM_AMOUNT = "alarmamount";
     public static String ALARM_REPEATED = "alarmrepeated";
-    
+     
     public static String[] monthNameBengali = {
     	"জানুয়ারী", "ফেব্রুয়ারী", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "আক্টোবর", "নভেম্বর", "ডিসেম্বর"
     };

@@ -41,7 +41,7 @@ public class MonthlyReport extends Fragment {
 		monthPager = (ViewPager) view.findViewById(R.id.view_pager);
 
         mTabsAdapter = new TabsAdapter(getActivity(), monthPager);
-//        monthPager.setOffscreenPageLimit(totalTabs);
+        monthPager.setOffscreenPageLimit(1);
 
         Bundle args = null;
         for(int i=-3; i<3; i++){

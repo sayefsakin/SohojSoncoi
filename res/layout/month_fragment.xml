@@ -50,5 +50,11 @@
 	        android:progressDrawable="@drawable/total_progress_bar"
 	        android:layout_below="@id/totalLabel" />
 
+	    <ExpandableListView
+                android:id="@+id/aeBaeLV"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_below="@id/totalProgressBar"
+                android:layout_marginTop="10dp" />
 
 </RelativeLayout>
