@@ -18,6 +18,7 @@ import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
 import com.sakin.sohojshoncoi.daylihisab.DailyHisab;
+import com.sakin.sohojshoncoi.settings.SettingsFragment;
 import com.sakin.sohojshoncoi.sofol.Sofol;
 import com.sakin.sohojshoncoi.uporiae.UporiAe;
 
@@ -239,6 +240,9 @@ public class Main extends FragmentActivity {
 			case 4:
 				fragment = new UporiAe();
 				break;
+			case 5:
+				fragment = new SettingsFragment();
+				break;
 			default:
 				fragment = new DailyHisab();
 				break;
@@ -249,7 +253,6 @@ public class Main extends FragmentActivity {
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 //        // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-//        setTitle(position);
         mDrawerLayout.closeDrawer(mDrawerList);
         ITEM = position;
 	}

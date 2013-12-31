@@ -194,6 +194,7 @@ public class AddNewHisab extends Fragment
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
 		}
+		Utils.setActionBarTitle(getActivity(), "নতুন আয়/ব্যয়");
 	    return view;
 	}
 

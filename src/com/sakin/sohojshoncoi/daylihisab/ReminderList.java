@@ -71,6 +71,7 @@ public class ReminderList extends ListFragment
 				}
 			}
 		}
+		Utils.setActionBarTitle(getActivity(), "বিলের রিমাইন্ডারসমূহ");
 		return view;
 	}
 	

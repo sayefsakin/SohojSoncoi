@@ -67,8 +67,8 @@ public class PlanningList extends ListFragment
 					Utils.print(e.toString());
 				}
 			}
-		
 		}
+		Utils.setActionBarTitle(getActivity(), "পরিকল্পনা সমূহ");
 		return view;
 	}
 	

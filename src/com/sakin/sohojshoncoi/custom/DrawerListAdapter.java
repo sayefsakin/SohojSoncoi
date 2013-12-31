@@ -43,8 +43,8 @@ public class DrawerListAdapter extends ArrayAdapter {
 
         if(items.get(position) != null )
         {
-            text.setTextColor(Color.WHITE);
-            text.setBackgroundColor(color.custom_color); 
+//            text.setTextColor(Color.WHITE);
+//            text.setBackgroundColor(color.custom_color); 
             text.setTypeface(Utils.banglaTypeFace);
 
             text.setText(items.get(position));

@@ -40,7 +40,7 @@ public class Sofol extends Fragment {
 				Toast.makeText(getActivity(), R.string.lost_connection, Toast.LENGTH_SHORT).show();
 			}
         }
-		
+		Utils.setActionBarTitle(getActivity(), "সফলদের সাফল্যগাথা");
 	    return view;
 	}
 	

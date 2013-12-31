@@ -250,18 +250,24 @@ public class SSDAO {
 	public List<Reminder> getReminderBetweenDate(/*Account account, */Date start, Date end) throws SQLException{
 		if(end.before(start))return null;
 		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
-		qb.orderBy("date", false);
+		qb.orderBy("due_date", false);
 		qb.where()/*.eq("account_id", account).and()*/.between("date", start, end);
 		return qb.query();
 	}
 	public String getReminderSumBetweenDate(/*Account account, */Date start, Date end) throws SQLException {
 		if(end.before(start))return null;
 		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
-		qb.orderBy("date", true);
+		qb.orderBy("due_date", true);
 	    qb.where()/*.eq("account_id", account).and()*/.between("date", start, end);
 	    qb.selectRaw("SUM(amount)");
 	    GenericRawResults<String[]> results = qb.queryRaw();
 	    return results.getFirstResult()[0];
+	}
+	public List<Reminder> getReminderFromDate(Date start) throws SQLException{
+		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
+		qb.orderBy("due_date", true);
+		qb.where().ge("due_date", start);
+		return qb.query();
 	}
 //	public List<Reminder> getReminderOfCategory(Account account, Category category) throws SQLException {
 //		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();

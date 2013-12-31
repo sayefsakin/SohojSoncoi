@@ -29,6 +29,7 @@ public class MonthlyReport extends Fragment {
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
 		}
+		Utils.setActionBarTitle(getActivity(), "আয়/ব্যয়ের রিপোর্ট");
 	    return view;
 	}
 	

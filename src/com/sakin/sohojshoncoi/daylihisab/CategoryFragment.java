@@ -58,6 +58,7 @@ public class CategoryFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.category_view, container, false);
+		Utils.setActionBarTitle(getActivity(), "ক্যাটাগরি");
 		
 		GridView gridview = (GridView) view.findViewById(R.id.gridview);
 		Integer[] thumbs;

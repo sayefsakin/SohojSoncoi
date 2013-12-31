@@ -77,8 +77,8 @@ public class HisabList extends ListFragment
 					Utils.print(e.toString());
 				}
 			}
-		
 		}
+		Utils.setActionBarTitle(getActivity(), "আগের হিসাবসমূহ");
 		return view;
 	}
 	

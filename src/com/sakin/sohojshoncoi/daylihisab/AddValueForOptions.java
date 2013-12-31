@@ -153,7 +153,7 @@ public class AddValueForOptions extends ListFragment implements
 			ViewGroup parent = (ViewGroup) rootView.getParent();
 			parent.removeView(rootView);
 		}
-
+		Utils.setActionBarTitle(getActivity(), "নতুন পরিকল্পনা");
 	    return rootView;
 	}
 	public class OptionList{

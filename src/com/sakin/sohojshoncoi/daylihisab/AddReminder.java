@@ -192,6 +192,7 @@ public class AddReminder extends Fragment
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
 		}
+		Utils.setActionBarTitle(getActivity(), "নতুন রিমাইন্ডার");
 	    return view;
 	}
 	
