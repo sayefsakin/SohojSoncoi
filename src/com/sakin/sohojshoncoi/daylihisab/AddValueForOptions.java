@@ -168,6 +168,7 @@ public class AddValueForOptions extends ListFragment implements
 	public void onCategorySelected(String cat) {
 		//Utils.print(cat);
 		//list_items=new String[15];
+		updateList();
 		int flag=0,i;
 		for(i=0;i<count;i++){
 			if(cat.equals(list_items[i])){
@@ -243,9 +244,22 @@ public class AddValueForOptions extends ListFragment implements
 		adapter.notifyDataSetChanged();
 	}
 	
+	private boolean checkValidity() throws SQLException {
+		List<Planning> planning = SSDAO.getSSdao().getPlanningOfMonthAndYear(Month, Year);
+		if(planning.size() > 0) {
+			return false;
+		}
+		return true;
+	}
+	
 	private void doSave() {
 		Utils.print("planning saving.......");
 		try {
+			boolean b = checkValidity();
+			if(b == false) {
+				Utils.showToast(getActivity(), "Plan for this month already set. Please change the month.");
+				return;
+			}
 			if(isEdit) {
 				SSDAO.getSSdao().removePlanningDescriptionOfPlanning(planning.getPlanningId());
 				double ae, bae;

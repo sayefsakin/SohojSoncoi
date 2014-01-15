@@ -34,19 +34,19 @@ public class CategoryFragment extends Fragment {
             R.drawable.shikkha,
             R.drawable.khela,
             R.drawable.binodon,
-            R.drawable.gari,
             R.drawable.doctor,
             R.drawable.bill,
             R.drawable.biniyog,
             R.drawable.social,
-            R.drawable.onnano
+            R.drawable.personal_loan_icon,
+            R.drawable.other
     };
 	private Integer[] mThumbIdsAe = {
-            R.drawable.khabar,
-            R.drawable.poshak,
-            R.drawable.basosthan,
-            R.drawable.jogajog,
-            R.drawable.shikkha
+            R.drawable.beton,
+            R.drawable.bank,
+            R.drawable.lav,
+            R.drawable.personal_loan_icon,
+            R.drawable.other
     };	
 	private Boolean aeOrBae;
 	public CategoryFragment(Fragment caller, Boolean aeOrBae){

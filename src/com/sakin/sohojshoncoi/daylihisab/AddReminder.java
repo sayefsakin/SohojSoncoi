@@ -70,6 +70,31 @@ public class AddReminder extends Fragment
 		this.isEdit = false;
 	}
 	
+	public AddReminder(int id) {
+		try {
+			Reminder reminder = SSDAO.getSSdao().getReminderFromID(id);
+			this.reminder = reminder;
+			Reminder.Status st = reminder.getStatus();
+			if(st.toString().equals("PAID")) {
+				this.status = true;
+				this.alarm = false;
+			} else if(st.toString().equals("NON_PAID")) {
+				this.status = false;
+				this.alarm = false;
+			} else {
+				this.status = false;
+				this.alarm = true;
+			}
+			this.amount = reminder.getAmount();
+			this.description = reminder.getDescription();
+			this.dateTime = Utils.dateToCalendar(reminder.getDueDate());
+			this.repeated = reminder.getRepeated();
+			this.isEdit = true;
+		} catch (SQLException e) {
+			Utils.print(e.toString());
+		}
+	}
+	
 	public AddReminder(Boolean status, Boolean alarm, double amount,
 						String desc, Calendar dateTime, Reminder.Repeat repeated){
 		this.status = status;
@@ -336,7 +361,7 @@ public class AddReminder extends Fragment
 	public void onDateSelected(Calendar date, boolean se) {
 		this.dateTime = date;
 		String dt = Integer.toString(date.get(Calendar.DAY_OF_MONTH)) + "-" + 
-					Integer.toString(date.get(Calendar.MONTH)) + "-" +
+					Integer.toString(date.get(Calendar.MONTH) + 1) + "-" +
 					Integer.toString(date.get(Calendar.YEAR));
 		dateButton.setText(dt);
 	}
@@ -350,7 +375,7 @@ public class AddReminder extends Fragment
 			AP = "PM";
 			hour %= 12;
 		}
-		String tm = Integer.toString(hour) + ":" + 
+		String tm = Integer.toString(hour==0?12:hour) + ":" + 
 					Integer.toString(minute) + " " + AP;
 		timeButton.setText(tm);
 	}

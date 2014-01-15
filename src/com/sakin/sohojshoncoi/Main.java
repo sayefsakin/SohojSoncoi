@@ -12,40 +12,55 @@ import java.util.Map;
 
 import com.sakin.sohojshoncoi.bazardor.BazarDor;
 import com.sakin.sohojshoncoi.custom.DrawerListAdapter;
+import com.sakin.sohojshoncoi.custom.FireAlarmDialogFragment;
 import com.sakin.sohojshoncoi.custom.TypefaceSpan;
 import com.sakin.sohojshoncoi.custom.VideoElement;
 import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
 import com.sakin.sohojshoncoi.daylihisab.DailyHisab;
+import com.sakin.sohojshoncoi.jiggasa.JiggasaFragment;
 import com.sakin.sohojshoncoi.settings.SettingsFragment;
 import com.sakin.sohojshoncoi.sofol.Sofol;
 import com.sakin.sohojshoncoi.uporiae.UporiAe;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -63,7 +78,7 @@ public class Main extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		init();
+		init(savedInstanceState);
 		//create the drawer
 		drawerItems = getResources().getStringArray(R.array.drawermenulist);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -105,6 +120,19 @@ public class Main extends FragmentActivity {
         } else 
         	selectItem(ITEM);
 		
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+	    if (keyCode == KeyEvent.KEYCODE_BACK && ITEM != 0 ) {
+	        selectItem(0);
+	        return false;
+	    } else if (keyCode == KeyEvent.KEYCODE_BACK && ITEM == 0) {
+	    	showExitDialog();
+	    	return false;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
 	}
 
 	@Override
@@ -155,7 +183,7 @@ public class Main extends FragmentActivity {
     	   ITEM = savedInstanceState.getInt("selected_item");
     }
     
-	private void init(){
+	private void init(Bundle savedInstanceState){
 		// all initialization code goes here
 		SSDAO.getSSdao().init(this);
 		Utils.createCustomCategory(Main.this);
@@ -183,15 +211,89 @@ public class Main extends FragmentActivity {
             	String msg = b.getString(Utils.ALARM_MSG);
             	double amount = b.getDouble(Utils.ALARM_AMOUNT);
             	int rep = b.getInt(Utils.ALARM_REPEATED);
-            	Toast.makeText(c, b.getString("msg") + " " + Double.toString(amount) + "/-", Toast.LENGTH_LONG).show();
+//            	Toast.makeText(c, msg + " " + Double.toString(amount) + "/-", Toast.LENGTH_LONG).show();
             	Utils.runAudio();
-//            	have to check vibration
-//            	Utils.startVibrate(c);
+            	Utils.startVibrate(c);
+            	
+            	Intent alarmPopup = new Intent(c, AlarmPopup.class);
+            	alarmPopup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	alarmPopup.putExtra(Utils.ALARM_MSG, msg);
+            	alarmPopup.putExtra(Utils.ALARM_AMOUNT, amount);
+            	alarmPopup.putExtra(Utils.ALARM_REPEATED, rep);
+            	c.startActivity(alarmPopup);
+//            	final NotificationManager nm = createNotificationAndNotify(c, msg, amount, rep);
+//            	
+////            	DialogFragment dialog = new FireAlarmDialogFragment();
+////                dialog.show(getSupportFragmentManager(), "FireAlarmDialogFragment");
+//            	AlertDialog.Builder builder = new AlertDialog.Builder(c);
+//                builder.setMessage(msg + " " + Double.toString(amount) + "/-")
+////                       .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+////                           public void onClick(DialogInterface dialog, int id) {
+////                               // FIRE ZE MISSILES!
+////                           }
+////                       })
+//                       .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                           public void onClick(DialogInterface dialog, int id) {
+//                               Utils.stopAudio();
+//                               Utils.stopVibrate();
+//                               nm.cancelAll();
+//                           }
+//                       });
+//                builder.create();
+//                builder.setCancelable(false);
+//                builder.show();
+                
             }
 		};
 		registerReceiver(Utils.broadcastReceiver, new IntentFilter("com.sakin.sohojshoncoi"));
 		Utils.alarmManagerm = (AlarmManager)(getSystemService( Context.ALARM_SERVICE ));
 	}
+	
+	private void showExitDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    builder.setMessage("আপনি কি সত্যিই বের হতে চান?")
+	           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	            	   finish();
+	               }
+	           })
+	           .setNegativeButton("No", new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	               }
+	           });
+	    builder.create();
+	    builder.setCancelable(false);
+	    AlertDialog alert = builder.show();
+	    TextView msgView = (TextView) alert.findViewById(android.R.id.message);
+	    msgView.setTypeface(Utils.banglaTypeFace);
+	}
+//	private NotificationManager createNotificationAndNotify(Context c, String msg, double amount, int rep) {
+//		NotificationCompat.Builder mBuilder =
+//		        new NotificationCompat.Builder(this)
+//		        .setSmallIcon(R.drawable.ic_action_alarms)
+//		        .setContentTitle("Sohojsoncoi Reminder")
+//		        .setContentText(msg + " " + Double.toString(amount) + "/-")
+//		        .setAutoCancel(true);
+//		
+//		// Creates an explicit intent for an Activity in your app
+//		Intent myIntent = new Intent(c, Main.class);
+//		myIntent.putExtra(Utils.COME_FROM_ALARM, true);
+//		myIntent.putExtra(Utils.ALARM_MSG, msg);
+//		myIntent.putExtra(Utils.ALARM_AMOUNT, amount);
+//		myIntent.putExtra(Utils.ALARM_REPEATED, rep);
+//	    PendingIntent resultPendingIntent = PendingIntent.getActivity(
+//	      c, 
+//	      0, 
+//	      myIntent, 
+//	      0);
+//	    
+//		mBuilder.setContentIntent(resultPendingIntent);
+//		NotificationManager mNotificationManager =
+//		    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//		// mId allows you to update the notification later on.
+//		mNotificationManager.notify(1, mBuilder.build());
+//		return mNotificationManager;
+//	}
 	
 	private void testing() {
 //		TextView tv = (TextView) findViewById(R.id.textView1);
@@ -231,14 +333,17 @@ public class Main extends FragmentActivity {
 			case 0:
 				fragment = new DailyHisab();
 				break;
+//			case 1:
+//				fragment = new BazarDor();
+//				break;
 			case 1:
-				fragment = new BazarDor();
-				break;
-			case 2:
 				fragment = new Sofol();
 				break;
-			case 4:
+			case 3:
 				fragment = new UporiAe();
+				break;
+			case 4:
+				fragment = new JiggasaFragment();
 				break;
 			case 5:
 				fragment = new SettingsFragment();
@@ -255,6 +360,7 @@ public class Main extends FragmentActivity {
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
         ITEM = position;
+        Utils.SELECTED_ITEM = position;
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

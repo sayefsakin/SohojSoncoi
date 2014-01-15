@@ -14,10 +14,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
-public class TabsAdapter extends FragmentPagerAdapter implements TabListener, OnPageChangeListener{
+public class TabsAdapter extends FragmentStatePagerAdapter implements TabListener, OnPageChangeListener{
 	private final Context mContext;
 	private final ActionBar mActionBar;
 	private final ViewPager mViewPager;
@@ -80,8 +82,8 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-//		mViewPager.setCurrentItem(tab.getPosition());
-		Utils.print("clicked");
+		mViewPager.setCurrentItem(tab.getPosition());
+//		Utils.print("clicked");
 		Object tag = tab.getTag();
 		for (int i = 0; i<mTabs.size(); i++){
 			if (mTabs.get(i) == tag){
@@ -90,12 +92,10 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 		}
 	}
 
-
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		
 	}
-
 
 	@Override
 	public Fragment getItem(int position) {
@@ -103,10 +103,14 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 		return Fragment.instantiate(mContext, info.clss.getName(), info.args);
 	}
 
-
 	@Override
 	public int getCount() {
 		return mTabs.size();
+	}
+	
+	@Override
+	public int getItemPosition(Object object){
+	    return PagerAdapter.POSITION_NONE;
 	}
 
 }

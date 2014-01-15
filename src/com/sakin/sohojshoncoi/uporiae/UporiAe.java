@@ -2,6 +2,7 @@ package com.sakin.sohojshoncoi.uporiae;
 
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -12,6 +13,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sakin.sohojshoncoi.R;
@@ -75,24 +78,19 @@ public class UporiAe extends Fragment {
         	args = new Bundle();
         	args.putString(Utils.TAB_URL_ID, playlist_url[i]);
     		args.putInt(Utils.TAB_ID, i + totalTabs);
-    		mTabsAdapter.addTab(bar.newTab().setText(tab_title[i]), SofolVideosFragment.class, args);
+    		ActionBar.Tab curTab = CreateNewTab(bar, i);
+    		mTabsAdapter.addTab(curTab, SofolVideosFragment.class, args);
         }
         
-//        Bundle args = new Bundle();
-//		args.putString(Utils.TAB_URL_ID, playlist_url[0]);
-//		args.putInt(Utils.TAB_ID, 0);
-//		mTabsAdapter.addTab(bar.newTab().setText(tab_title[0]), SofolVideosFragment.class, args);
-//		
-//		
-//		Bundle args1 = new Bundle();
-//		args1.putString(Utils.TAB_URL_ID, playlist_url[1]);
-//		args1.putInt(Utils.TAB_ID, 1);
-//		mTabsAdapter.addTab(bar.newTab().setText(tab_title[1]), SofolVideosFragment.class, args1);
-//		
-//		Bundle args2 = new Bundle();
-//		args2.putString(Utils.TAB_URL_ID, playlist_url[2]);
-//		args2.putInt(Utils.TAB_ID, 2);
-//		mTabsAdapter.addTab(bar.newTab().setText(tab_title[2]), SofolVideosFragment.class, args2);
+	}
+	
+	private ActionBar.Tab CreateNewTab(ActionBar bar, int ind) {
+		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout layoutView = (LinearLayout)inflater.inflate(R.layout.tab_title_view, null);
+		TextView title = (TextView)layoutView.findViewById(R.id.tab_title_text);
+		title.setTypeface(Utils.banglaTypeFace);
+		title.setText(tab_title[ind]);
+		return bar.newTab().setCustomView(layoutView);
 	}
 	
 	@Override

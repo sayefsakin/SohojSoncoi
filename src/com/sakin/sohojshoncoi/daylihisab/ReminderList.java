@@ -143,12 +143,12 @@ public class ReminderList extends ListFragment
 		MenuItem editItem = menu.findItem(R.id.action_edit);
 		if(editMode) {
 			menu.findItem(R.id.action_add).setVisible(false);
-			menu.findItem(R.id.action_filter).setVisible(false);
+//			menu.findItem(R.id.action_filter).setVisible(false);
 			
 			editItem.setIcon(R.drawable.ic_action_discard);
 		} else {
 			menu.findItem(R.id.action_add).setVisible(true);
-			menu.findItem(R.id.action_filter).setVisible(true);
+//			menu.findItem(R.id.action_filter).setVisible(true);
 			
 			editItem.setIcon(R.drawable.ic_action_edit);
 		}
@@ -164,9 +164,9 @@ public class ReminderList extends ListFragment
 	        case R.id.action_edit:
 	            editModeToggle();
 	            return true;
-	        case R.id.action_filter:
-	            goToFilter();
-	            return true;
+//	        case R.id.action_filter:
+//	            goToFilter();
+//	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

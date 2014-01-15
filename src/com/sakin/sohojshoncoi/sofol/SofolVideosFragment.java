@@ -31,6 +31,7 @@ public class SofolVideosFragment extends ListFragment {
 			Bundle savedInstanceState) {
 	     // The last two arguments ensure LayoutParams are inflated properly.
 		View rootView = inflater.inflate(R.layout.sofol_videos_fragment, container, false);
+		Utils.print("sofol fragment created");
 		
 		videoList = new ArrayList<VideoElement>();
 		adapter = new VideoFragmentAdapter(getActivity(), R.layout.sofol_item, videoList);

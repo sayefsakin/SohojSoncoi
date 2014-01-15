@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.sakin.sohojshoncoi.AlarmPopup;
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.database.Reminder;
@@ -13,6 +14,7 @@ import com.sakin.sohojshoncoi.database.SSDAO;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,7 +43,10 @@ public class DailyHisab extends Fragment {
 		addNewButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-//				Intent addNewHisabIntent = new Intent(getActivity(), AddNewHisab.class);
+//				Intent addNewHisabIntent = new Intent(getActivity(), AlarmPopup.class);
+//				addNewHisabIntent.putExtra(Utils.ALARM_MSG, "heello");
+//				addNewHisabIntent.putExtra(Utils.ALARM_AMOUNT, 45);
+//				addNewHisabIntent.putExtra(Utils.ALARM_REPEATED, 1);
 //				startActivity(addNewHisabIntent);
 				Fragment addNewHisab = new AddNewHisab();
 				FragmentTransaction ft = getFragmentManager().beginTransaction();

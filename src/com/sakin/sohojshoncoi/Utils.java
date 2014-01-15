@@ -82,10 +82,12 @@ public class Utils {
     public static int MAX_AE_INDEX;
     public static int MAX_BAE_INDEX;
     
-    public static String ALARM_MSG = "alarmmsg";
-    public static String ALARM_AMOUNT = "alarmamount";
-    public static String ALARM_REPEATED = "alarmrepeated";
-     
+    public static final String ALARM_MSG = "alarmmsg";
+    public static final String ALARM_AMOUNT = "alarmamount";
+    public static final String ALARM_REPEATED = "alarmrepeated";
+    public static final String COME_FROM_ALARM = "comefromalarm";
+    private static MediaPlayer mp; 
+    
     public static String[] monthNameBengali = {
     	"জানুয়ারী", "ফেব্রুয়ারী", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "আক্টোবর", "নভেম্বর", "ডিসেম্বর"
     };
@@ -151,10 +153,11 @@ public class Utils {
 	
 	
 	public static void runAudio(){
-		MediaPlayer mp = new MediaPlayer();
+		mp = new MediaPlayer();
 		try {
 			mp.setDataSource(Utils.ALARM_TONE_DIRECTORY);
 			mp.prepare();
+			mp.setLooping(true);
 			mp.start();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -165,6 +168,11 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void stopAudio(){
+		mp.stop();
+		mp.release();
 	}
 	
 	public static void startVibrate(Context ac) {

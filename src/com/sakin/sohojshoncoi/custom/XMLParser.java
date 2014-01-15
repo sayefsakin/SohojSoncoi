@@ -11,6 +11,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
@@ -54,20 +55,30 @@ public class XMLParser extends AsyncTask<String, Void, List<VideoElement>>{
 	@Override
 	protected void onPostExecute(List<VideoElement> result) {
 		Utils.print("xml parser finished");
-		int pagerID = R.id.pager;
-		if(id>=5)
-			pagerID = R.id.uporiae_pager;
-		String tagString = "android:switcher:" + Integer.toString(pagerID)+":"+Integer.toString(id%5);
-		Utils.print(tagString);
-		Fragment fragment = ac.getSupportFragmentManager().findFragmentByTag(tagString);
-		if(fragment != null) {
-			if(fragment.getView() != null) {
-				// no need to call if fragment's onDestroyView() 
-				//	has since been called.
-				((SofolVideosFragment) fragment).updateDisplayWithList(result);
+//		int pagerID = R.id.pager;
+//		if(id>=5)
+//			pagerID = R.id.uporiae_pager;
+//		String tagString = "android:switcher:" + Integer.toString(pagerID)+":"+Integer.toString(id%5);
+//		Utils.print(tagString);
+//		Fragment fragment = ac.getSupportFragmentManager().findFragmentByTag(tagString);
+//		if(fragment != null) {
+//			if(fragment.getView() != null) {
+//				// no need to call if fragment's onDestroyView() 
+//				//	has since been called.
+//				Utils.print("fragment found");
+//				((SofolVideosFragment) fragment).updateDisplayWithList(result);
+//			}
+//		}
+		if((Utils.SELECTED_ITEM == 1 && id < 5) || (Utils.SELECTED_ITEM == 3 && id >=5)) {
+			ViewPager pager = (ViewPager) ac.findViewById((id<5)?R.id.pager:R.id.uporiae_pager);
+			Fragment fragment = (Fragment) pager.getAdapter().instantiateItem(pager, id%5);
+			if(fragment != null) {
+				if(fragment.getView() != null) {
+					Utils.print("fragment found for pager id: " + id);
+					((SofolVideosFragment) fragment).updateDisplayWithList(result);
+				}
 			}
 		}
-		
 		super.onPostExecute(result);
 	}
 	

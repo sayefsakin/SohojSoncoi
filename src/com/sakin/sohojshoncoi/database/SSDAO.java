@@ -269,6 +269,13 @@ public class SSDAO {
 		qb.where().ge("due_date", start);
 		return qb.query();
 	}
+	public Reminder getReminderFromID(int id) throws SQLException {
+		Reminder rem = null;
+		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
+		qb.where().eq("reminder_id", id);
+		rem = qb.query().get(0);
+		return rem;
+	}
 //	public List<Reminder> getReminderOfCategory(Account account, Category category) throws SQLException {
 //		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
 //		qb.orderBy("date", true);
