@@ -326,7 +326,7 @@ public class AddNewHisab extends Fragment
 				descriptionEditText.length() == 0 ||
 				Double.compare(amount, 0.0) == 0) {
 			
-			Utils.showToast(getActivity(), "সকল ঘড় পুরন করুন");
+			Utils.showToast(getActivity(), "সকল শূন্যস্থান পুরন করুন");
 		} else {
 			if(aeOrBae) {
 				amount *= -1.0;

@@ -74,9 +74,9 @@ public class HisabListAdapter extends ArrayAdapter<Transaction>{
 			holder.categoryView.setText(cat.getName());
 	        
 	        if(cat.getType().toString().equals("INCOME")){
-	        	holder.categoryTypeImage.setImageResource(R.drawable.ic_action_expand);
-	        } else {
 	        	holder.categoryTypeImage.setImageResource(R.drawable.ic_action_collapse);
+	        } else {
+	        	holder.categoryTypeImage.setImageResource(R.drawable.ic_action_expand);
 	        }
 		} catch (SQLException e) {
 			Utils.print(e.toString());

@@ -15,7 +15,8 @@ public class AlarmPopup extends Activity {
 		Bundle extras = getIntent().getExtras();
     	String msg = extras.getString(Utils.ALARM_MSG);
     	double amount = extras.getDouble(Utils.ALARM_AMOUNT);
-    	final int rep = extras.getInt(Utils.ALARM_REPEATED);
+    	int rep = extras.getInt(Utils.ALARM_REPEATED);
+    	final int alarmID = extras.getInt(Utils.COME_FROM_ALARM);
     	Utils.runAudio();
     	Utils.startVibrate(this);
     	
@@ -23,8 +24,10 @@ public class AlarmPopup extends Activity {
         builder.setMessage(msg + " " + Double.toString(amount) + "/-")
                .setPositiveButton("Go to Reminder", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
+                	   Utils.stopAudio();
+                       Utils.stopVibrate();
                 	   Intent mainIntent = new Intent(AlarmPopup.this, Main.class);
-                	   mainIntent.putExtra(Utils.COME_FROM_ALARM, rep);
+                	   mainIntent.putExtra(Utils.COME_FROM_ALARM, alarmID);
                 	   Utils.SELECTED_ITEM = 0;
                 	   startActivity(mainIntent);
                    }

@@ -37,6 +37,9 @@ public class SofolVideosFragment extends ListFragment {
 		adapter = new VideoFragmentAdapter(getActivity(), R.layout.sofol_item, videoList);
 		setListAdapter(adapter);
 		
+		videoList.add(new VideoElement("", "", "No video found", "", 0));
+		adapter.notifyDataSetChanged();
+		
 		id = getArguments().getInt(Utils.TAB_ID);
 		playlistUrl = getArguments().getString(Utils.TAB_URL_ID);
 		xmlParser = new XMLParser(getActivity(), id);
@@ -58,6 +61,9 @@ public class SofolVideosFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	  	// do something with the data
 		VideoElement item = (VideoElement) getListAdapter().getItem(position);
+		if(item.getVideoTitle().equalsIgnoreCase("No video found")) {
+			return;
+		}
 		Intent youTubeFullScreen = new Intent(getActivity(), YouTubeFullScreen.class);
 		youTubeFullScreen.putExtra(Utils.VIDEO_ELEMENT_ID, item);
 		startActivity(youTubeFullScreen);
@@ -83,6 +89,7 @@ public class SofolVideosFragment extends ListFragment {
 	
 	public void updateDisplayWithList(List<VideoElement> videoElementList){
 		if(videoElementList != null){
+			videoList.clear();
 		Utils.print(Integer.toString(videoElementList.size()));
 		for(int i=0;i<videoElementList.size();i++){
 			videoList.add(videoElementList.get(i));

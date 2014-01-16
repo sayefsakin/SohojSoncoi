@@ -92,6 +92,8 @@ public class AddValueForOptions extends ListFragment implements
 					for(PlanningDescription pd : pdList) {
 						Category cat = SSDAO.getSSdao().getCategoryFromID( 
 								pd.getCategory().getCategoryID());
+						list_items[count] = cat.getName();
+						count++;
 						optionList.add(new OptionList(cat.getName(), pd.getAmount()));
 					}
 					adapter.notifyDataSetChanged();
@@ -256,7 +258,7 @@ public class AddValueForOptions extends ListFragment implements
 		Utils.print("planning saving.......");
 		try {
 			boolean b = checkValidity();
-			if(b == false) {
+			if(b == false && isEdit == false) {
 				Utils.showToast(getActivity(), "Plan for this month already set. Please change the month.");
 				return;
 			}

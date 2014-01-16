@@ -52,6 +52,10 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         duration = holder.getDuration();
         duration.setTypeface(Utils.banglaTypeFace);
         duration.setTextColor(Color.WHITE);
+        
+        if(video.getVideoTitle().equalsIgnoreCase("No video found")) {
+        	duration.setText("");
+        } else {
         int d = video.getVideoDuration();
         String time = "";
         int h = 0, m = 0, s = d;
@@ -67,7 +71,7 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         s = d % 60;
         time += Integer.toString(s) + " সেকেন্ড";
         duration.setText(time);
-        
+        }
 //        thumbnail = holder.getThumb();
 //        thumbnail.setImageResource(R.drawable.jogajog);
 //        

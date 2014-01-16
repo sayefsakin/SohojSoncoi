@@ -22,6 +22,7 @@ import com.sakin.sohojshoncoi.daylihisab.DailyHisab;
 import com.sakin.sohojshoncoi.jiggasa.JiggasaFragment;
 import com.sakin.sohojshoncoi.settings.SettingsFragment;
 import com.sakin.sohojshoncoi.sofol.Sofol;
+import com.sakin.sohojshoncoi.soncoi.SoncoiBriddhi;
 import com.sakin.sohojshoncoi.uporiae.UporiAe;
 
 import android.net.Uri;
@@ -124,13 +125,25 @@ public class Main extends FragmentActivity {
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		
+		Fragment myFragment = (Fragment) getSupportFragmentManager().findFragmentByTag("HOME_PAGE");
+		if (myFragment != null &&  myFragment.isVisible()) {
+//		   Utils.print("fragment found");
+	    	showExitDialog();
+	    	return false;
+		}
+		
+		Fragment fragment = (Fragment) getSupportFragmentManager().findFragmentByTag("dailyhisab");
+		if (fragment != null &&  fragment.isVisible()) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK && ITEM != 0 ) {
 	        selectItem(0);
 	        return false;
-	    } else if (keyCode == KeyEvent.KEYCODE_BACK && ITEM == 0) {
-	    	showExitDialog();
-	    	return false;
-	    }
+	    }}
+//	    else if (keyCode == KeyEvent.KEYCODE_BACK && Utils.SELECTED_ITEM == 0) {
+//	    	
+//	    	showExitDialog();
+//	    	return false;
+//	    }
 
 	    return super.onKeyDown(keyCode, event);
 	}
@@ -211,6 +224,7 @@ public class Main extends FragmentActivity {
             	String msg = b.getString(Utils.ALARM_MSG);
             	double amount = b.getDouble(Utils.ALARM_AMOUNT);
             	int rep = b.getInt(Utils.ALARM_REPEATED);
+            	int alermID = b.getInt(Utils.COME_FROM_ALARM);
 //            	Toast.makeText(c, msg + " " + Double.toString(amount) + "/-", Toast.LENGTH_LONG).show();
             	Utils.runAudio();
             	Utils.startVibrate(c);
@@ -220,6 +234,7 @@ public class Main extends FragmentActivity {
             	alarmPopup.putExtra(Utils.ALARM_MSG, msg);
             	alarmPopup.putExtra(Utils.ALARM_AMOUNT, amount);
             	alarmPopup.putExtra(Utils.ALARM_REPEATED, rep);
+            	alarmPopup.putExtra(Utils.COME_FROM_ALARM, alermID);
             	c.startActivity(alarmPopup);
 //            	final NotificationManager nm = createNotificationAndNotify(c, msg, amount, rep);
 //            	
@@ -329,15 +344,20 @@ public class Main extends FragmentActivity {
 	
 	private void selectItem(int position) {
 		Fragment fragment = null;
+		int i = 0;
 		switch (position) {
 			case 0:
 				fragment = new DailyHisab();
+				i = 11;
 				break;
 //			case 1:
 //				fragment = new BazarDor();
 //				break;
 			case 1:
 				fragment = new Sofol();
+				break;
+			case 2:
+				fragment = new SoncoiBriddhi();
 				break;
 			case 3:
 				fragment = new UporiAe();
@@ -353,7 +373,11 @@ public class Main extends FragmentActivity {
 				break;
 		}
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        String tag = "dailyhisab";
+        if(i == 11) {
+        	tag = "HOME_PAGE";
+        }
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, tag).commit();
         
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 //        // update selected item and title, then close the drawer

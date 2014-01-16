@@ -331,6 +331,7 @@ public class AddReminder extends Fragment
 		} else {
 			ti.putExtra(Utils.ALARM_REPEATED, 0);
 		}
+		ti.putExtra(Utils.COME_FROM_ALARM, reminder.getReminderID());
 		PendingIntent pendingIntent = PendingIntent.getBroadcast( getActivity(), 
 				reqID, ti, 0 );
 		

@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
+import com.sakin.sohojshoncoi.daylihisab.AddNewHisab;
+import com.sakin.sohojshoncoi.daylihisab.DailyHisab;
 import com.sakin.sohojshoncoi.filechooser.FileChooser;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +33,11 @@ public class SettingsFragment extends ListFragment {
 	     // The last two arguments ensure LayoutParams are inflated properly.
 		if(rootView==null){
 			rootView = inflater.inflate(R.layout.settings, container, false);
-		} else{
+		} else {
 			ViewGroup parent = (ViewGroup) rootView.getParent();
 			parent.removeView(rootView);
 		}
-		 String[] values = new String[] { "Reminder tone", "Help", "About" };
+		 String[] values = new String[] { "Reminder tone", "Help", "Credits" };
 		 SettingsArrayAdapter adapter = new SettingsArrayAdapter(getActivity(),
 		    R.layout.settings_item, values);
 		setListAdapter(adapter);
@@ -46,6 +50,13 @@ public class SettingsFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		if(position == 0){
 			searchFile();
+		} else if(position == 2) {
+			Fragment addNewHisab = new AboutUs();
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			ft.remove(SettingsFragment.this);
+            ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
+            ft.addToBackStack("settings");
+            ft.commit();
 		}
 	   return;
 	}
