@@ -32,11 +32,32 @@
 	        android:layout_toRightOf="@id/totalLabel" />
 	    
 	    <TextView 
+	        android:id="@+id/extraText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/test_text"
+	        android:layout_marginLeft="5dp"
+	        android:textColor="@color/red"
+	        android:layout_alignTop="@id/totalLabel"
+	        android:layout_toRightOf="@id/amountText" />
+	    
+	    <TextView 
 	        android:id="@+id/planText"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/test_text"
 	        android:layout_alignTop="@id/totalLabel"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginRight="10dp" />
+
+	    
+	    <TextView 
+	        android:id="@+id/planLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/test_text"
+	        android:layout_above="@id/planText"
+	        android:layout_marginBottom="2dp"
 	        android:layout_alignParentRight="true"
 	        android:layout_marginRight="10dp" />
 	    

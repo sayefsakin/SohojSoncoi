@@ -58,8 +58,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView totalLabel = (TextView) convertView.findViewById(R.id.itemTotalLabel);
         TextView amountLabel = (TextView) convertView.findViewById(R.id.itemAmountText);
         TextView planLabel = (TextView) convertView.findViewById(R.id.itemPlanText);
+        TextView extraLabel = (TextView) convertView.findViewById(R.id.itemExtraText);
+        extraLabel.setText("");
         ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.itemProgressBar);
-
+        progressBar.setProgressDrawable(convertView.getResources().getDrawable(R.drawable.total_progress_bar));
+        progressBar.setProgress(1);
+        
         totalLabel.setTypeface(Utils.banglaTypeFace);
         totalLabel.setText(childElement.categoryName);
         
@@ -76,7 +80,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if(Double.compare(childElement.totalPlan, 0.0) != 0) {
         	progressBar.setMax((int) childElement.totalPlan);
         	if(childElement.totalAmount > childElement.totalPlan) {
+        		extraLabel.setText("(+" + Double.toString(childElement.totalAmount - childElement.totalPlan) + ")");
         		progressBar.setProgress((int) childElement.totalPlan);
+        		progressBar.setProgressDrawable(convertView.getResources().getDrawable(R.drawable.total_progress_bar_red));
         	}
         	b = true;
         }

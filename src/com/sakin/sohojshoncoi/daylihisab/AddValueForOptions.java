@@ -66,7 +66,7 @@ public class AddValueForOptions extends ListFragment implements
 			
 			Calendar cal = Calendar.getInstance();
 			datebutton =(Button) rootView.findViewById (R.id.dailydatebutton);
-			datebutton.setBackgroundResource(R.drawable.date_button);
+			datebutton.setBackgroundResource(R.drawable.optionbtn);
 			datebutton.setTypeface(Utils.banglaTypeFace);
 			datebutton.setText("তারিখ");
 			datebutton.setOnClickListener(new OnClickListener() {
@@ -105,7 +105,7 @@ public class AddValueForOptions extends ListFragment implements
 			optionbtnay =(Button) rootView.findViewById (R.id.optionbuttonay);
 			optionbtnay.setBackgroundResource(R.drawable.optionbtn);
 			optionbtnay.setTypeface(Utils.banglaTypeFace);
-			optionbtnay.setText("আয়");
+			optionbtnay.setText("নতুন আয়ের পরিকল্পনা");
 			optionbtnay.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -123,7 +123,7 @@ public class AddValueForOptions extends ListFragment implements
 			optionbtnbey =(Button) rootView.findViewById (R.id.optionbuttonbey);
 			optionbtnbey.setBackgroundResource(R.drawable.optionbtn);
 			optionbtnbey.setTypeface(Utils.banglaTypeFace);
-			optionbtnbey.setText("ব্যয়");
+			optionbtnbey.setText("নতুন ব্যয়ের পরিকল্পনা");
 			optionbtnbey.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -138,7 +138,7 @@ public class AddValueForOptions extends ListFragment implements
 			});
 			
 			plansave= (Button) rootView.findViewById (R.id.plansavebutton);
-			plansave.setBackgroundResource(R.drawable.optionbtn);
+			plansave.setBackgroundResource(R.drawable.save_button);
 			plansave.setTypeface(Utils.banglaTypeFace);
 			plansave.setText("সেভ");
 			plansave.setOnClickListener(new OnClickListener() {

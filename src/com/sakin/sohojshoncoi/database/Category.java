@@ -8,7 +8,21 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "category")
 public class Category {
 
-	public enum CategoryType {INCOME, EXPENSE};
+	public enum CategoryType {INCOME ("INCOME"), EXPENSE ("EXPENSE");
+		private final String name;       
+	
+	    private CategoryType(String s) {
+	        name = s;
+	    }
+	
+	    public boolean equalsName(String otherName){
+	        return (otherName == null)? false:name.equals(otherName);
+	    }
+	
+	    public String toString(){
+	       return name;
+	    }
+	};
 	
 	@DatabaseField(generatedId = true)
     private int category_id;

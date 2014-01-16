@@ -91,7 +91,7 @@ public class AddNewHisab extends Fragment
 		try {
 			Category cat = SSDAO.getSSdao().getCategoryFromID(transaction.getCategory().getCategoryID());
 			this.categoryName = cat.getName();
-			if(cat.getType().toString().equals("INCOME")) {
+			if(cat.getType().equalsName("INCOME")) {
 				this.aeOrBae = false;
 			} else {
 				this.aeOrBae = true;
@@ -295,7 +295,7 @@ public class AddNewHisab extends Fragment
 	}
 	
 	private void doReset(){
-		aeOrBae = true;
+//		aeOrBae = true;
 		if(aeOrBae){
 			aeBaeSwitch.setBackgroundResource(R.drawable.baebutton);
 		} else {

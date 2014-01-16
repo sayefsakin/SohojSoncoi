@@ -44,8 +44,13 @@ public class MonthlyReportFragment extends Fragment {
 		year = getArguments().getInt(Utils.YEAR_ID);
 		
 		ProgressBar totalProgressBar = (ProgressBar) rootView.findViewById(R.id.totalProgressBar);
+		totalProgressBar.setProgressDrawable(rootView.getResources().getDrawable(R.drawable.total_progress_bar));
+		totalProgressBar.setProgress(1);
 		setText(rootView, R.id.ajLabel, "");
 		setText(rootView, R.id.totalLabel, "সর্বমোট");
+		setText(rootView, R.id.planLabel, "পরিকল্পনা");
+		TextView extraText = (TextView) rootView.findViewById(R.id.extraText);
+		extraText.setText("");
 		
 		Calendar st = Calendar.getInstance();
 		st.set(year, month, 1, 0, 0, 0);
@@ -85,7 +90,9 @@ public class MonthlyReportFragment extends Fragment {
         if(Double.compare(totalPlan, 0.0) != 0){
         	totalProgressBar.setMax((int) totalPlan);
         	if(totalAmount > totalPlan) {
+        		extraText.setText("(+" + Double.toString(totalAmount - totalPlan) + ")");
         		totalProgressBar.setProgress((int) totalPlan);
+        		totalProgressBar.setProgressDrawable(rootView.getResources().getDrawable(R.drawable.total_progress_bar_red));
         	}
         	b = true;
         }     

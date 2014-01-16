@@ -24,6 +24,16 @@
         android:layout_toRightOf="@id/itemTotalLabel" />
     
     <TextView 
+        android:id="@+id/itemExtraText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test_text"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/red"
+        android:layout_alignTop="@id/itemTotalLabel"
+        android:layout_toRightOf="@id/itemAmountText" />
+    
+    <TextView 
         android:id="@+id/itemPlanText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/itemTotalLabel"
         android:layout_alignRight="@id/itemPlanText"
-        android:progressDrawable="@drawable/total_progress_bar"
         android:textColor="@color/white"
         android:layout_below="@id/itemTotalLabel" />
 
