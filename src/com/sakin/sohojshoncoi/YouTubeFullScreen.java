@@ -17,6 +17,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayer.PlayerStyle;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.sakin.sohojshoncoi.custom.VideoElement;
 
@@ -32,10 +33,10 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	private LinearLayout baseLayout;
 	private YouTubePlayerView playerView;
 	private YouTubePlayer player;
-	private Button fullscreenButton;
+//	private Button fullscreenButton;
 	private TextView videoTitle;
 	private TextView videoDetails;
-	private CompoundButton checkbox;
+//	private CompoundButton checkbox;
 	private View otherViews;
 	private VideoElement videoElement;
 
@@ -53,15 +54,15 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    
 	    baseLayout = (LinearLayout) findViewById(R.id.youtube_layout);
 	    playerView = (YouTubePlayerView) findViewById(R.id.player);
-	    fullscreenButton = (Button) findViewById(R.id.fullscreen_button);
-	    checkbox = (CompoundButton) findViewById(R.id.landscape_fullscreen_checkbox);
+//	    fullscreenButton = (Button) findViewById(R.id.fullscreen_button);
+//	    checkbox = (CompoundButton) findViewById(R.id.landscape_fullscreen_checkbox);
 	    otherViews = findViewById(R.id.other_views);
 	    videoTitle = (TextView) findViewById(R.id.video_title);
 	    videoDetails = (TextView) findViewById(R.id.video_details);
 
-	    checkbox.setOnCheckedChangeListener(this);
+//	    checkbox.setOnCheckedChangeListener(this);
 	    // You can use your own button to switch to fullscreen too
-	    fullscreenButton.setOnClickListener(this);
+//	    fullscreenButton.setOnClickListener(this);
 	    
 	    playerView.initialize(Utils.DEVELOPER_KEY, this);
 
@@ -85,6 +86,8 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    player.setOnFullscreenListener(this);
 	    if (!wasRestored) {
 	    	player.cueVideo(videoElement.getVideoUrl().substring(videoElement.getVideoUrl().indexOf('=') + 1));
+	    	PlayerStyle style = PlayerStyle.MINIMAL;
+		    player.setPlayerStyle(style);
 	    }
 	}
 
@@ -150,9 +153,9 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	}
 	
 	private void setControlsEnabled() {
-		checkbox.setEnabled(player != null
-				&& getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
-		fullscreenButton.setEnabled(player != null);
+//		checkbox.setEnabled(player != null
+//				&& getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
+//		fullscreenButton.setEnabled(player != null);
 	}
 
 	@Override

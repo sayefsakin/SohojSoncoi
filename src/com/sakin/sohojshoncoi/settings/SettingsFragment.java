@@ -50,6 +50,13 @@ public class SettingsFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		if(position == 0){
 			searchFile();
+		} else if(position == 1) {
+			Fragment addNewHisab = new Help();
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			ft.remove(SettingsFragment.this);
+            ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
+            ft.addToBackStack("settings");
+            ft.commit();
 		} else if(position == 2) {
 			Fragment addNewHisab = new AboutUs();
 			FragmentTransaction ft = getFragmentManager().beginTransaction();

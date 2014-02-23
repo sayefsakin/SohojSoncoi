@@ -47,6 +47,7 @@ public class Utils {
 	public static final String VIDEO_ELEMENT_ID = "video_element";
 	
 	public static final String ADDNEWHISABTAG = "add_new_hisab_fragment";
+	public static final String SETTINGSTAG = "settingstag";
 	public static final String ADDNEWPLANNINGTAG = "add_new_planning_fragment";
 	
 	public final static int MAX_Video_Fragment = 5;

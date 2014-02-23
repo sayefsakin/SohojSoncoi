@@ -69,8 +69,10 @@ public class XMLParser extends AsyncTask<String, Void, List<VideoElement>>{
 //				((SofolVideosFragment) fragment).updateDisplayWithList(result);
 //			}
 //		}
-		if((Utils.SELECTED_ITEM == 1 && id < 5) || (Utils.SELECTED_ITEM == 3 && id >=5)) {
-			ViewPager pager = (ViewPager) ac.findViewById((id<5)?R.id.pager:R.id.uporiae_pager);
+		if((Utils.SELECTED_ITEM == 1 && id < 5) || (Utils.SELECTED_ITEM == 3 && id >=5) ||
+				Utils.SELECTED_ITEM == 2) {
+			ViewPager pager = (ViewPager) ac.findViewById((id<5)?R.id.pager:
+				Utils.SELECTED_ITEM == 2?R.id.soncoi_pager:R.id.uporiae_pager);
 			Fragment fragment = (Fragment) pager.getAdapter().instantiateItem(pager, id%5);
 			if(fragment != null) {
 				if(fragment.getView() != null) {

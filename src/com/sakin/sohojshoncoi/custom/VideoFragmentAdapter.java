@@ -53,7 +53,8 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         duration.setTypeface(Utils.banglaTypeFace);
         duration.setTextColor(Color.WHITE);
         
-        if(video.getVideoTitle().equalsIgnoreCase("No video found")) {
+        if(video.getVideoTitle().equalsIgnoreCase("No video found") ||
+        		video.getVideoTitle().equalsIgnoreCase("Loading....") ) {
         	duration.setText("");
         } else {
         int d = video.getVideoDuration();

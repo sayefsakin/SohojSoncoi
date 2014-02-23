@@ -76,7 +76,7 @@ public class SoncoiBriddhi extends Fragment {
         for(int i=0; i<totalTabs; i++){
         	args = new Bundle();
         	args.putString(Utils.TAB_URL_ID, playlist_url[i]);
-    		args.putInt(Utils.TAB_ID, i + totalTabs);
+    		args.putInt(Utils.TAB_ID, i + 10);
     		ActionBar.Tab curTab = CreateNewTab(bar, i);
     		mTabsAdapter.addTab(curTab, SofolVideosFragment.class, args);
         }
