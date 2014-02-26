@@ -2,11 +2,14 @@ package com.sakin.sohojshoncoi.daylihisab;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.TabsAdapter;
+
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -29,19 +32,19 @@ public class MonthlyReport extends Fragment {
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
 		}
-		Utils.setActionBarTitle(getActivity(), "আয়/ব্যয়ের রিপোর্ট");
+		Utils.setActionBarTitle(getActivity(), "Avq/e¨‡qi wi‡cvU©");
 	    return view;
 	}
 	
 	@SuppressLint("SimpleDateFormat")
 	private void loadTabs(View view){
 		Utils.print("load Tabs called");
-		final ActionBar bar = getActivity().getActionBar();
+		final ActionBar bar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS );
 		bar.removeAllTabs();
 		monthPager = (ViewPager) view.findViewById(R.id.view_pager);
 
-        mTabsAdapter = new TabsAdapter(getActivity(), monthPager);
+        mTabsAdapter = new TabsAdapter((ActionBarActivity) getActivity(), monthPager);
         monthPager.setOffscreenPageLimit(1);
 
         Bundle args = null;

@@ -35,6 +35,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -67,7 +68,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Main extends FragmentActivity {
+public class Main extends ActionBarActivity {
 
 	private String[] drawerItems;
     private DrawerLayout mDrawerLayout;
@@ -81,7 +82,10 @@ public class Main extends FragmentActivity {
 		setContentView(R.layout.main);
 		init(savedInstanceState);
 		//create the drawer
-		drawerItems = getResources().getStringArray(R.array.drawermenulist);
+		drawerItems = getResources().getStringArray(R.array.supportdrawermenulist);
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			drawerItems = getResources().getStringArray(R.array.drawermenulist);
+		}
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -92,8 +96,8 @@ public class Main extends FragmentActivity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         
      // enable ActionBar app icon to behave as action to toggle nav drawer
-        getActionBar().setDisplayHomeAsUpEnabled(false);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(true);
         
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -105,11 +109,11 @@ public class Main extends FragmentActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
                 ) {
             public void onDrawerClosed(View view) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            	supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
             
             public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -202,6 +206,7 @@ public class Main extends FragmentActivity {
 		Utils.createCustomCategory(Main.this);
 		//include bangla font
 		Utils.banglaTypeFace = Typeface.createFromAsset(getAssets(), getString(R.string.font_solaimanlipi));
+		Utils.banglaTypeFaceSutonny = Typeface.createFromAsset(getAssets(), getString(R.string.font_sutonny));
 //		try {
 //			SSDAO.getSSdao().deleteAccountByName("User");
 //		} catch (SQLException e) {
@@ -211,7 +216,7 @@ public class Main extends FragmentActivity {
 		Utils.createSingleAccount();
 		
 		//set the title
-		Utils.setActionBarTitle(this, "সহজ সঞ্চয়");
+		Utils.setActionBarTitle(this, "mnR mÂq");
 		Utils.pendingIntents = new HashMap<Integer, PendingIntent>();
 		setupAlarm();
 	}
@@ -266,7 +271,13 @@ public class Main extends FragmentActivity {
 	
 	private void showExitDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setMessage("আপনি কি সত্যিই বের হতে চান?")
+		String builderMessage = "Avcwb wK mwZ¨B †ei n‡Z Pvb?";
+		Typeface tf = Utils.banglaTypeFaceSutonny;
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			builderMessage = "আপনি কি সত্যিই বের হতে চান?";
+			tf = Utils.banglaTypeFace;
+		}
+	    builder.setMessage(builderMessage)
 	           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 	               public void onClick(DialogInterface dialog, int id) {
 	            	   finish();
@@ -280,7 +291,7 @@ public class Main extends FragmentActivity {
 	    builder.setCancelable(false);
 	    AlertDialog alert = builder.show();
 	    TextView msgView = (TextView) alert.findViewById(android.R.id.message);
-	    msgView.setTypeface(Utils.banglaTypeFace);
+	    msgView.setTypeface(tf);
 	}
 //	private NotificationManager createNotificationAndNotify(Context c, String msg, double amount, int rep) {
 //		NotificationCompat.Builder mBuilder =
@@ -379,7 +390,7 @@ public class Main extends FragmentActivity {
         }
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, tag).commit();
         
-        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 //        // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);

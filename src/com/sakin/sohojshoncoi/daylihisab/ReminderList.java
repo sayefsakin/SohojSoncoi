@@ -71,7 +71,7 @@ public class ReminderList extends ListFragment
 				}
 			}
 		}
-		Utils.setActionBarTitle(getActivity(), "বিলের রিমাইন্ডারসমূহ");
+		Utils.setActionBarTitle(getActivity(), "we‡ji wigvBÛvimg~n");
 		return view;
 	}
 	
@@ -113,7 +113,7 @@ public class ReminderList extends ListFragment
 	  	if(!editMode) {
 	  		isRefresh = true;
 		  	Fragment addReminder = new AddReminder((Reminder)l.getItemAtPosition(position));
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(ReminderList.this);
 		    ft.add(R.id.content_frame, addReminder);
 		    ft.addToBackStack("reminderlist");
@@ -175,7 +175,7 @@ public class ReminderList extends ListFragment
 	private void goToAddNewPage() {
 		isRefresh = true;
 		Fragment addReminder = new AddReminder();
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 		ft.remove(ReminderList.this);
         ft.add(R.id.content_frame, addReminder);
         ft.addToBackStack("reminderlist");
@@ -188,18 +188,18 @@ public class ReminderList extends ListFragment
 		if(editMode){
 			listView.setOnTouchListener(touchListener);
         	listView.setOnScrollListener(touchListener.makeScrollListener());
-        	Utils.showToast(getActivity(), "Swipe to delete item");
+        	Utils.showEnglishToast(getActivity(), "Swipe to delete item");
 		} else {
 			listView.setOnTouchListener(null);
         	listView.setOnScrollListener(null);
-        	Utils.showToast(getActivity(), "Normal Mode");
+        	Utils.showEnglishToast(getActivity(), "Normal Mode");
 		}
 	}
 	
 	private void goToFilter() {
 		isRefresh = false;
 		Fragment chooseFilter = new ChooseFilter(ReminderList.this);
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 		ft.remove(ReminderList.this);
         ft.add(R.id.content_frame, chooseFilter);
         ft.addToBackStack(null);

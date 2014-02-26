@@ -28,7 +28,7 @@ public class AboutUs extends Fragment {
 		String customHtml = "<html><head><style type=\"text/css\">.heading{	font-size: medium;	text-decoration: none;	color: #7d7dfe;}.sub{	font-size: large; text-decoration: none; color: white;}</style></head><body bgcolor='#000016'><center><h1 style=\"color:white;\">Credits</h1></br><div style=\"color:red;font-size:25px;font-weight:bold\">SOHOJ SONCHOY</div><div class='sub'>This App is Created by</br> 'DU Dreamers'</br>for EATL Prothom Alo App Contest 2014</br>Version: 1.0</div></br><div class='heading'>Concept</div><div class='sub'>Amit Kumar Das</div></br><div class='heading'>Project Lead & Lead Programmer</div><div class='sub'>Sayef Azad Sakin</div></br><div class='heading'>Programmer</div><div class='sub'>Tamal Adhikary</div></br><div class='heading'>App Design</div><div class='sub'>Amit Kumar Das</br>Tamal Adhikary</br>Sayef Azad Sakin</br>Nazmus Sakib Miazi</div></br><div class='heading'>Bug fix and Testing </div><div class='sub'>Nazmus Sakib Miazi</br>Amit Kumar Das</div></br><div class='heading'>User Interface Design and Illustration</div><div class='sub'>Amit Kumar Das</br>Sayef Azad Sakin</div></br></center></body></html>";
 		webView.loadDataWithBaseURL("http://www.example.com", customHtml, "text/html", null, null);
 		
-		Utils.setActionBarTitle(getActivity(), "Credits");
+		Utils.setActionBarTitle(getActivity(), "mnR mÂq");
 		
 		return rootView;
 	}

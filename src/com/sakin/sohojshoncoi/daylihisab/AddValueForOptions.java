@@ -112,7 +112,7 @@ public class AddValueForOptions extends ListFragment implements
 				public void onClick(View v) {
 					
 					Fragment categoryFragment = new CategoryFragment(AddValueForOptions.this, false);
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 					ft.remove(AddValueForOptions.this);
 	                ft.add(R.id.content_frame, categoryFragment);
 	                ft.addToBackStack("addvalueforoptions");
@@ -129,7 +129,7 @@ public class AddValueForOptions extends ListFragment implements
 				@Override
 				public void onClick(View v) {
 					Fragment categoryFragment = new CategoryFragment(AddValueForOptions.this, true);
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 					ft.remove(AddValueForOptions.this);
 	                ft.add(R.id.content_frame, categoryFragment);
 	                ft.addToBackStack("addvalueforoptions");
@@ -155,7 +155,7 @@ public class AddValueForOptions extends ListFragment implements
 			ViewGroup parent = (ViewGroup) rootView.getParent();
 			parent.removeView(rootView);
 		}
-		Utils.setActionBarTitle(getActivity(), "নতুন পরিকল্পনা");
+		Utils.setActionBarTitle(getActivity(), "bZzb cwiKíbv");
 	    return rootView;
 	}
 	public class OptionList{
@@ -259,7 +259,7 @@ public class AddValueForOptions extends ListFragment implements
 		try {
 			boolean b = checkValidity();
 			if(b == false && isEdit == false) {
-				Utils.showToast(getActivity(), "Plan for this month already set. Please change the month.");
+				Utils.showToast(getActivity(), "GB gv‡mi Rb¨ cwiKíbv B‡Zvg‡a¨B †bqv n‡q‡Q");
 				return;
 			}
 			if(isEdit) {
@@ -281,7 +281,7 @@ public class AddValueForOptions extends ListFragment implements
 				planning.setMonth(Month);
 				planning.setYear(Year);
 				SSDAO.getSSdao().getPlanningDAO().update(planning);
-				Utils.showToast(getActivity(), "পরিকল্পনা পরিবর্তন সংরক্ষিত");
+				Utils.showToast(getActivity(), "cwiKíbv cwieZ©b msiw¶Z");
 			} else {
 				Planning plan = new Planning(Utils.userAccount, 0.0, 0.0, Month, Year);
 				SSDAO.getSSdao().getPlanningDAO().create(plan);
@@ -309,15 +309,15 @@ public class AddValueForOptions extends ListFragment implements
 				plan.setAeAmount(ae);
 				plan.setBaeAmount(bae);
 				SSDAO.getSSdao().getPlanningDAO().update(plan);
-				Utils.showToast(getActivity(), "পরিকল্পনা সংরক্ষিত");
+				Utils.showToast(getActivity(), "cwiKíbv msiw¶Z");
 			}
 		} catch (SQLException e) {
 			Utils.print(e.toString());
 		}
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 		ft.remove(AddValueForOptions.this);
         ft.commit();
-        getFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack();
 	}
 	
 }

@@ -217,7 +217,7 @@ public class AddReminder extends Fragment
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
 		}
-		Utils.setActionBarTitle(getActivity(), "নতুন রিমাইন্ডার");
+		Utils.setActionBarTitle(getActivity(), "bZzb wigvBÛvi");
 	    return view;
 	}
 	
@@ -230,12 +230,12 @@ public class AddReminder extends Fragment
 	
 	public void showDatePickerDialog(View v) {
 	    DialogFragment newFragment = new DatePickerFragment(AddReminder.this, this.dateTime);
-	    newFragment.show(getFragmentManager(), "datePicker");
+	    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
 	}
 	
 	public void showTimePickerDialog(View v) {
 	    DialogFragment newFragment = new TimePickerFragment(AddReminder.this, this.dateTime);
-	    newFragment.show(getFragmentManager(), "timePicker");
+	    newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
 	}
 	
 	public void showRepeatedPickerDialog(View v) {
@@ -243,7 +243,7 @@ public class AddReminder extends Fragment
 						Reminder.Repeat.DAILY.name(),
 						Reminder.Repeat.NONE.name() };
 	    DialogFragment newFragment = new ChooseDialogFragment(AddReminder.this, "", list);
-	    newFragment.show(getFragmentManager(), "itemPicker");
+	    newFragment.show(getActivity().getSupportFragmentManager(), "itemPicker");
 	}
 	
 	private void doReset(){
@@ -262,13 +262,13 @@ public class AddReminder extends Fragment
 		description = descriptionEditText.getText().toString();
 		amount = Double.parseDouble(mulloEditText.getText().toString());
 		if(alarmSwitch.isChecked() && statusSwitch.isChecked()){
-			Utils.showToast(getActivity(), "পরিশোধিত বিলের এলার্ম ডিসেলেক্ট করুন");
+			Utils.showToast(getActivity(), "cwi‡kvwaZ we‡ji Gjvg© wW‡m‡j± Ki“b");
 			return;
 		}
 		if(descriptionEditText.length() == 0 ||
 				Double.compare(amount, 0.0) == 0) {
 			
-			Utils.showToast(getActivity(), "সকল ঘড় পুরন করুন");
+			Utils.showToast(getActivity(), "mKj Ni c~iY Ki“b");
 		} else {
 			int reminderID = 0;
 			if(isEdit) {
@@ -286,7 +286,7 @@ public class AddReminder extends Fragment
 				
 				SSDAO.getSSdao().getReminderDAO().update(reminder);
 				reminderID = reminder.getReminderID();
-				Utils.showToast(getActivity(), "রিমাইন্ডার পরিবর্তন সংরক্ষিত");
+				Utils.showToast(getActivity(), "wigvBÛvi cwieZ©b msiw¶Z");
 			} else {
 				Reminder.Status st;
 				if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
@@ -297,15 +297,15 @@ public class AddReminder extends Fragment
 				Utils.print("reminder id: " + Integer.toString(rem.getReminderID()));
 				reminderID = rem.getReminderID();
 				this.reminder = rem;
-				Utils.showToast(getActivity(), "রিমাইন্ডার সংরক্ষিত");
+				Utils.showToast(getActivity(), "wigvBÛvi msiw¶Z");
 			}
 			if(alarm){
 				setAlarm(reminderID);
 			}
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(AddReminder.this);
 	        ft.commit();
-	        getFragmentManager().popBackStack();
+	        getActivity().getSupportFragmentManager().popBackStack();
 		}
 	}
 	

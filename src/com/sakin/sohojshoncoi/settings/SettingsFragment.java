@@ -42,7 +42,7 @@ public class SettingsFragment extends ListFragment {
 		    R.layout.settings_item, values);
 		setListAdapter(adapter);
 		
-		Utils.setActionBarTitle(getActivity(), "সেটিংস");
+		Utils.setActionBarTitle(getActivity(), "†mwUsm");
 		return rootView;
 	}
 	
@@ -52,14 +52,14 @@ public class SettingsFragment extends ListFragment {
 			searchFile();
 		} else if(position == 1) {
 			Fragment addNewHisab = new Help();
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(SettingsFragment.this);
             ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
             ft.addToBackStack("settings");
             ft.commit();
 		} else if(position == 2) {
 			Fragment addNewHisab = new AboutUs();
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(SettingsFragment.this);
             ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
             ft.addToBackStack("settings");

@@ -7,12 +7,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <Switch 
+    <ToggleButton 
 	    android:id="@+id/onOffButton"
-	    android:layout_width="fill_parent"
+	    android:layout_width="100dip"
 	    android:layout_height="45dip"
 	    android:textOn="Filter On"
 	    android:textOff="Filter Off"
+	    android:background="@drawable/toggletoswitch"
 	    android:layout_marginLeft="15dip"
 	    android:layout_marginRight="15dip" />
     

@@ -1,7 +1,5 @@
 package com.sakin.sohojshoncoi.uporiae;
 
-
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -10,6 +8,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +45,7 @@ public class UporiAe extends Fragment {
 				Toast.makeText(getActivity(), R.string.lost_connection, Toast.LENGTH_SHORT).show();
 			}
         }
-		Utils.setActionBarTitle(getActivity(), "উপরি আয়");
+		Utils.setActionBarTitle(getActivity(), "Dcwi Avq");
 	    return view;
 	}
 	
@@ -62,14 +62,17 @@ public class UporiAe extends Fragment {
 	}
 	
 	private void loadTabs(View view){
-		final ActionBar bar = getActivity().getActionBar();
+		final ActionBar bar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS );
 		bar.removeAllTabs();
         uporiaePager = (ViewPager) view.findViewById(R.id.uporiae_pager);
 
-        mTabsAdapter = new TabsAdapter(getActivity(), uporiaePager);
+        mTabsAdapter = new TabsAdapter((ActionBarActivity) getActivity(), uporiaePager);
         playlist_url = getResources().getStringArray(R.array.uporiae_tab_url);
-        tab_title = getResources().getStringArray(R.array.uporiae_tab_title);
+        tab_title = getResources().getStringArray(R.array.support_uporiae_tab_title);
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        	tab_title = getResources().getStringArray(R.array.uporiae_tab_title);
+        }
         int totalTabs = tab_title.length;
         uporiaePager.setOffscreenPageLimit(totalTabs);
         
@@ -88,7 +91,11 @@ public class UporiAe extends Fragment {
 		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout layoutView = (LinearLayout)inflater.inflate(R.layout.tab_title_view, null);
 		TextView title = (TextView)layoutView.findViewById(R.id.tab_title_text);
-		title.setTypeface(Utils.banglaTypeFace);
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			title.setTypeface(Utils.banglaTypeFace);
+		} else {
+			title.setTypeface(Utils.banglaTypeFaceSutonny);
+		}
 		title.setText(tab_title[ind]);
 		return bar.newTab().setCustomView(layoutView);
 	}

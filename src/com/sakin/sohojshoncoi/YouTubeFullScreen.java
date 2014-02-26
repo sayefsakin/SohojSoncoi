@@ -48,7 +48,7 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    
 	    setContentView(R.layout.youtube_full_screen);
 		
-	    Utils.setActionBarTitle(this, "সহজ সঞ্চয়");
+	    Utils.setActionBarTitle(this, "mnR mÂq");
 	    getActionBar().setDisplayHomeAsUpEnabled(true);
 	    getActionBar().setHomeButtonEnabled(true);
 	    

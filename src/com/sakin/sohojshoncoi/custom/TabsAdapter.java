@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 import com.sakin.sohojshoncoi.Utils;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.ActionBar.TabListener;
-import android.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBar.TabListener;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -35,10 +35,10 @@ public class TabsAdapter extends FragmentStatePagerAdapter implements TabListene
 		}
 	}
 
-	public TabsAdapter(FragmentActivity activity, ViewPager pager) {
+	public TabsAdapter(ActionBarActivity activity, ViewPager pager) {
 		super(activity.getSupportFragmentManager());
 		mContext = activity;
-		mActionBar = activity.getActionBar();
+		mActionBar = activity.getSupportActionBar();//((ActionBarActivity) getActivity()).getSupportActionBar();
 		mViewPager = pager;
 		mViewPager.setAdapter(this);
 		mViewPager.setOnPageChangeListener(this);

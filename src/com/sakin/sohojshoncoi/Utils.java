@@ -25,6 +25,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.app.ActionBarActivity;
 
 import com.sakin.sohojshoncoi.custom.TypefaceSpan;
 import com.sakin.sohojshoncoi.database.Account;
@@ -36,6 +37,7 @@ public class Utils {
 	public static final boolean DEBUG = true;
 	public static Account userAccount = null;
 	public static Typeface banglaTypeFace = null;
+	public static Typeface banglaTypeFaceSutonny = null;
     public static BroadcastReceiver broadcastReceiver;
     public static AlarmManager alarmManagerm;
     public static Vibrator vibrator;
@@ -127,9 +129,9 @@ public class Utils {
 	
 	public static void setActionBarTitle(Activity ac, String ss){
 		SpannableString s = new SpannableString(ss);
-		s.setSpan(new TypefaceSpan(ac, Utils.banglaTypeFace, "banglaTypeFace"), 0, s.length(),
+		s.setSpan(new TypefaceSpan(ac, Utils.banglaTypeFaceSutonny, "banglaTypeFaceSutonny"), 0, s.length(),
 		        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		ac.getActionBar().setTitle(s);
+		((ActionBarActivity) ac).getSupportActionBar().setTitle(s);
 	}
 	
 	public static void showToast(Activity ac, String msg){
@@ -139,7 +141,27 @@ public class Utils {
 		toastView.setBackgroundColor(Color.DKGRAY);
 		
 		TextView tv = new TextView(ac.getApplicationContext());
-		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setTypeface(Utils.banglaTypeFaceSutonny);
+		tv.setText(msg);
+		tv.setTextSize(16);
+//		tv.setBackgroundColor(color.darker_gray);
+		toastView.addView(tv);
+		
+		
+		Toast toast = new Toast(ac.getApplicationContext());
+		toast.setView(toastView);
+		toast.setDuration(Toast.LENGTH_SHORT);
+		toast.show();
+	}
+	
+	public static void showEnglishToast(Activity ac, String msg){
+		RelativeLayout toastView = new RelativeLayout(ac.getApplicationContext());
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(400,200);
+		toastView.setLayoutParams(params);
+		toastView.setBackgroundColor(Color.DKGRAY);
+		
+		TextView tv = new TextView(ac.getApplicationContext());
+//		tv.setTypeface(Utils.banglaTypeFaceSutonny);
 		tv.setText(msg);
 		tv.setTextSize(16);
 //		tv.setBackgroundColor(color.darker_gray);

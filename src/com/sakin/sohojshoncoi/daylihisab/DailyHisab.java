@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,9 +36,9 @@ public class DailyHisab extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.dailyhisab, container, false);
-		Utils.setActionBarTitle(getActivity(), "দৈনিক হিসাব");
+		Utils.setActionBarTitle(getActivity(), "ˆ`wbK wnmve");
 		double balance = getCurrentBalance();
-		setText(view, "ব্যালেন্সঃ " + Double.toString(balance));
+		setText(view, "e¨v‡jÝt " + Double.toString(balance));
 		
 		Button addNewButton = (Button) view.findViewById(R.id.addNewButton);
 		addNewButton.setOnClickListener(new OnClickListener() {
@@ -49,7 +50,7 @@ public class DailyHisab extends Fragment {
 //				addNewHisabIntent.putExtra(Utils.ALARM_REPEATED, 1);
 //				startActivity(addNewHisabIntent);
 				Fragment addNewHisab = new AddNewHisab();
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 				ft.remove(DailyHisab.this);
                 ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
                 ft.addToBackStack("dailyhisab");
@@ -62,7 +63,7 @@ public class DailyHisab extends Fragment {
 			
 			public void onClick(View v) {
 				Fragment reminder = new ReminderList();
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 				ft.remove(DailyHisab.this);
                 ft.add(R.id.content_frame, reminder);
                 ft.addToBackStack("dailyhisab");
@@ -76,7 +77,7 @@ public class DailyHisab extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				Fragment hisabList = new HisabList();
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 				ft.remove(DailyHisab.this);
                 ft.add(R.id.content_frame, hisabList);
                 ft.addToBackStack("dailyhisab");
@@ -90,7 +91,7 @@ public class DailyHisab extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				Fragment monthlyReport = new MonthlyReport();
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 				ft.remove(DailyHisab.this);
                 ft.add(R.id.content_frame, monthlyReport);
                 ft.addToBackStack("dailyhisab");
@@ -104,7 +105,7 @@ public class DailyHisab extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				Fragment planningList = new PlanningList();
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 				ft.remove(DailyHisab.this);
                 ft.add(R.id.content_frame, planningList);
                 ft.addToBackStack("dailyhisab");
@@ -121,7 +122,7 @@ public class DailyHisab extends Fragment {
 			List<Reminder> remList = SSDAO.getSSdao().getReminderFromDate(new Date());
 			if(remList == null || remList.size() == 0) {
 				currentViewID++;
-				addRowsToBill(currentViewID - 1,"কোন বকেয়া বিল নেই","","");
+				addRowsToBill(currentViewID - 1,"No bill found","","");
 			} else {
 				for(int j = 0; j<remList.size(); j++ ) {
 					Reminder rem = remList.get(j);
@@ -207,9 +208,9 @@ public class DailyHisab extends Fragment {
 		mainLayout.addView(titleView, bokeaBillTitleParams);
 		
 		TextView tv = new TextView(getActivity());
-		tv.setText("বকেয়া বিল");
+		tv.setText("e‡Kqv wej");
 		tv.setTextColor(Color.WHITE);
-		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setTypeface(Utils.banglaTypeFaceSutonny);
 		tv.setTextSize(20);
 
 		RelativeLayout.LayoutParams bokeaBillTitleTextParams =
@@ -276,7 +277,7 @@ public class DailyHisab extends Fragment {
 
 	public void setText(View view, String item) {
 		TextView tv = (TextView) view.findViewById(R.id.dailyhisabText);
-		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setTypeface(Utils.banglaTypeFaceSutonny);
 		tv.setText(item);
 	}
 	

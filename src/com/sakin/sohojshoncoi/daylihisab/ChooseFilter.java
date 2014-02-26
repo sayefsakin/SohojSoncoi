@@ -17,8 +17,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
@@ -40,7 +40,7 @@ public class ChooseFilter extends Fragment
     }
     
     private Button aeBaeButton, categoryButton, startDateButton, endDateButton, saveButton;
-	private Switch filterOnOffSwitch;
+	private ToggleButton filterOnOffSwitch;
     
 	View view;
 	private boolean filterOnOff;//true on, false off
@@ -73,11 +73,11 @@ public class ChooseFilter extends Fragment
 		if(view == null) {
 			view = inflater.inflate(R.layout.choose_filter, container, false);
 			
-			setText(R.id.startDateLabel, "এই তারিখ থেকেঃ");
-			setText(R.id.endDateLabel, "এই তারিখ পর্যন্তঃ");
-			setText(R.id.categoryLabel, "ক্যাটেগরিঃ");
+			setText(R.id.startDateLabel, "GB ZvwiL †_‡Kt");
+			setText(R.id.endDateLabel, "GB ZvwiL ch©š—t");
+			setText(R.id.categoryLabel, "K¨vUvMwit");
 
-			filterOnOffSwitch = (Switch) view.findViewById(R.id.onOffButton);
+			filterOnOffSwitch = (ToggleButton) view.findViewById(R.id.onOffButton);
 			filterOnOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -87,7 +87,7 @@ public class ChooseFilter extends Fragment
 			});
 			
 			aeBaeButton = (Button) view.findViewById(R.id.aeBaeButton);
-			aeBaeButton.setTypeface(Utils.banglaTypeFace);
+//			aeBaeButton.setTypeface(Utils.banglaTypeFace);
 			aeBaeButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -96,12 +96,14 @@ public class ChooseFilter extends Fragment
 			});
 			
 			categoryButton = (Button) view.findViewById(R.id.categoryButton);
-			categoryButton.setTypeface(Utils.banglaTypeFace);
+			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+				categoryButton.setTypeface(Utils.banglaTypeFace);
+			}
 			categoryButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Fragment categoryFragment = new CategoryFragment(ChooseFilter.this, aeOrBae);
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 					ft.remove(ChooseFilter.this);
 	                ft.add(R.id.content_frame, categoryFragment);
 	                ft.addToBackStack(null);
@@ -110,7 +112,7 @@ public class ChooseFilter extends Fragment
 			});
 			
 			startDateButton = (Button) view.findViewById(R.id.startDateButton);
-			startDateButton.setTypeface(Utils.banglaTypeFace);
+//			startDateButton.setTypeface(Utils.banglaTypeFace);
 			startDateButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -119,7 +121,7 @@ public class ChooseFilter extends Fragment
 			});
 			
 			endDateButton = (Button) view.findViewById(R.id.endDateButton);
-			endDateButton.setTypeface(Utils.banglaTypeFace);
+//			endDateButton.setTypeface(Utils.banglaTypeFace);
 			endDateButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -128,10 +130,10 @@ public class ChooseFilter extends Fragment
 			});
 			
 			saveButton = (Button) view.findViewById(R.id.saveButton);
-			saveButton.setTypeface(Utils.banglaTypeFace);
+			saveButton.setTypeface(Utils.banglaTypeFaceSutonny);
 			saveButton.setBackgroundResource(R.drawable.save_button);
 			saveButton.setTextColor(Color.WHITE);
-			saveButton.setText("দেখুন");
+			saveButton.setText("†`Lyb");
 			saveButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -151,19 +153,19 @@ public class ChooseFilter extends Fragment
 	public void setText(int id, String item) {
 		TextView tv = (TextView) view.findViewById(id);
 		tv.setTextColor(Color.WHITE);
-		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setTypeface(Utils.banglaTypeFaceSutonny);
 		tv.setText(item);
 	}
 	
 	public void showDatePickerDialog(View v, Calendar date, boolean t) {//start date true, end date false
 	    DialogFragment newFragment = new DatePickerFragment(ChooseFilter.this, date, t);
-	    newFragment.show(getFragmentManager(), "datePicker");
+	    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
 	}
 	
 	public void showRepeatedPickerDialog(View v) {
 		String[] list = {"Income", "Expense", "Both" };
 	    DialogFragment newFragment = new ChooseDialogFragment(ChooseFilter.this, "", list);
-	    newFragment.show(getFragmentManager(), "itemPicker");
+	    newFragment.show(getActivity().getSupportFragmentManager(), "itemPicker");
 	}
 	
 	private void changeVisibility(boolean visibility) {
@@ -198,7 +200,7 @@ public class ChooseFilter extends Fragment
 	
 	private void doSave() {
 		if(endDate.before(startDate)) {
-			Utils.showToast(getActivity(), "Invalid Date");
+			Utils.showToast(getActivity(), "ZvwiLwU Bbf¨vwjW");
 			return;
 		}
 		//need to handle date inclusion problem
@@ -207,10 +209,10 @@ public class ChooseFilter extends Fragment
 		Utils.print("end date: " + endDate.toString());
 		
 		mCallback.onFilterSelectedListener(categoryName, startDate, endDate, this.filterOnOff);
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 		ft.remove(ChooseFilter.this);
         ft.commit();
-        getFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack();
 	}
 	
 	@Override
@@ -251,12 +253,12 @@ public class ChooseFilter extends Fragment
 		if(item.equals("Income")) {
 			aeBaeButton.setText("Income");
 			categoryButton.setEnabled(true);
-			onCategorySelected("সকল আয়");
+			onCategorySelected("All Income");
 			this.aeOrBae = false;
 		} else if (item.equals("Expense")) {
 			aeBaeButton.setText("Expense");
 			categoryButton.setEnabled(true);
-			onCategorySelected("সকল ব্যয়");
+			onCategorySelected("All Expense");
 			this.aeOrBae = true;
 		} else {
 			aeBaeButton.setText("Both");

@@ -108,11 +108,11 @@ public class AddNewHisab extends Fragment
 			view = inflater.inflate(R.layout.addnewhisab, container, false);
 			Utils.print("addNewHisab created");
 
-			setText(R.id.mulloLabel, "মূল্যঃ");
-			setText(R.id.categoryLabel, "ক্যাটাগরিঃ");
-			setText(R.id.dateLabel, "তারিখঃ");
-			setText(R.id.descriptionLabel, "বর্ণনাঃ");
-			setText(R.id.pictureLabel, "ছবিঃ");
+			setText(R.id.mulloLabel, "g~j¨t");
+			setText(R.id.categoryLabel, "K¨vUvMwit");
+			setText(R.id.dateLabel, "ZvwiLt");
+			setText(R.id.descriptionLabel, "eY©bvt");
+			setText(R.id.pictureLabel, "Qwet");
 			
 			mulloEditText = (EditText) view.findViewById(R.id.mulloEditText);
 			descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditText);
@@ -140,17 +140,23 @@ public class AddNewHisab extends Fragment
 						aeBaeSwitch.setBackgroundResource(R.drawable.aebutton);
 					}
 					categoryName = "";
-					categoryButton.setText("পছন্দ করুন");
+					if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+						categoryButton.setText("পছন্দ করুন");
+					} else {
+						categoryButton.setText("Choose");
+					}
 				}
 			});
 			
 			categoryButton = (Button) view.findViewById(R.id.categoryButton);
-			categoryButton.setTypeface(Utils.banglaTypeFace);
+			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+				categoryButton.setTypeface(Utils.banglaTypeFace);
+			}
 			categoryButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Fragment categoryFragment = new CategoryFragment(AddNewHisab.this, aeOrBae);
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 					ft.remove(AddNewHisab.this);
 	                ft.add(R.id.content_frame, categoryFragment);
 	                ft.addToBackStack(null);
@@ -159,7 +165,7 @@ public class AddNewHisab extends Fragment
 			});
 			
 			dateButton = (Button) view.findViewById(R.id.dateButton);
-			dateButton.setTypeface(Utils.banglaTypeFace);
+//			dateButton.setTypeface(Utils.banglaTypeFace);
 			dateButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -169,8 +175,8 @@ public class AddNewHisab extends Fragment
 
 			saveButton = (Button) view.findViewById(R.id.saveButton);
 			saveButton.setBackgroundResource(R.drawable.save_button);
-			saveButton.setTypeface(Utils.banglaTypeFace);
-			saveButton.setText("সেভ");
+			saveButton.setTypeface(Utils.banglaTypeFaceSutonny);
+			saveButton.setText("†mf");
 			saveButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -180,8 +186,8 @@ public class AddNewHisab extends Fragment
 			
 			resetButton = (Button) view.findViewById(R.id.resetButton);
 			resetButton.setBackgroundResource(R.drawable.reset_button);
-			resetButton.setTypeface(Utils.banglaTypeFace);
-			resetButton.setText("রিসেট");
+			resetButton.setTypeface(Utils.banglaTypeFaceSutonny);
+			resetButton.setText("wi‡mU");
 			resetButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -194,20 +200,20 @@ public class AddNewHisab extends Fragment
 			ViewGroup parent = (ViewGroup) view.getParent();
 			parent.removeView(view);
 		}
-		Utils.setActionBarTitle(getActivity(), "নতুন আয়/ব্যয়");
+		Utils.setActionBarTitle(getActivity(), "bZzb Avq/e¨q");
 	    return view;
 	}
 
 	public void setText(int id, String item) {
 		TextView tv = (TextView) view.findViewById(id);
 		tv.setTextColor(Color.WHITE);
-		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setTypeface(Utils.banglaTypeFaceSutonny);
 		tv.setText(item);
 	}
 	
 	public void showDatePickerDialog(View v) {
 	    DialogFragment newFragment = new DatePickerFragment(AddNewHisab.this, this.date);
-	    newFragment.show(getFragmentManager(), "datePicker");
+	    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
 	}
 	
 	@Override
@@ -305,7 +311,11 @@ public class AddNewHisab extends Fragment
 		descriptionEditText.setText(description);
 		
 		if(categoryName.length() == 0) {
-			categoryButton.setText("পছন্দ করুন");
+			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+				categoryButton.setText("পছন্দ করুন");
+			} else {
+				categoryButton.setText("Choose");
+			}
 		} else {
 			categoryButton.setText(categoryName);			
 		}
@@ -326,7 +336,7 @@ public class AddNewHisab extends Fragment
 				descriptionEditText.length() == 0 ||
 				Double.compare(amount, 0.0) == 0) {
 			
-			Utils.showToast(getActivity(), "সকল শূন্যস্থান পুরন করুন");
+			Utils.showToast(getActivity(), "mKj k~b¨¯’vb c~iY Ki“b");
 		} else {
 			if(aeOrBae) {
 				amount *= -1.0;
@@ -353,7 +363,7 @@ public class AddNewHisab extends Fragment
 					transaction.setDate(date.getTime());
 					
 					SSDAO.getSSdao().getTransactionDAO().update(transaction);
-					Utils.showToast(getActivity(), "হিসাব পরিবর্তন সংরক্ষিত");
+					Utils.showToast(getActivity(), "wnmve cwieZ©b msiw¶Z");
 				} else {
 					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
 					String filePath = "";
@@ -368,16 +378,16 @@ public class AddNewHisab extends Fragment
 							amount,
 							filePath, size, date.getTime());
 					SSDAO.getSSdao().getTransactionDAO().create(transaction);
-					Utils.showToast(getActivity(), "হিসাব সংরক্ষিত");
+					Utils.showToast(getActivity(), "wnmve msiw¶Z");
 				}
 			} catch (SQLException e) {
 				Utils.print("SQL error in adding new transaction");
-				Utils.showToast(getActivity(), "সংরক্ষিত হয়নি, আবার চেষ্টা করুন!");
+				Utils.showToast(getActivity(), "msiw¶Z nqwb, Avevi †Póv Ki“b!");
 			}
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(AddNewHisab.this);
 	        ft.commit();
-	        getFragmentManager().popBackStack();
+	        getActivity().getSupportFragmentManager().popBackStack();
 		}
 	}
 	

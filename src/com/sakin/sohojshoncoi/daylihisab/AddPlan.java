@@ -16,7 +16,7 @@ public class AddPlan extends Activity {
 		
 		TextView tv = (TextView) findViewById(R.id.planText);
 		tv.setText("Add New Hisab Page");
-		Utils.setActionBarTitle(this, "ক্যাটেগরি");
+		Utils.setActionBarTitle(this, "K¨vUvMwi");
 	}
     
     @Override

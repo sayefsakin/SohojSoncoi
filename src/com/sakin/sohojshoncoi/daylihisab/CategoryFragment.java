@@ -58,16 +58,20 @@ public class CategoryFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.category_view, container, false);
-		Utils.setActionBarTitle(getActivity(), "ক্যাটাগরি");
+		Utils.setActionBarTitle(getActivity(), "K¨vUvMwi");
 		
 		GridView gridview = (GridView) view.findViewById(R.id.gridview);
 		Integer[] thumbs;
 		final String[] title;
 		if(aeOrBae) {
-			title = getResources().getStringArray(R.array.category_title_bae);
+			title = getResources().getStringArray(
+					android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB
+					?R.array.category_title_bae:R.array.support_category_title_bae);
 			thumbs = mThumbIdsBae;
 		} else {
-			title = getResources().getStringArray(R.array.category_title_ae);
+			title = getResources().getStringArray(
+					android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB
+					?R.array.category_title_ae:R.array.support_category_title_ae);
 			thumbs = mThumbIdsAe;
 		}
 	    gridview.setAdapter(new ImageAdapter(getActivity(),
@@ -76,10 +80,10 @@ public class CategoryFragment extends Fragment {
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 	        	mCallback.onCategorySelected(title[position]);
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 				ft.remove(CategoryFragment.this);
                 ft.commit();
-                getFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().popBackStack();
 	        }
 	    });
 	    
