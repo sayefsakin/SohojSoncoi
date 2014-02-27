@@ -16,7 +16,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.media.audiofx.Equalizer;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
@@ -69,7 +71,7 @@ public class Utils {
     public static final int CAMERA_RESULT_CANCELED = 0;
     public static final String IMAGE_DIRECTORY_NAME = "sohojsoncoi";
     
-    public static String ALARM_TONE_DIRECTORY = "/storage/sdcard0/zedge/ringtones/Fast N Furious_17.mp3";
+    public static String ALARM_TONE_DIRECTORY = "";
     
     public static int CURRENT_VISIBLE_PAGE;
     public static int HOME_PAGE = 1;
@@ -99,8 +101,15 @@ public class Utils {
 		//default categories
 		int i = 1, j;
 		List<Category> categories = new ArrayList<Category>();
-		String[] baeTitle = ac.getResources().getStringArray(R.array.category_title_bae);
-		String[] aeTitle = ac.getResources().getStringArray(R.array.category_title_ae);
+		String[] baeTitle = ac.getResources().getStringArray(R.array.support_category_title_bae);
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			baeTitle = ac.getResources().getStringArray(R.array.category_title_bae);
+		}
+		
+		String[] aeTitle = ac.getResources().getStringArray(R.array.support_category_title_ae);
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			aeTitle = ac.getResources().getStringArray(R.array.category_title_ae);
+		}
 		for(j = 0;j<baeTitle.length;j++){
 			categories.add(new Category(i++,baeTitle[j], Category.CategoryType.EXPENSE, "", -1));
 		}
@@ -175,11 +184,15 @@ public class Utils {
 	}
 	
 	
-	public static void runAudio(){
+	public static void runAudio(Context ac){
 		mp = new MediaPlayer();
 		try {
-			mp.setDataSource(Utils.ALARM_TONE_DIRECTORY);
-			mp.prepare();
+			if(Utils.ALARM_TONE_DIRECTORY == "") {
+				mp = MediaPlayer.create(ac, Settings.System.DEFAULT_RINGTONE_URI);
+			} else {
+				mp.setDataSource(Utils.ALARM_TONE_DIRECTORY);
+				mp.prepare();
+			}
 			mp.setLooping(true);
 			mp.start();
 		} catch (IllegalArgumentException e) {

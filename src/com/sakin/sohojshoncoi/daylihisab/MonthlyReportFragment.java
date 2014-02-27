@@ -47,8 +47,16 @@ public class MonthlyReportFragment extends Fragment {
 		totalProgressBar.setProgressDrawable(rootView.getResources().getDrawable(R.drawable.total_progress_bar));
 		totalProgressBar.setProgress(1);
 		setText(rootView, R.id.ajLabel, "");
-		setText(rootView, R.id.totalLabel, "সর্বমোট");
-		setText(rootView, R.id.planLabel, "পরিকল্পনা");
+		
+		TextView tv = (TextView) rootView.findViewById(R.id.totalLabel);
+		tv.setTypeface(Utils.banglaTypeFaceSutonny);
+		tv.setTextColor(Color.WHITE);
+		tv.setText("me©‡gvU");
+		TextView tv1 = (TextView) rootView.findViewById(R.id.planLabel);
+		tv1.setTypeface(Utils.banglaTypeFaceSutonny);
+		tv1.setTextColor(Color.WHITE);
+		tv1.setText("cwiKíbv");
+		
 		TextView extraText = (TextView) rootView.findViewById(R.id.extraText);
 		extraText.setText("");
 		
@@ -114,7 +122,9 @@ public class MonthlyReportFragment extends Fragment {
 	
 	private void setText(View view, int id, String item) {
 		TextView tv = (TextView) view.findViewById(id);
-		tv.setTypeface(Utils.banglaTypeFace);
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			tv.setTypeface(Utils.banglaTypeFace);
+		}
 		tv.setTextColor(Color.WHITE);
 		tv.setText(item);
 	}
@@ -139,11 +149,17 @@ public class MonthlyReportFragment extends Fragment {
         listDataChild = new HashMap<String, List<ReportElement>>();
         
         // Adding child data
-        listDataHeader.add("ব্যয়");
-        listDataHeader.add("আয়");
+        listDataHeader.add("e¨q");
+        listDataHeader.add("Avq");
+        String[] baeTitle = getResources().getStringArray(R.array.support_category_title_bae);
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        	baeTitle = getResources().getStringArray(R.array.category_title_bae);
+        }
         
-        String[] baeTitle = getResources().getStringArray(R.array.category_title_bae);
-		String[] aeTitle = getResources().getStringArray(R.array.category_title_ae);
+        String[] aeTitle = getResources().getStringArray(R.array.support_category_title_ae);
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        	aeTitle = getResources().getStringArray(R.array.category_title_ae);
+        }
         // Adding bae data
         List<ReportElement> baeList = new ArrayList<ReportElement>();
         List<ReportElement> aeList = new ArrayList<ReportElement>();

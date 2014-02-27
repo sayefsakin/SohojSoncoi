@@ -9,10 +9,10 @@
 
     <ToggleButton 
 	    android:id="@+id/onOffButton"
-	    android:layout_width="100dip"
-	    android:layout_height="45dip"
-	    android:textOn="Filter On"
-	    android:textOff="Filter Off"
+	    android:layout_width="137dip"
+	    android:layout_height="30dip"
+	    android:textOn=""
+	    android:textOff=""
 	    android:background="@drawable/toggletoswitch"
 	    android:layout_marginLeft="15dip"
 	    android:layout_marginRight="15dip" />
@@ -20,8 +20,9 @@
     <Button 
 	    android:id="@+id/aeBaeButton"
 	    android:layout_width="fill_parent"
-	    android:layout_height="45dip"
+	    android:layout_height="30dip"
 	    android:layout_below="@id/onOffButton"
+	    android:textColor="@color/white"
 	    android:layout_marginLeft="15dip"
 	    android:layout_marginRight="15dip" />
     
@@ -45,6 +46,7 @@
 		android:layout_alignParentRight="true"
 		android:layout_marginRight="10dip"
 		android:text="@string/category_choose"
+		android:textColor="@color/white"
 		android:textSize="14sp" />
     
     <TextView
@@ -65,6 +67,7 @@
 		android:layout_marginTop="10dip"
 		android:layout_alignRight="@id/categoryButton"
 		android:text="@string/pick_date"
+		android:textColor="@color/white"
 		android:textSize="14sp" />
     
     <TextView
@@ -85,6 +88,7 @@
 		android:layout_marginTop="10dip"
 		android:layout_alignRight="@id/categoryButton"
 		android:text="@string/pick_date"
+		android:textColor="@color/white"
 		android:textSize="14sp" />
     
     <Button
@@ -96,6 +100,7 @@
 		android:layout_centerHorizontal="true"
 		android:text="@string/test_text"
 		android:background="@color/green"
+		android:textColor="@color/white"
 		android:textSize="14sp" />
 
 

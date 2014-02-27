@@ -61,7 +61,7 @@
     <Button
         android:id="@+id/plansavebutton"
         android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"

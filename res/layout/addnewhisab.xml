@@ -52,7 +52,7 @@
     <Button
 		android:id="@+id/categoryButton"
 		android:layout_width="180dip"
-		android:layout_height="35dip"
+		android:layout_height="30dip"
 		android:layout_below="@id/mulloEditText"
 		android:layout_marginTop="10dip"
 		android:layout_alignRight="@id/mulloEditText"
@@ -73,7 +73,7 @@
     <Button
 		android:id="@+id/dateButton"
 		android:layout_width="180dip"
-		android:layout_height="35dip"
+		android:layout_height="30dip"
 		android:layout_below="@id/categoryButton"
 		android:layout_marginTop="10dip"
 		android:layout_alignRight="@id/mulloEditText"

@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -184,7 +185,7 @@ public class ReminderList extends ListFragment
 	
 	private void editModeToggle() {
 		editMode = !editMode;
-		getActivity().invalidateOptionsMenu();
+		((ActionBarActivity) getActivity()).supportInvalidateOptionsMenu();
 		if(editMode){
 			listView.setOnTouchListener(touchListener);
         	listView.setOnScrollListener(touchListener.makeScrollListener());

@@ -235,7 +235,9 @@ public class DailyHisab extends Fragment {
 		TextView tv = new TextView(getActivity());
 		tv.setText(title);
 		tv.setTextColor(Color.BLACK);
-		tv.setTypeface(Utils.banglaTypeFace);
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			tv.setTypeface(Utils.banglaTypeFace);
+		}
 		tv.setTextSize(16);
 		tv.setId(100);
 		RelativeLayout.LayoutParams bokeaBillTitleTextParams =
@@ -248,7 +250,9 @@ public class DailyHisab extends Fragment {
 		TextView tv1 = new TextView(getActivity());
 		tv1.setText(time);
 		tv1.setTextColor(Color.BLACK);
-		tv1.setTypeface(Utils.banglaTypeFace);
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			tv1.setTypeface(Utils.banglaTypeFace);
+		}
 		tv1.setTextSize(10);
 
 		RelativeLayout.LayoutParams bokeaBillTimeTextParams =
@@ -262,7 +266,9 @@ public class DailyHisab extends Fragment {
 		TextView amountText = new TextView(getActivity());
 		amountText.setText(amount);
 		amountText.setTextColor(Color.BLACK);
-		amountText.setTypeface(Utils.banglaTypeFace);
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			amountText.setTypeface(Utils.banglaTypeFace);
+		}
 		amountText.setTextSize(16);
 		
 		RelativeLayout.LayoutParams bokeaBillAmountTextParams =

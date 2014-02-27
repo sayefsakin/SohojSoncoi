@@ -32,7 +32,12 @@
             </intent-filter>
         </activity>
         <activity android:name="com.sakin.sohojshoncoi.YouTubeFullScreen"
-            android:parentActivityName="com.sakin.sohojshoncoi.Main" >
+            android:parentActivityName="com.sakin.sohojshoncoi.Main" 
+			android:screenOrientation="sensor"
+        	android:configChanges="keyboardHidden|orientation|screenSize"
+        	android:theme="@style/BlackNoTitleBarTheme">
+      		<meta-data android:name="minVersion" android:value="8"/>
+      		<meta-data android:name="isLaunchableActivity" android:value="true"/>
 	        <!-- Parent activity meta-data to support 4.0 and lower -->
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"

@@ -17,7 +17,7 @@ public class AlarmPopup extends Activity {
     	double amount = extras.getDouble(Utils.ALARM_AMOUNT);
     	int rep = extras.getInt(Utils.ALARM_REPEATED);
     	final int alarmID = extras.getInt(Utils.COME_FROM_ALARM);
-    	Utils.runAudio();
+    	Utils.runAudio(getApplicationContext());
     	Utils.startVibrate(this);
     	
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);

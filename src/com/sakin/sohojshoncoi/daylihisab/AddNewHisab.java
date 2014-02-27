@@ -149,6 +149,7 @@ public class AddNewHisab extends Fragment
 			});
 			
 			categoryButton = (Button) view.findViewById(R.id.categoryButton);
+			categoryButton.setBackgroundResource(R.drawable.optionbtn);
 			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
 				categoryButton.setTypeface(Utils.banglaTypeFace);
 			}
@@ -166,6 +167,7 @@ public class AddNewHisab extends Fragment
 			
 			dateButton = (Button) view.findViewById(R.id.dateButton);
 //			dateButton.setTypeface(Utils.banglaTypeFace);
+			dateButton.setBackgroundResource(R.drawable.optionbtn);
 			dateButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

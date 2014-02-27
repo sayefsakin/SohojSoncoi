@@ -71,7 +71,9 @@ public class OptionAdapter extends ArrayAdapter<OptionList> {
 		});
         
         title = holder.getTitle();
-        title.setTypeface(Utils.banglaTypeFace);
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        	title.setTypeface(Utils.banglaTypeFace);
+        }
         title.setText(item.category);
         
         et = holder.getText();

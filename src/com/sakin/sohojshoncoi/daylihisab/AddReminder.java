@@ -27,7 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
+import android.widget.ToggleButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +49,7 @@ public class AddReminder extends Fragment
 	
 	private EditText mulloEditText, descriptionEditText;
 	private Button timeButton, dateButton, repeatButton, saveButton, resetButton;
-	private Switch statusSwitch;
+	private ToggleButton statusSwitch;
 	private CheckBox alarmSwitch;
 	View view = null;
 	
@@ -132,17 +132,17 @@ public class AddReminder extends Fragment
 		if(view == null){
 			view = inflater.inflate(R.layout.add_new_reminder, container, false);
 			
-			setText(R.id.mulloLabelReminder,"মূল্যঃ");
-			setText(R.id.descriptionLabelReminder,"বর্ণনাঃ");
-			setText(R.id.dateLabelReminder,"তারিখঃ");
-			setText(R.id.timeLabel,"সময়ঃ");
-			setText(R.id.alarmLabel,"এলার্মঃ");
-			setText(R.id.repeatedLabel,"রিপিটেডঃ");
+			setText(R.id.mulloLabelReminder,"g~j¨t");
+			setText(R.id.descriptionLabelReminder,"eY©bvt");
+			setText(R.id.dateLabelReminder,"ZvwiLt");
+			setText(R.id.timeLabel,"mgqt");
+			setText(R.id.alarmLabel,"Gjvg©t");
+			setText(R.id.repeatedLabel,"wiwc‡UWt");
 			
 			mulloEditText = (EditText) view.findViewById(R.id.mulloEditTextReminder);
 			descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditTextReminder);
 			
-			statusSwitch = (Switch) view.findViewById(R.id.statusButton);
+			statusSwitch = (ToggleButton) view.findViewById(R.id.statusButton);
 			statusSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -150,9 +150,9 @@ public class AddReminder extends Fragment
 				}
 			});
 			if(isEdit == true){
-				statusSwitch.setVisibility(Switch.VISIBLE);
+				statusSwitch.setVisibility(ToggleButton.VISIBLE);
 			} else {
-				statusSwitch.setVisibility(Switch.INVISIBLE);
+				statusSwitch.setVisibility(ToggleButton.INVISIBLE);
 			}
 			
 			alarmSwitch = (CheckBox) view.findViewById(R.id.alarmSwitch);
@@ -164,7 +164,8 @@ public class AddReminder extends Fragment
 			});
 			
 			dateButton = (Button) view.findViewById(R.id.dateButtonReminder);
-			dateButton.setTypeface(Utils.banglaTypeFace);
+//			dateButton.setTypeface(Utils.banglaTypeFace);
+			dateButton.setBackgroundResource(R.drawable.optionbtn);
 			dateButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -173,7 +174,8 @@ public class AddReminder extends Fragment
 			});
 			
 			timeButton = (Button) view.findViewById(R.id.timeButton);
-			timeButton.setTypeface(Utils.banglaTypeFace);
+//			timeButton.setTypeface(Utils.banglaTypeFace);
+			timeButton.setBackgroundResource(R.drawable.optionbtn);
 			timeButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -182,7 +184,8 @@ public class AddReminder extends Fragment
 			});
 			
 			repeatButton = (Button) view.findViewById(R.id.repeatedButton);
-			repeatButton.setTypeface(Utils.banglaTypeFace);
+			repeatButton.setBackgroundResource(R.drawable.optionbtn);
+//			repeatButton.setTypeface(Utils.banglaTypeFace);
 			repeatButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -192,8 +195,8 @@ public class AddReminder extends Fragment
 			
 			saveButton = (Button) view.findViewById(R.id.saveButtonReminder);
 			saveButton.setBackgroundResource(R.drawable.save_button);
-			saveButton.setTypeface(Utils.banglaTypeFace);
-			saveButton.setText("সেভ");
+			saveButton.setTypeface(Utils.banglaTypeFaceSutonny);
+			saveButton.setText("‡mf");
 			saveButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -203,8 +206,8 @@ public class AddReminder extends Fragment
 			
 			resetButton = (Button) view.findViewById(R.id.resetButtonReminder);
 			resetButton.setBackgroundResource(R.drawable.reset_button);
-			resetButton.setTypeface(Utils.banglaTypeFace);
-			resetButton.setText("রিসেট");
+			resetButton.setTypeface(Utils.banglaTypeFaceSutonny);
+			resetButton.setText("wi‡mU");
 			resetButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -224,7 +227,7 @@ public class AddReminder extends Fragment
 	public void setText(int id, String item) {
 		TextView tv = (TextView) view.findViewById(id);
 		tv.setTextColor(Color.WHITE);
-		tv.setTypeface(Utils.banglaTypeFace);
+		tv.setTypeface(Utils.banglaTypeFaceSutonny);
 		tv.setText(item);
 	}
 	

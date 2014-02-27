@@ -63,7 +63,7 @@ public class MonthlyReport extends Fragment {
 	
 	@Override
 	public void onDestroyView() {
-		getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		((ActionBarActivity )getActivity()).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		super.onDestroyView();
 	}
 	

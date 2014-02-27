@@ -7,12 +7,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <Switch 
+    <ToggleButton 
 	    android:id="@+id/statusButton"
-	    android:layout_width="fill_parent"
-	    android:layout_height="45dip"
-	    android:textOn="Paid"
-	    android:textOff="Non-Paid"
+	    android:layout_width="137dip"
+	    android:layout_height="36dip"
+	    android:textOn=""
+	    android:textOff=""
+	    android:background="@drawable/paidtononpaid"
 	    android:layout_alignParentRight="true"
 	    android:layout_marginRight="15dip" />
 
@@ -52,7 +53,7 @@
     <Button
 		android:id="@+id/timeButton"
 		android:layout_width="180dip"
-		android:layout_height="35dip"
+		android:layout_height="30dip"
 		android:layout_below="@id/mulloEditTextReminder"
 		android:layout_marginTop="10dip"
 		android:layout_alignRight="@id/mulloEditTextReminder"
@@ -73,7 +74,7 @@
     <Button
 		android:id="@+id/dateButtonReminder"
 		android:layout_width="180dip"
-		android:layout_height="35dip"
+		android:layout_height="30dip"
 		android:layout_below="@id/timeButton"
 		android:layout_marginTop="10dip"
 		android:layout_alignRight="@id/mulloEditTextReminder"
@@ -119,7 +120,7 @@
     <Button
 		android:id="@+id/repeatedButton"
 		android:layout_width="180dip"
-		android:layout_height="35dip"
+		android:layout_height="30dip"
 		android:layout_below="@id/descriptionEditTextReminder"
 		android:layout_marginTop="10dip"
 		android:layout_alignRight="@id/mulloEditTextReminder"

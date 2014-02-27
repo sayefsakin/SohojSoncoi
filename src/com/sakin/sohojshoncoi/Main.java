@@ -46,10 +46,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -89,6 +91,7 @@ public class Main extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // Set the adapter for the list view
         mDrawerList.setAdapter(new DrawerListAdapter(this,
                 R.layout.drawer_list_item, new ArrayList<String>(Arrays.asList(drawerItems))));
@@ -96,9 +99,9 @@ public class Main extends ActionBarActivity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         
      // enable ActionBar app icon to behave as action to toggle nav drawer
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -200,6 +203,19 @@ public class Main extends ActionBarActivity {
     	   ITEM = savedInstanceState.getInt("selected_item");
     }
     
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    
 	private void init(Bundle savedInstanceState){
 		// all initialization code goes here
 		SSDAO.getSSdao().init(this);
@@ -231,8 +247,8 @@ public class Main extends ActionBarActivity {
             	int rep = b.getInt(Utils.ALARM_REPEATED);
             	int alermID = b.getInt(Utils.COME_FROM_ALARM);
 //            	Toast.makeText(c, msg + " " + Double.toString(amount) + "/-", Toast.LENGTH_LONG).show();
-            	Utils.runAudio();
-            	Utils.startVibrate(c);
+//            	Utils.runAudio(c);
+//            	Utils.startVibrate(c);
             	
             	Intent alarmPopup = new Intent(c, AlarmPopup.class);
             	alarmPopup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

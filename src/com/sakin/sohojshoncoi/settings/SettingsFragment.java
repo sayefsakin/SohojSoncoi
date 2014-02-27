@@ -106,7 +106,7 @@ class SettingsArrayAdapter extends ArrayAdapter<String> {
 	        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    View rowView = inflater.inflate(id, parent, false);
 	    TextView textView = (TextView) rowView.findViewById(R.id.settings_title);
-	    textView.setTypeface(Utils.banglaTypeFace);
+//	    textView.setTypeface(Utils.banglaTypeFace);
 	    textView.setTextColor(Color.WHITE);
 	    textView.setText(values[position]);
 

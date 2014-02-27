@@ -44,23 +44,25 @@ public class HisabListAdapter extends ArrayAdapter<Transaction>{
             holder = new ViewHolder(mView);
             
             holder.descriptionView = holder.getDescriptionView();
-            holder.descriptionView.setTypeface(Utils.banglaTypeFace);
             holder.descriptionView.setTextSize(16);
             
             holder.amountView = holder.getAmountView();
-            holder.amountView.setTypeface(Utils.banglaTypeFace);
             holder.amountView.setTextSize(20);
             
-            holder.categoryView = holder.getCategoryView();
-            holder.categoryView.setTypeface(Utils.banglaTypeFace);
+            holder.categoryView = holder.getCategoryView();            
             holder.categoryView.setTextSize(12);
-
+            
             holder.categoryTypeImage = holder.getCategoryTypeImage();
             
             holder.dateView = holder.getDateView();
-            holder.dateView.setTypeface(Utils.banglaTypeFace);
             holder.dateView.setTextSize(12);
             
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            	holder.descriptionView.setTypeface(Utils.banglaTypeFace);
+            	holder.amountView.setTypeface(Utils.banglaTypeFace);
+            	holder.categoryView.setTypeface(Utils.banglaTypeFace);
+            	holder.dateView.setTypeface(Utils.banglaTypeFace);
+            }
             mView.setTag(holder);
         }
 

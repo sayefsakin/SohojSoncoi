@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -78,7 +79,7 @@ public class HisabList extends ListFragment
 				}
 			}
 		}
-		Utils.setActionBarTitle(getActivity(), "Av‡Mi wnmvemg~n");
+		Utils.setActionBarTitle(getActivity(), "Av‡Mi wnmve");
 		return view;
 	}
 	
@@ -179,7 +180,7 @@ public class HisabList extends ListFragment
 	
 	private void editModeToggle() {
 		editMode = !editMode;
-		getActivity().invalidateOptionsMenu();
+		((ActionBarActivity) getActivity()).supportInvalidateOptionsMenu();
 		if(editMode){
 			listView.setOnTouchListener(touchListener);
         	listView.setOnScrollListener(touchListener.makeScrollListener());

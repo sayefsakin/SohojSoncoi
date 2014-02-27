@@ -40,26 +40,29 @@ public class PlanningListAdapter extends ArrayAdapter<Planning>{
             holder = new ViewHolder(mView);
             
             holder.monthView = holder.getMonthView();
-            holder.monthView.setTypeface(Utils.banglaTypeFace);
             holder.monthView.setTextSize(16);
             
             holder.aeLabelView = holder.getAeLabelView();
-            holder.aeLabelView.setTypeface(Utils.banglaTypeFace);
+            holder.aeLabelView.setTypeface(Utils.banglaTypeFaceSutonny);
             holder.aeLabelView.setTextSize(12);
-            holder.aeLabelView.setText("আয়ঃ");
+            holder.aeLabelView.setText("Avqt");
             
             holder.baeLabelView = holder.getBaeLabelView();
-            holder.baeLabelView.setTypeface(Utils.banglaTypeFace);
+            holder.baeLabelView.setTypeface(Utils.banglaTypeFaceSutonny);
             holder.baeLabelView.setTextSize(12);
-            holder.baeLabelView.setText("ব্যয়ঃ");
+            holder.baeLabelView.setText("e¨qt");
             
             holder.aeAmountView = holder.getAeAmountView();
-            holder.aeAmountView.setTypeface(Utils.banglaTypeFace);
             holder.aeAmountView.setTextSize(16);
             
             holder.baeAmountView = holder.getBaeAmountView();
-            holder.baeAmountView.setTypeface(Utils.banglaTypeFace);
             holder.baeAmountView.setTextSize(16);
+            
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            	holder.monthView.setTypeface(Utils.banglaTypeFace);
+            	holder.aeAmountView.setTypeface(Utils.banglaTypeFace);
+            	holder.baeAmountView.setTypeface(Utils.banglaTypeFace);
+            }
             
             mView.setTag(holder);
         }

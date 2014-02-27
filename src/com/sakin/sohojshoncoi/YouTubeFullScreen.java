@@ -48,9 +48,11 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    
 	    setContentView(R.layout.youtube_full_screen);
 		
-	    Utils.setActionBarTitle(this, "mnR mÂq");
-	    getActionBar().setDisplayHomeAsUpEnabled(true);
-	    getActionBar().setHomeButtonEnabled(true);
+//	    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+//	    	Utils.setActionBarTitle(this, "mnR mÂq");
+//	    	getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//	    	getSupportActionBar().setHomeButtonEnabled(true);
+//	    }
 	    
 	    baseLayout = (LinearLayout) findViewById(R.id.youtube_layout);
 	    playerView = (YouTubePlayerView) findViewById(R.id.player);
@@ -71,9 +73,11 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    videoElement = (VideoElement) getIntent().getSerializableExtra(Utils.VIDEO_ELEMENT_ID);
 	    Utils.print("from new activity: " + videoElement.getVideoDescription());
 	    videoTitle.setText(videoElement.getVideoTitle());
-	    videoTitle.setTypeface(Utils.banglaTypeFace);
+	    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+	    	videoTitle.setTypeface(Utils.banglaTypeFace);
+	    	videoDetails.setTypeface(Utils.banglaTypeFace);
+	    }
 	    videoDetails.setText(videoElement.getVideoDescription());
-	    videoDetails.setTypeface(Utils.banglaTypeFace);
 	}
 	
 	@Override
@@ -86,8 +90,8 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    player.setOnFullscreenListener(this);
 	    if (!wasRestored) {
 	    	player.cueVideo(videoElement.getVideoUrl().substring(videoElement.getVideoUrl().indexOf('=') + 1));
-	    	PlayerStyle style = PlayerStyle.MINIMAL;
-		    player.setPlayerStyle(style);
+//	    	PlayerStyle style = PlayerStyle.MINIMAL;
+//		    player.setPlayerStyle(style);
 	    }
 	}
 

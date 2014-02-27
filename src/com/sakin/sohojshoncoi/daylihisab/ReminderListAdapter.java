@@ -46,24 +46,26 @@ public class ReminderListAdapter extends ArrayAdapter<Reminder>{
             holder = new ViewHolder(mView);
             
             holder.descriptionView = holder.getDescriptionView();
-            holder.descriptionView.setTypeface(Utils.banglaTypeFace);
             holder.descriptionView.setTextSize(16);
             
             holder.amountView = holder.getAmountView();
-            holder.amountView.setTypeface(Utils.banglaTypeFace);
             holder.amountView.setTextSize(20);
             
             holder.dueDateView = holder.getDueDateView();
-            holder.dueDateView.setTypeface(Utils.banglaTypeFace);
             holder.dueDateView.setTextSize(12);
             
             holder.dateView = holder.getDateView();
-            holder.dateView.setTypeface(Utils.banglaTypeFace);
             holder.dateView.setTextSize(12);
 
             holder.repeatedImageView = holder.getRepeatedImageView();
             holder.alarmImageView = holder.getAlarmImageView();
             
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            	holder.dateView.setTypeface(Utils.banglaTypeFace);
+            	holder.dueDateView.setTypeface(Utils.banglaTypeFace);
+            	holder.amountView.setTypeface(Utils.banglaTypeFace);
+            	holder.descriptionView.setTypeface(Utils.banglaTypeFace);
+            }
             mView.setTag(holder);
         }
 

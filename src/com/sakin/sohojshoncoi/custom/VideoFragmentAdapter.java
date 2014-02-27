@@ -45,13 +45,16 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         holder = (ViewHolder) mView.getTag();
         
         title = holder.getTitle();
-        title.setTypeface(Utils.banglaTypeFace);
         title.setText(video.getVideoTitle());
         title.setTextColor(Color.WHITE);
         
         duration = holder.getDuration();
-        duration.setTypeface(Utils.banglaTypeFace);
+        duration.setTypeface(Utils.banglaTypeFaceSutonny);
         duration.setTextColor(Color.WHITE);
+        
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        	title.setTypeface(Utils.banglaTypeFace);
+        }
         
         if(video.getVideoTitle().equalsIgnoreCase("No video found") ||
         		video.getVideoTitle().equalsIgnoreCase("Loading....") ) {
@@ -64,13 +67,13 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         	m = s / 60;
         	if(m>=60){
         		h = m / 60;
-        		time += Integer.toString(h) + " ঘন্টা ";
+        		time += Integer.toString(h) + " N›Uv ";
         	}
         	m = m % 60;
-        	time += Integer.toString(m) + " মিনিট ";
+        	time += Integer.toString(m) + " wgwbU ";
         }
         s = d % 60;
-        time += Integer.toString(s) + " সেকেন্ড";
+        time += Integer.toString(s) + " ‡m‡KÛ";
         duration.setText(time);
         }
 //        thumbnail = holder.getThumb();

@@ -88,6 +88,7 @@ public class ChooseFilter extends Fragment
 			
 			aeBaeButton = (Button) view.findViewById(R.id.aeBaeButton);
 //			aeBaeButton.setTypeface(Utils.banglaTypeFace);
+			aeBaeButton.setBackgroundResource(R.drawable.optionbtn);
 			aeBaeButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -96,6 +97,7 @@ public class ChooseFilter extends Fragment
 			});
 			
 			categoryButton = (Button) view.findViewById(R.id.categoryButton);
+			categoryButton.setBackgroundResource(R.drawable.optionbtn);
 			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
 				categoryButton.setTypeface(Utils.banglaTypeFace);
 			}
@@ -112,6 +114,7 @@ public class ChooseFilter extends Fragment
 			});
 			
 			startDateButton = (Button) view.findViewById(R.id.startDateButton);
+			startDateButton.setBackgroundResource(R.drawable.optionbtn);
 //			startDateButton.setTypeface(Utils.banglaTypeFace);
 			startDateButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -121,6 +124,7 @@ public class ChooseFilter extends Fragment
 			});
 			
 			endDateButton = (Button) view.findViewById(R.id.endDateButton);
+			endDateButton.setBackgroundResource(R.drawable.optionbtn);
 //			endDateButton.setTypeface(Utils.banglaTypeFace);
 			endDateButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -249,7 +253,7 @@ public class ChooseFilter extends Fragment
 	
 	@Override
 	public void onItemSelected(String item) {
-		aeBaeButton.setTypeface(Utils.banglaTypeFace);
+//		aeBaeButton.setTypeface(Utils.banglaTypeFace);
 		if(item.equals("Income")) {
 			aeBaeButton.setText("Income");
 			categoryButton.setEnabled(true);
