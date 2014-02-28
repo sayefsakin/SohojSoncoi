@@ -1,142 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/help_layout_1" 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
 <HorizontalScrollView 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-<LinearLayout
-    android:id="@+id/help_layout_2" 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
     
    <ImageView
         android:id="@+id/help_image_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/help_image_1"
+        android:src="@drawable/help"
         android:layout_marginRight="10dip" />
 
-   <ImageView
-        android:id="@+id/help_image_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_2"
-        android:layout_marginRight="10dip" />
-   <ImageView
-        android:id="@+id/help_image_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_3"
-        android:layout_marginRight="10dip" />
-   
-
-   <ImageView
-        android:id="@+id/help_image_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_4"
-        android:layout_marginRight="10dip" />
-   <ImageView
-        android:id="@+id/help_image_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_5"
-        android:layout_marginRight="10dip" />
-   <ImageView
-        android:id="@+id/help_image_6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_6"
-        android:layout_marginRight="10dip" />
-   <ImageView
-        android:id="@+id/help_image_7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_7"
-        android:layout_marginRight="10dip" />
-   <ImageView
-        android:id="@+id/help_image_8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_8"
-        android:layout_marginRight="10dip" />
-   <ImageView
-        android:id="@+id/help_image_9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_9"
-        android:layout_marginRight="10dip" />
-   <ImageView
-        android:id="@+id/help_image_10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_10"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_11"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_12"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_13"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_14"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_15"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_16"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_17"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_18"
-        android:layout_marginRight="10dip" />
-        <ImageView
-        android:id="@+id/help_image_19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help_image_19"
-        android:layout_marginRight="10dip" />
-
-
-</LinearLayout>
 </HorizontalScrollView>
 
 <TextView
@@ -145,7 +27,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:text=""
-    android:layout_marginTop="10dip"
+    android:layout_alignParentBottom="true"
     />
 
-</LinearLayout>
+</RelativeLayout>

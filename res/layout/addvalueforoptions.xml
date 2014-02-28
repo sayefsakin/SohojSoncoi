@@ -53,6 +53,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:listSelector="@android:color/transparent"               
+		android:cacheColorHint="@android:color/transparent"
+		android:choiceMode="none"
+		android:divider="@android:color/transparent"
+  		android:dividerHeight="10.0sp"
         android:background="@color/custom_color" >
     </ListView>
 

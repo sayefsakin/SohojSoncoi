@@ -79,14 +79,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         	a = true;
         }
         if(Double.compare(childElement.totalPlan, 0.0) != 0) {
+        	b = true;
+        }
         	progressBar.setMax((int) childElement.totalPlan);
         	if(childElement.totalAmount > childElement.totalPlan) {
         		extraLabel.setText("(+" + Double.toString(childElement.totalAmount - childElement.totalPlan) + ")");
         		progressBar.setProgress((int) childElement.totalPlan);
         		progressBar.setProgressDrawable(convertView.getResources().getDrawable(R.drawable.total_progress_bar_red));
         	}
-        	b = true;
-        }
+//        	b = true;
+//        }
         
         if(a == false && b == false) {
         	amountLabel.setText("No Data Available");

@@ -149,5 +149,9 @@
 		android:textColor="@color/white"
 		android:textSize="20sp" />
 
+    <TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="20dp"
+	    android:layout_below="@id/resetButton" />
 </RelativeLayout>
 </ScrollView>

@@ -1,48 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:gravity="right" >
+    
         
-        <TextView
+         <TextView
 	        android:id="@+id/OptionLabel"
 	        android:layout_width="wrap_content"
 	        android:layout_height="fill_parent"
 	        android:background="@color/custom_color"
-	        android:layout_marginLeft="20dip"
-	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:layout_marginRight="20dip"
 	        android:textColor="@color/white"
 	        android:gravity="center"
 	        android:textSize="15sp" />
-    </LinearLayout>
 
     <EditText
         android:id="@+id/OptionEditText"
         android:layout_width="110dip"
-        android:layout_height="30dip"
-        android:layout_marginTop="5dip"
+        android:layout_height="fill_parent"
         android:background="@color/light_gray"
         android:inputType="numberDecimal"
-        android:textSize="20sp" 
-        android:layout_toLeftOf="@+id/crossbutton"/>
-      
+        android:gravity="center_vertical"
+        android:imeOptions="actionDone"
+        android:textSize="20sp" />
+    
+    
     <Button 
         android:id="@+id/crossbutton"
         android:layout_width="20dip"
         android:layout_height="30dip"
-        android:layout_marginTop="5dip"
         android:layout_marginRight="20dip"
         android:layout_marginLeft="20dip"
-        android:layout_alignParentRight="true"
-        
         />
     
 
-</RelativeLayout>
+</LinearLayout>
  

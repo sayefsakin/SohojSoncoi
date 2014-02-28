@@ -73,6 +73,9 @@ public class AddNewHisab extends Fragment
 		this.description = description;
 		this.fileUri = file;
 		this.isEdit = true;
+		if(aeOrBae) {
+			this.amount *= -1.0;
+		}
 	}
 	
 	public AddNewHisab(Transaction transaction) {
@@ -95,6 +98,7 @@ public class AddNewHisab extends Fragment
 				this.aeOrBae = false;
 			} else {
 				this.aeOrBae = true;
+				this.amount *= -1.0;
 			}
 		} catch (SQLException e) {
 			Utils.print(e.toString());

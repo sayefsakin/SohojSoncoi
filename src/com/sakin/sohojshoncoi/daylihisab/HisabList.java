@@ -217,14 +217,14 @@ public class HisabList extends ListFragment
 														startDate.getTime(), 
 														endDate.getTime()));
 				} else {
-					if(categoryName.equals("সকল আয়")) {
+					if(categoryName.equals("All Income")) {
 						hisabList.addAll(SSDAO.getSSdao()
 									.getTransactionOfCategoryBetweenDate(
 												/*Utils.userAccount,*/
 												0, 
 												startDate.getTime(), endDate.getTime(),
 												true));
-					} else if(categoryName.equals("সকল ব্যয়")) {
+					} else if(categoryName.equals("All Expense")) {
 						hisabList.addAll(SSDAO.getSSdao()
 								.getTransactionOfCategoryBetweenDate(
 											/*Utils.userAccount,*/

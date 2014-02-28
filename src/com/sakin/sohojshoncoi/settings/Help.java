@@ -21,7 +21,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	view = inflater.inflate(R.layout.help, container, false);
 	
 	//tx = (TextView) view.findViewById(R.id.help_text);
-	setText(R.id.help_text,"ডান থেকে বামে স্ক্রল করুন");
+	setText(R.id.help_text,"Wvb ‡_‡K ev‡g ¯Œj Ki“b");
 	
 	
     return view;
@@ -31,7 +31,7 @@ private void setText(int id, String string) {
 	TextView tv = (TextView) view.findViewById(id);
 	tv.setTextColor(Color.WHITE);
 	tv.setTextSize(20);
-	tv.setTypeface(Utils.banglaTypeFace);
+	tv.setTypeface(Utils.banglaTypeFaceSutonny);
 	tv.setText(string);
 	
 }
