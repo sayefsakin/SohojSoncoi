@@ -67,6 +67,7 @@ public class Utils {
     public static String DEVELOPER_KEY = "AIzaSyCGDUyXYA7PeLXbj5Sv29hYjDAzi8unYA8";
     
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    public static final int CAPTURE_IMAGE_FROM_GALLARY_REQUEST_CODE = 101;
     public static final int CAMERA_RESULT_OK = -1;
     public static final int CAMERA_RESULT_CANCELED = 0;
     public static final String IMAGE_DIRECTORY_NAME = "sohojsoncoi";

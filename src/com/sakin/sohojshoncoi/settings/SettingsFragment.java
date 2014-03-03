@@ -37,7 +37,7 @@ public class SettingsFragment extends ListFragment {
 			ViewGroup parent = (ViewGroup) rootView.getParent();
 			parent.removeView(rootView);
 		}
-		 String[] values = new String[] { "Reminder tone", "Credits" };
+		 String[] values = new String[] { "Reminder tone", "Help", "Credits" };
 		 SettingsArrayAdapter adapter = new SettingsArrayAdapter(getActivity(),
 		    R.layout.settings_item, values);
 		setListAdapter(adapter);
@@ -50,14 +50,14 @@ public class SettingsFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		if(position == 0){
 			searchFile();
-		} else if(position == 2) {
+		} else if(position == 1) {
 			Fragment addNewHisab = new Help();
 			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(SettingsFragment.this);
             ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
             ft.addToBackStack("settings");
             ft.commit();
-		} else if(position == 1) {
+		} else if(position == 2) {
 			Fragment addNewHisab = new AboutUs();
 			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(SettingsFragment.this);

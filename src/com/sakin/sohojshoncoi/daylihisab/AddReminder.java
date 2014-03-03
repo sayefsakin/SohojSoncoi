@@ -1,21 +1,14 @@
 package com.sakin.sohojshoncoi.daylihisab;
 
-import java.io.File;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.AlarmClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -29,17 +22,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.TimePickerFragment;
 import com.sakin.sohojshoncoi.custom.DatePickerFragment;
 import com.sakin.sohojshoncoi.custom.ChooseDialogFragment;
-import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.Reminder;
 import com.sakin.sohojshoncoi.database.SSDAO;
-import com.sakin.sohojshoncoi.database.Transaction;
 
 @SuppressLint({ "ValidFragment", "InlinedApi" })
 public class AddReminder extends Fragment 

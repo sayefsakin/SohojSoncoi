@@ -6,18 +6,25 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.DatePickerFragment;
 import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.SSDAO;
 import com.sakin.sohojshoncoi.database.Transaction;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,7 +53,7 @@ public class AddNewHisab extends Fragment
 	private View view = null;
 	private ImageView imgPreview;
 	
-	private Uri fileUri;
+	private String fileUrl;
 	private Boolean aeOrBae, isEdit; //true = bae, false = ae
 	private String categoryName;
 	private Calendar date;
@@ -60,18 +67,18 @@ public class AddNewHisab extends Fragment
 		this.categoryName = "";
 		this.date = Calendar.getInstance();
 		this.description = "";
-		this.fileUri = null;
+		this.fileUrl = "";
 		this.isEdit = false;
 	}
 	
 	public AddNewHisab(Boolean aeOrBae, double amount, String cat,
-					Calendar date, String description, Uri file){
+					Calendar date, String description, String url){
 		this.aeOrBae = aeOrBae;
 		this.amount = amount;
 		this.categoryName = cat;
 		this.date = date;
 		this.description = description;
-		this.fileUri = file;
+		this.fileUrl = url;
 		this.isEdit = true;
 		if(aeOrBae) {
 			this.amount *= -1.0;
@@ -86,9 +93,9 @@ public class AddNewHisab extends Fragment
 		this.description = transaction.getDescription();
 		String pictureUrl = transaction.getPictureUrl();
 		if(pictureUrl.length() > 0) {
-			this.fileUri = Uri.fromFile(new File(pictureUrl));
+			this.fileUrl = pictureUrl;
 		} else {
-			this.fileUri = null;
+			this.fileUrl = null;
 		}
 		
 		try {
@@ -124,11 +131,10 @@ public class AddNewHisab extends Fragment
 			imgPreview.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if(!isDeviceSupportCamera()){
-						Toast.makeText(getActivity(), "No camera found", Toast.LENGTH_SHORT).show();
-					} else {
-						Utils.print("camera found");
-						captureImage();
+					if(fileUrl != "") {
+						showPreviewPictureDialog(v);
+					} else { 
+						showTakePictureDialog(v);
 					}
 				}
 			});
@@ -197,6 +203,12 @@ public class AddNewHisab extends Fragment
 			resetButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					aeOrBae = true;
+					amount = 0.0;
+					description = "";
+					categoryName = "";
+					date = Calendar.getInstance();
+					fileUrl = "";
 					doReset();
 				}
 			});
@@ -234,22 +246,47 @@ public class AddNewHisab extends Fragment
 	        } else {
 	            // Image capture failed, advise user
 	        }
+	    } else if (requestCode == Utils.CAPTURE_IMAGE_FROM_GALLARY_REQUEST_CODE) {
+	    	if (resultCode == Activity.RESULT_OK) {
+	            // Image captured and saved to fileUri specified in the Intent
+	            Toast.makeText(getActivity(), "Image captured from gallery", Toast.LENGTH_LONG).show();
+	            Uri selectedImage = data.getData(); 
+	            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+	    	    
+	            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+	                    filePathColumn, null, null, null);
+	            cursor.moveToFirst();
+	    
+	            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+	            String picturePath = cursor.getString(columnIndex);
+	            fileUrl = picturePath;
+	            cursor.close();
+	            
+	            previewCapturedImage();
+	        } else if (resultCode == Activity.RESULT_CANCELED) {
+	            // User cancelled the image capture
+	        } else {
+	            // Image capture failed, advise user
+	        }
 	    } else {
 	    	Toast.makeText(getActivity(), "Image not captured" + Integer.toString(resultCode), Toast.LENGTH_LONG).show();
 	    }
 	}
 
+	private void captureImageFromGallery() {
+	    Intent intent = new Intent(Intent.ACTION_PICK,
+	    		android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+	    // start the image capture Intent
+	    startActivityForResult(intent, Utils.CAPTURE_IMAGE_FROM_GALLARY_REQUEST_CODE);
+	}
 	private boolean isDeviceSupportCamera() {
         return (getActivity().getApplicationContext().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA));
     }
-	private void captureImage() {
+	private void captureImageFromCamera() {
 	    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-	 
-	    fileUri = getOutputMediaFileUri();
-	 
+	    Uri fileUri = getOutputMediaFileUri();
 	    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-	 
 	    // start the image capture Intent
 	    startActivityForResult(intent, Utils.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 	}
@@ -264,8 +301,7 @@ public class AddNewHisab extends Fragment
             // images
             options.inSampleSize = 8;
  
-            final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),
-                    options);
+            final Bitmap bitmap = BitmapFactory.decodeFile(fileUrl, options);
             imgPreview.setImageBitmap(bitmap);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -281,8 +317,8 @@ public class AddNewHisab extends Fragment
 	/*
 	 * returning image / video
 	 */
-	private static File getOutputMediaFile() {
-	 
+	private File getOutputMediaFile() {
+
 	    // External sdcard location
 	    File mediaStorageDir = new File(
 	            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
@@ -300,14 +336,14 @@ public class AddNewHisab extends Fragment
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
 	            Locale.getDefault()).format(new Date());
 	    File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                + "IMG_" + timeStamp + ".jpg");
+	    fileUrl = mediaStorageDir.getPath() + File.separator
+                + "IMG_" + timeStamp + ".jpg";
+        mediaFile = new File(fileUrl);
 	 
 	    return mediaFile;
 	}
 	
 	private void doReset(){
-//		aeOrBae = true;
 		if(aeOrBae){
 			aeBaeSwitch.setBackgroundResource(R.drawable.baebutton);
 		} else {
@@ -326,7 +362,7 @@ public class AddNewHisab extends Fragment
 			categoryButton.setText(categoryName);			
 		}
 		
-		if(this.fileUri == null) {
+		if(this.fileUrl == "") {
 			imgPreview.setImageResource(R.drawable.image_placeholder);
 		} else {
 			previewCapturedImage();
@@ -352,15 +388,12 @@ public class AddNewHisab extends Fragment
 					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
 					transaction.setCategory(cat);
 
-					String filePath = "";
 					long size = 0;
-					if(fileUri != null){
-						File f = new File(fileUri.getPath());
-						
-						filePath = fileUri.getPath();
+					if(fileUrl != ""){
+						File f = new File(fileUrl);
 						size = f.length();
 						
-						transaction.setPictureUrl(filePath);
+						transaction.setPictureUrl(fileUrl);
 						transaction.setPictureSize(size);
 					}
 					transaction.setAccount(Utils.userAccount);
@@ -372,17 +405,15 @@ public class AddNewHisab extends Fragment
 					Utils.showToast(getActivity(), "wnmve cwieZ©b msiw¶Z");
 				} else {
 					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
-					String filePath = "";
 					long size = 0;
-					if(fileUri != null){
-						filePath = fileUri.getPath();
-						File f = new File(fileUri.getPath());
+					if(fileUrl != ""){
+						File f = new File(fileUrl);
 						size = f.length();
 					}
 					Transaction transaction = new Transaction(cat, Utils.userAccount, 
 							description, 
 							amount,
-							filePath, size, date.getTime());
+							fileUrl, size, date.getTime());
 					SSDAO.getSSdao().getTransactionDAO().create(transaction);
 					Utils.showToast(getActivity(), "wnmve msiw¶Z");
 				}
@@ -418,4 +449,74 @@ public class AddNewHisab extends Fragment
 		super.onDestroy();
 	}
 	
+	public void showTakePictureDialog(View v) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		String builderMessage = "Qwe Zzjyb";
+		Typeface tf = Utils.banglaTypeFaceSutonny;
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			builderMessage = "ছবি তুলুন";
+			tf = Utils.banglaTypeFace;
+		}
+	    builder.setMessage(builderMessage)
+	           .setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	            	   if(!isDeviceSupportCamera()){
+							Toast.makeText(getActivity(), "No camera found", Toast.LENGTH_SHORT).show();
+						} else {
+							Utils.print("camera found");
+							captureImageFromCamera();
+						}
+	               }
+	           })
+	           .setNeutralButton("Gallery",  new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	            	   captureImageFromGallery();
+	               }
+	           })
+	           .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	               }
+	           });
+	    builder.create();
+	    builder.setCancelable(false);
+	    AlertDialog alert = builder.show();
+	    TextView msgView = (TextView) alert.findViewById(android.R.id.message);
+	    msgView.setTypeface(tf);
+	}
+	
+	public void showPreviewPictureDialog(View v) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		String builderMessage = "Qwe †`Lyb";
+		Typeface tf = Utils.banglaTypeFaceSutonny;
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			builderMessage = "ছবি দেখুন";
+			tf = Utils.banglaTypeFace;
+		}
+	    builder.setMessage(builderMessage)
+	           .setPositiveButton("Preview", new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	            	   Fragment previewImage = new PreviewImage(fileUrl);
+	            	   FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+	            	   ft.remove(AddNewHisab.this);
+	            	   ft.add(R.id.content_frame, previewImage);
+	            	   ft.addToBackStack(null);
+	            	   ft.commit();
+	               }
+	           })
+	           .setNeutralButton("Delete",  new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	            	   fileUrl = "";
+	            	   imgPreview.setImageResource(R.drawable.image_placeholder);
+	               }
+	           })
+	           .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	               }
+	           });
+	    builder.create();
+	    builder.setCancelable(false);
+	    AlertDialog alert = builder.show();
+	    TextView msgView = (TextView) alert.findViewById(android.R.id.message);
+	    msgView.setTypeface(tf);
+	}
 }
