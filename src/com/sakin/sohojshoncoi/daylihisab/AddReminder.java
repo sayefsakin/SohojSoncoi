@@ -1,13 +1,18 @@
 package com.sakin.sohojshoncoi.daylihisab;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -28,8 +33,10 @@ import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.TimePickerFragment;
 import com.sakin.sohojshoncoi.custom.DatePickerFragment;
 import com.sakin.sohojshoncoi.custom.ChooseDialogFragment;
+import com.sakin.sohojshoncoi.database.Category;
 import com.sakin.sohojshoncoi.database.Reminder;
 import com.sakin.sohojshoncoi.database.SSDAO;
+import com.sakin.sohojshoncoi.database.Transaction;
 
 @SuppressLint({ "ValidFragment", "InlinedApi" })
 public class AddReminder extends Fragment 
@@ -240,8 +247,8 @@ public class AddReminder extends Fragment
 	}
 	
 	private void doReset(){
-		statusSwitch.setChecked(false);
-		alarmSwitch.setChecked(true);
+		statusSwitch.setChecked(status);
+		alarmSwitch.setChecked(alarm);
 		mulloEditText.setText(Double.toString(amount));
 		descriptionEditText.setText(description);
 		
@@ -261,7 +268,11 @@ public class AddReminder extends Fragment
 		if(descriptionEditText.length() == 0 ||
 				Double.compare(amount, 0.0) == 0) {
 			
-			Utils.showToast(getActivity(), "mKj Ni c~iY Ki“b");
+			Utils.showToast(getActivity(), "mKj k~b¨¯’vb c~iY Ki“b");
+		} else if (amount < 0.0 ) {
+			Utils.showToast(getActivity(), "†b‡MwUf cwigvY MÖnY‡hvM¨ bq");
+		} else if( description.length() > 50 ) {
+			Utils.showToast(getActivity(), "weeiY msw¶ß Ki“b");
 		} else {
 			int reminderID = 0;
 			if(isEdit) {
@@ -280,6 +291,9 @@ public class AddReminder extends Fragment
 				SSDAO.getSSdao().getReminderDAO().update(reminder);
 				reminderID = reminder.getReminderID();
 				Utils.showToast(getActivity(), "wigvBÛvi cwieZ©b msiw¶Z");
+				if(statusSwitch.isChecked()) {
+					addToTransaction();
+				}
 			} else {
 				Reminder.Status st;
 				if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
@@ -302,9 +316,26 @@ public class AddReminder extends Fragment
 		}
 	}
 	
+	private void addToTransaction() {
+		if(Utils.isAddTransactionOnReminder == false) return;
+		try {
+			Category cat = SSDAO.getSSdao().getCategoryFromID(Utils.MAX_BAE_INDEX - 1);
+			Transaction transaction = new Transaction(cat, Utils.userAccount, 
+					description, 
+					amount,
+					"", 0.0, Calendar.getInstance().getTime());
+			SSDAO.getSSdao().getTransactionDAO().create(transaction);
+			Utils.showToast(getActivity(), "wnmve msiw¶Z");
+		} catch (SQLException e) {
+			Utils.print("SQL error in adding new transaction");
+			Utils.showToast(getActivity(), "msiw¶Z nqwb, Avevi †Póv Ki“b!");
+		}
+	}
 	private void setAlarm(int reqID){
 		Utils.print(this.dateTime.toString());
-		
+		if(this.dateTime.getTime().before(new Date())) {
+			return;
+		}
 		Calendar myAlarmDate = Calendar.getInstance();
 		myAlarmDate.setTimeInMillis(System.currentTimeMillis());
 		myAlarmDate.set(

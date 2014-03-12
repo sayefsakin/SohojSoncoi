@@ -86,6 +86,8 @@ public class ReminderListAdapter extends ArrayAdapter<Reminder>{
         
         if(reminder.getStatus().toString().equals("ALARM")) {
         	holder.alarmImageView.setImageResource(R.drawable.ic_action_alarms);
+        } else if(reminder.getStatus().toString().equals("PAID")) {
+        	holder.alarmImageView.setImageResource(R.drawable.ic_action_accept);
         } else {
         	holder.alarmImageView.setVisibility(ImageView.INVISIBLE);
         }

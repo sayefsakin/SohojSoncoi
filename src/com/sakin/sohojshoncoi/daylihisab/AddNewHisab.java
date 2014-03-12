@@ -377,8 +377,11 @@ public class AddNewHisab extends Fragment
 		if(categoryName.length() == 0 ||
 				descriptionEditText.length() == 0 ||
 				Double.compare(amount, 0.0) == 0) {
-			
 			Utils.showToast(getActivity(), "mKj k~b¨¯’vb c~iY Ki“b");
+		} else if (amount < 0.0 ) {
+			Utils.showToast(getActivity(), "†b‡MwUf cwigvY MÖnY‡hvM¨ bq");
+		} else if( description.length() > 50 ) {
+			Utils.showToast(getActivity(), "weeiY msw¶ß Ki“b");
 		} else {
 			if(aeOrBae) {
 				amount *= -1.0;

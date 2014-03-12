@@ -62,6 +62,7 @@ public class Utils {
     public static boolean wifiConnected = false;
     public static boolean mobileConnected = false;
     public static boolean refreshDisplay = true;
+    public static boolean isAddTransactionOnReminder = true;
     public static String sPref = null;//users current network preference setting
     
     public static String DEVELOPER_KEY = "AIzaSyCGDUyXYA7PeLXbj5Sv29hYjDAzi8unYA8";
