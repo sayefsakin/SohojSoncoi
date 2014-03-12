@@ -4,16 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    <Button 
+        android:id="@+id/piChartButton"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+       	android:layout_alignParentLeft="true" />
+    
+    <Button 
+        android:id="@+id/lineChartButton"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+       	android:layout_alignParentRight="true" />
+    
 		<TextView
 	        android:id="@+id/ajLabel"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentTop="true"
+	        android:layout_below="@id/piChartButton"
 	        android:text="@string/test_text"
 	        android:layout_centerHorizontal="true"
 	        android:layout_marginTop="10dp" />    
     
-	    
 	    <TextView
 	        android:id="@+id/totalLabel"
 	        android:layout_width="wrap_content"

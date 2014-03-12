@@ -154,7 +154,7 @@ public class Utils {
 		TextView tv = new TextView(ac.getApplicationContext());
 		tv.setTypeface(Utils.banglaTypeFaceSutonny);
 		tv.setText(msg);
-		tv.setTextSize(16);
+		tv.setTextSize(20);
 //		tv.setBackgroundColor(color.darker_gray);
 		toastView.addView(tv);
 		

@@ -6,15 +6,19 @@ import java.util.List;
 
 
 
+
+
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
  
@@ -97,6 +101,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         } else {
         	progressBar.setVisibility(ProgressBar.VISIBLE);
         }
+        if (isLastChild) {
+            convertView.setPadding(0, 0, 0, 20);
+        } else
+            convertView.setPadding(0, 0, 0, 0);
+        
         return convertView;
     }
  
@@ -130,7 +139,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.report_list_header, null);
         }
- 
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(Utils.banglaTypeFaceSutonny, Typeface.BOLD);

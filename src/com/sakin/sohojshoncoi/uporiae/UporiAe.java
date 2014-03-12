@@ -45,7 +45,7 @@ public class UporiAe extends Fragment {
 				Toast.makeText(getActivity(), R.string.lost_connection, Toast.LENGTH_SHORT).show();
 			}
         }
-		Utils.setActionBarTitle(getActivity(), "Dcwi Avq");
+		Utils.setActionBarTitle(getActivity(), "wewfbœ Av‡qi †KŠkj");
 	    return view;
 	}
 	

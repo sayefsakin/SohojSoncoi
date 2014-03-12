@@ -6,14 +6,19 @@ import java.util.Calendar;
 import com.sakin.sohojshoncoi.R;
 import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.custom.TabsAdapter;
+import com.sakin.sohojshoncoi.daylihisab.charts.PieChart;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 

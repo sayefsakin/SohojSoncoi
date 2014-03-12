@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import javax.net.ssl.SSLEngineResult.Status;
+
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -252,6 +254,21 @@ public class SSDAO {
 		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
 		qb.orderBy("due_date", false);
 		qb.where()/*.eq("account_id", account).and()*/.between("date", start, end);
+		return qb.query();
+	}
+	public List<Reminder> getReminderWithFilters(String repeated, String status, Date start, Date end) throws SQLException{
+		if(end.before(start))return null;
+		QueryBuilder<Reminder, Integer> qb = getReminderDAO().queryBuilder();
+		qb.orderBy("due_date", false);
+		qb.where().between("due_date", start, end);
+		if(repeated.equals("ALL") == false) {
+			qb.where().eq("repeated", Reminder.Repeat.valueOf(repeated));
+		}
+		if (status.equals("NON_PAID")) {
+			qb.where().ne("status", Reminder.Status.valueOf("PAID"));
+	 	} else if(status.equals("BOTH") == false) {
+			qb.where().eq("status", Reminder.Status.valueOf(status));
+		}
 		return qb.query();
 	}
 	public String getReminderSumBetweenDate(/*Account account, */Date start, Date end) throws SQLException {

@@ -30,7 +30,7 @@ import android.widget.ListView;
 
 @SuppressLint("UseValueOf")
 public class ReminderList extends ListFragment
-							implements ChooseFilter.OnFilterSelectedListener {
+							implements ChooseReminderFilter.OnFilterSelectedListener {
 	
 	private ReminderListAdapter adapter;
 	private List<Reminder> reminderList;
@@ -165,9 +165,9 @@ public class ReminderList extends ListFragment
 	        case R.id.action_edit:
 	            editModeToggle();
 	            return true;
-//	        case R.id.action_filter:
-//	            goToFilter();
-//	            return true;
+	        case R.id.action_filter:
+	            goToFilter();
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -199,7 +199,7 @@ public class ReminderList extends ListFragment
 	
 	private void goToFilter() {
 		isRefresh = false;
-		Fragment chooseFilter = new ChooseFilter(ReminderList.this);
+		Fragment chooseFilter = new ChooseReminderFilter(ReminderList.this);
 		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 		ft.remove(ReminderList.this);
         ft.add(R.id.content_frame, chooseFilter);
@@ -208,34 +208,25 @@ public class ReminderList extends ListFragment
 	}
 
 	@Override
-	public void onFilterSelectedListener(String name, Calendar std, Calendar ed, boolean onOff) {
-//		categoryName = name;
-//		startDate = std;
-//		endDate = ed;
-//		Utils.print("filter selected " + categoryName);
-//		try {
-//			reminderList.clear();
-//			if(onOff){
-//				if(categoryName.equals("Both")) {
-//					hisabList.addAll(SSDAO.getSSdao()
-//								.getTransactionBetweenDate(/*Utils.userAccount,*/ 
-//														startDate.getTime(), 
-//														endDate.getTime()));
-//				} else {
-//					Category cat = SSDAO.getSSdao().getCategoryFromName(categoryName);
-//					Utils.print(Integer.toString(cat.getCategoryID()));
-//					hisabList.addAll(SSDAO.getSSdao()
-//								.getTransactionOfCategoryBetweenDate(
-//											/*Utils.userAccount,*/
-//											cat.getCategoryID(), 
-//											startDate.getTime(), endDate.getTime()));
-//				}
-//			} else {
-//				reminderList.addAll(SSDAO.getSSdao().getReminder());
-//			}
-//			adapter.notifyDataSetChanged();
-//		} catch (SQLException e) {
-//			Utils.print(e.toString());
-//		}
+	public void onFilterSelectedListener(String repeated, String status, Calendar std, Calendar ed, boolean onOff) {
+		Utils.print(repeated + " " + status);
+		Calendar startDate = std;
+		Calendar endDate = ed;
+		try {
+			reminderList.clear();
+			if(onOff){
+				reminderList.addAll(
+						SSDAO.getSSdao().getReminderWithFilters(
+												repeated,
+												status, 
+												startDate.getTime(),
+												endDate.getTime()));
+			} else {
+				reminderList.addAll(SSDAO.getSSdao().getReminder());
+			}
+			adapter.notifyDataSetChanged();
+		} catch (SQLException e) {
+			Utils.print(e.toString());
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.sakin.sohojshoncoi.daylihisab;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,13 +13,18 @@ import com.sakin.sohojshoncoi.Utils;
 import com.sakin.sohojshoncoi.database.Planning;
 import com.sakin.sohojshoncoi.database.PlanningDescription;
 import com.sakin.sohojshoncoi.database.SSDAO;
+import com.sakin.sohojshoncoi.daylihisab.charts.CompareChart;
+import com.sakin.sohojshoncoi.daylihisab.charts.PieChart;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +37,9 @@ public class MonthlyReportFragment extends Fragment {
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<ReportElement>> listDataChild;
+    private Button piChartButton, lineChartButton;
+    List<String> planCategories, amountCategories, categories;
+    List<Double> plans, amounts;
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +51,21 @@ public class MonthlyReportFragment extends Fragment {
 		id = getArguments().getInt(Utils.TAB_ID);
 		month = getArguments().getInt(Utils.MONTH_ID);
 		year = getArguments().getInt(Utils.YEAR_ID);
+		planCategories = new ArrayList<String>();
+		amountCategories = new ArrayList<String>();
+		categories = new ArrayList<String>();
+		plans = new ArrayList<Double>();
+		amounts = new ArrayList<Double>();
+		
+		piChartButton = (Button) rootView.findViewById(R.id.piChartButton);
+		piChartButton.setBackgroundResource(R.drawable.optionbtn);
+		piChartButton.setTypeface(Utils.banglaTypeFaceSutonny);
+		piChartButton.setText("cvB PvU©");
+		
+		lineChartButton = (Button) rootView.findViewById(R.id.lineChartButton);
+		lineChartButton.setBackgroundResource(R.drawable.optionbtn);
+		lineChartButton.setTypeface(Utils.banglaTypeFaceSutonny);
+		lineChartButton.setText("jvBb PvU©");
 		
 		ProgressBar totalProgressBar = (ProgressBar) rootView.findViewById(R.id.totalProgressBar);
 		totalProgressBar.setProgressDrawable(rootView.getResources().getDrawable(R.drawable.total_progress_bar));
@@ -117,6 +141,56 @@ public class MonthlyReportFragment extends Fragment {
         listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
         expListView.setAdapter(listAdapter);
         
+        if(planCategories.size() == 0) {
+        	piChartButton.setEnabled(false);
+        	lineChartButton.setEnabled(false);
+        } else {
+        	piChartButton.setEnabled(true);
+        	lineChartButton.setEnabled(true);
+        }
+        final double pl[] = new double[plans.size()];
+		int i = 0;
+		for(Double d : plans) {
+			pl[i++] = (double)d;
+		}
+		final double am[] = new double[amounts.size()];
+		i = 0;
+		for(Double d : amounts) {
+			am[i++] = (double)d;
+		}
+        piChartButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(planCategories.size() == 0)return;
+				Calendar cal = Calendar.getInstance();
+				cal.set(Calendar.MONTH, month);
+				cal.set(Calendar.YEAR, year);
+				
+				Intent intent = new PieChart(
+						planCategories.toArray(new String[planCategories.size()]),
+						amountCategories.toArray(new String[amountCategories.size()]),
+						pl, am,
+						new SimpleDateFormat("MMM-yyyy").format(cal.getTime()))
+								.execute(getActivity().getApplicationContext());
+				startActivity(intent);
+			}
+		});
+        lineChartButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(categories.size() == 0)return;
+				Calendar cal = Calendar.getInstance();
+				cal.set(Calendar.MONTH, month);
+				cal.set(Calendar.YEAR, year);
+				
+				Intent intent = new CompareChart(
+						categories.toArray(new String[categories.size()]),
+						pl, am,
+						new SimpleDateFormat("MMM-yyyy").format(cal.getTime()))
+								.execute(getActivity().getApplicationContext());
+				startActivity(intent);
+			}
+		});
 		return rootView;
 	}
 	
@@ -184,7 +258,15 @@ public class MonthlyReportFragment extends Fragment {
 	        		if(bae < 0.0) bae *= -1.0;
 	        	}
 	        	double plan = getAmountOfCategoryFromPD(cpd, i);
-	        	baeList.add(new ReportElement(baeTitle[j], bae, plan));
+	        	if(Double.compare(bae, 0.0) != 0 || 
+	        			Double.compare(plan, 0.0) != 0) {
+	        		baeList.add(new ReportElement(baeTitle[j], bae, plan));
+	        		amountCategories.add(Double.toString(bae) + "(" + baeTitle[j] + ")");
+	        		planCategories.add(Double.toString(plan) + "(" + baeTitle[j] + ")");
+	        		categories.add(baeTitle[j]);
+	        		plans.add(plan);
+	        		amounts.add(bae);
+	        	}
 	        	i++;
 	        }
 	        for(int j = 0; j < aeTitle.length; j++) {
@@ -195,7 +277,10 @@ public class MonthlyReportFragment extends Fragment {
 	        		ae = Double.parseDouble(aeString);
 	        	}
 	        	double plan = getAmountOfCategoryFromPD(cpd, i);
-	        	aeList.add(new ReportElement(aeTitle[j], ae, plan));
+	        	if(Double.compare(ae, 0.0) != 0 || 
+	        			Double.compare(plan, 0.0) != 0) {
+	        		aeList.add(new ReportElement(aeTitle[j], ae, plan));
+	        	}
 	        	i++;
 	        }
         } catch (SQLException e) { 

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <ToggleButton 
+	    android:id="@+id/onOffButton"
+	    android:layout_width="137dip"
+	    android:layout_height="30dip"
+	    android:textOn=""
+	    android:textOff=""
+	    android:background="@drawable/toggletoswitch"
+	    android:layout_marginLeft="15dip" />
+    
+    <TextView
+        android:id="@+id/filterRepeatedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/onOffButton"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="10dip"
+        android:layout_alignParentLeft="true"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <Button 
+	    android:id="@+id/filterRepeatedButton"
+	    android:layout_width="180dip"
+	    android:layout_height="30dip"
+	    android:layout_below="@id/onOffButton"
+	    android:textColor="@color/white"
+	    android:textSize="16sp"
+	    android:layout_marginTop = "20dip"
+	    android:layout_alignParentRight="true"
+		android:layout_marginRight="10dip" />
+    
+    <TextView
+        android:id="@+id/filterStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/filterRepeatedButton"
+        android:layout_marginTop="10dip"
+        android:layout_alignLeft="@id/filterRepeatedLabel"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <Button
+		android:id="@+id/filterStatusButton"
+		android:layout_width="180dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/filterRepeatedButton"
+		android:layout_marginTop="10dip"
+		android:layout_alignRight="@id/filterRepeatedButton"
+		android:text="@string/category_choose"
+		android:textColor="@color/white"
+		android:textSize="16sp" />
+    
+    <TextView
+        android:id="@+id/startDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/filterStatusButton"
+        android:layout_marginTop="10dip"
+        android:layout_alignLeft="@id/filterRepeatedLabel"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <Button
+		android:id="@+id/startDateButton"
+		android:layout_width="180dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/filterStatusButton"
+		android:layout_marginTop="10dip"
+		android:layout_alignRight="@id/filterRepeatedButton"
+		android:text="@string/pick_date"
+		android:textColor="@color/white"
+		android:textSize="16sp" />
+    
+    <TextView
+        android:id="@+id/endDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/startDateButton"
+        android:layout_marginTop="10dip"
+        android:layout_alignLeft="@id/filterRepeatedLabel"
+        android:text="@string/test_text"
+        android:textSize="20sp" />
+    
+    <Button
+		android:id="@+id/endDateButton"
+		android:layout_width="180dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/startDateButton"
+		android:layout_marginTop="10dip"
+		android:layout_alignRight="@id/filterRepeatedButton"
+		android:text="@string/pick_date"
+		android:textColor="@color/white"
+		android:textSize="16sp" />
+    
+    <Button
+		android:id="@+id/saveButton"
+		android:layout_width="80dip"
+		android:layout_height="30dip"
+		android:layout_below="@id/endDateButton"
+		android:layout_marginTop="20dip"
+		android:layout_centerHorizontal="true"
+		android:text="@string/test_text"
+		android:background="@color/green"
+		android:textColor="@color/white"
+		android:textSize="16sp" />
+
+
+</RelativeLayout>
+</ScrollView>

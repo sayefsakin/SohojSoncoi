@@ -261,7 +261,7 @@ public class AddReminder extends Fragment
 		Utils.print("reminder saving.......");
 		description = descriptionEditText.getText().toString();
 		amount = Double.parseDouble(mulloEditText.getText().toString());
-		if(alarmSwitch.isChecked() && statusSwitch.isChecked()){
+		if(alarmSwitch.isChecked() && statusSwitch.isChecked() && repeated.equalsName("NONE")){
 			Utils.showToast(getActivity(), "cwi‡kvwaZ we‡ji Gjvg© wW‡m‡j± Ki“b");
 			return;
 		}
@@ -278,10 +278,26 @@ public class AddReminder extends Fragment
 			if(isEdit) {
 				removeAlarm(reminder.getReminderID());
 				Reminder.Status st;
-				if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
-				else if(statusSwitch.isChecked())st = Reminder.Status.PAID;
-				else st = Reminder.Status.NON_PAID;
 				
+				if(statusSwitch.isChecked()) {
+					addToTransaction();
+					if(repeated.equalsName("MONTHLY")) {
+						dateTime.set(Calendar.MONTH,
+								Calendar.getInstance().get(Calendar.MONTH) + 1);
+					} else if(repeated.equalsName("DAILY")) {
+						dateTime.set(Calendar.DATE, 
+								Calendar.getInstance().get(Calendar.DATE) + 1);
+					} 
+					if(repeated.equalsName("NONE")) {
+						st = Reminder.Status.PAID;
+					} else {
+						if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
+						else st = Reminder.Status.NON_PAID;
+					}
+				} else {
+					if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
+					else st = Reminder.Status.NON_PAID;
+				}
 				reminder.setStatus(st);
 				reminder.setAmount(amount);
 				reminder.setDescription(description);
@@ -291,9 +307,7 @@ public class AddReminder extends Fragment
 				SSDAO.getSSdao().getReminderDAO().update(reminder);
 				reminderID = reminder.getReminderID();
 				Utils.showToast(getActivity(), "wigvBÛvi cwieZ©b msiw¶Z");
-				if(statusSwitch.isChecked()) {
-					addToTransaction();
-				}
+				
 			} else {
 				Reminder.Status st;
 				if(alarmSwitch.isChecked())st = Reminder.Status.ALARM;
