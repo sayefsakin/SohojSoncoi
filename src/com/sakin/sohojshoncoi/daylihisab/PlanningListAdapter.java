@@ -58,7 +58,7 @@ public class PlanningListAdapter extends ArrayAdapter<Planning>{
             holder.baeAmountView = holder.getBaeAmountView();
             holder.baeAmountView.setTextSize(16);
             
-            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             	holder.monthView.setTypeface(Utils.banglaTypeFace);
             	holder.aeAmountView.setTypeface(Utils.banglaTypeFace);
             	holder.baeAmountView.setTypeface(Utils.banglaTypeFace);

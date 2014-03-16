@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" 
     xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
     
-	<item android:id="@+id/action_pie"
+	<item android:id="@+id/action_add"
           android:icon="@drawable/ic_action_new"
           android:title="@string/action_add"
           yourapp:showAsAction="always" />
-	<item android:id="@+id/action_line"
+	<item android:id="@+id/action_edit"
           android:icon="@drawable/ic_filter"
           android:title="@string/action_filter"
           yourapp:showAsAction="always" />

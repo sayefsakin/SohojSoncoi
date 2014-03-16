@@ -104,12 +104,12 @@ public class Utils {
 		int i = 1, j;
 		List<Category> categories = new ArrayList<Category>();
 		String[] baeTitle = ac.getResources().getStringArray(R.array.support_category_title_bae);
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			baeTitle = ac.getResources().getStringArray(R.array.category_title_bae);
 		}
 		
 		String[] aeTitle = ac.getResources().getStringArray(R.array.support_category_title_ae);
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			aeTitle = ac.getResources().getStringArray(R.array.category_title_ae);
 		}
 		for(j = 0;j<baeTitle.length;j++){

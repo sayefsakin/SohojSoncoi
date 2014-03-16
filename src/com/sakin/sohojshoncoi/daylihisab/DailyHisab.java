@@ -235,7 +235,7 @@ public class DailyHisab extends Fragment {
 		TextView tv = new TextView(getActivity());
 		tv.setText(title);
 		tv.setTextColor(Color.BLACK);
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			tv.setTypeface(Utils.banglaTypeFace);
 		}
 		tv.setTextSize(16);
@@ -250,7 +250,7 @@ public class DailyHisab extends Fragment {
 		TextView tv1 = new TextView(getActivity());
 		tv1.setText(time);
 		tv1.setTextColor(Color.BLACK);
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			tv1.setTypeface(Utils.banglaTypeFace);
 		}
 		tv1.setTextSize(10);
@@ -266,7 +266,7 @@ public class DailyHisab extends Fragment {
 		TextView amountText = new TextView(getActivity());
 		amountText.setText(amount);
 		amountText.setTextColor(Color.BLACK);
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			amountText.setTypeface(Utils.banglaTypeFace);
 		}
 		amountText.setTextSize(16);

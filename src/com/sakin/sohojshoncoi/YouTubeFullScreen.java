@@ -48,7 +48,7 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    
 	    setContentView(R.layout.youtube_full_screen);
 		
-//	    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+//	    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 //	    	Utils.setActionBarTitle(this, "mnR mÂq");
 //	    	getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //	    	getSupportActionBar().setHomeButtonEnabled(true);
@@ -73,7 +73,7 @@ public class YouTubeFullScreen extends YouTubeFailureRecoveryFragment implements
 	    videoElement = (VideoElement) getIntent().getSerializableExtra(Utils.VIDEO_ELEMENT_ID);
 	    Utils.print("from new activity: " + videoElement.getVideoDescription());
 	    videoTitle.setText(videoElement.getVideoTitle());
-	    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+	    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 	    	videoTitle.setTypeface(Utils.banglaTypeFace);
 	    	videoDetails.setTypeface(Utils.banglaTypeFace);
 	    }

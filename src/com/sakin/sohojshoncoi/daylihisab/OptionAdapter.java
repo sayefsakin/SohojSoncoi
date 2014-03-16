@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -41,9 +42,8 @@ public class OptionAdapter extends ArrayAdapter<OptionList> {
     public View getView(int position, View v, ViewGroup parent) {
     	ViewHolder holder = null;
     	TextView title = null;
-    	EditText et=null;
     	Button crossbtn;
-        OptionList item = getItem(position);
+        final OptionList item = getItem(position);
         final int pos=position;
 
 
@@ -59,6 +59,7 @@ public class OptionAdapter extends ArrayAdapter<OptionList> {
         
         holder = (ViewHolder) mView.getTag();
         
+        final EditText et = holder.getText();
         
         crossbtn=(Button) mView.findViewById(R.id.crossbutton);
         crossbtn.setBackgroundResource(R.drawable.ic_action_cancel);
@@ -68,17 +69,31 @@ public class OptionAdapter extends ArrayAdapter<OptionList> {
 			public void onClick(View v) {
 				 avfo.deleteRow(pos);
 			}
-		});
+		});	
         
         title = holder.getTitle();
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
         	title.setTypeface(Utils.banglaTypeFace);
         }
         title.setText(item.category);
         
-        et = holder.getText();
+        et.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(et.getText().toString().length() > 0){
+					if(Double.compare(Double.parseDouble(et.getText().toString()),0.0) == 0) {
+						et.setText("");
+					}
+				}
+				if(!hasFocus) {
+					item.setAmount(
+							et.getText().toString().length() > 0?
+							Double.parseDouble(et.getText().toString()):0.0);
+				}
+			}
+		});
         et.setText(Double.toString(item.amount));
-                
+        
         return mView;
     }
     
@@ -102,16 +117,6 @@ public class OptionAdapter extends ArrayAdapter<OptionList> {
         public EditText getText() {
             if(null == et){
             	et = (EditText) mRow.findViewById(R.id.OptionEditText);
-            	et.setOnEditorActionListener(new OnEditorActionListener() {
-            	    @Override
-            	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            	        if (actionId == EditorInfo.IME_ACTION_DONE ||
-            	        		actionId == EditorInfo.IME_ACTION_NEXT) {
-            	            avfo.updateList();
-            	        }
-            	        return false;
-            	    }
-            	});
             }
             return et;
         }

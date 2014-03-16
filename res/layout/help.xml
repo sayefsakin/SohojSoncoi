@@ -7,21 +7,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-<HorizontalScrollView 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    
-   <ImageView
-        android:id="@+id/help_image_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/help"
-        android:contentDescription="@string/desc"
-        android:layout_marginRight="10dip" />
-
-</HorizontalScrollView>
-
 <TextView
     android:id="@+id/help_text"
     android:layout_width="wrap_content"

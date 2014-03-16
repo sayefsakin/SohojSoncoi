@@ -126,7 +126,7 @@ public class PlanningList extends ListFragment
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.add_new_reminder_menu, menu);
+		inflater.inflate(R.menu.plan_menu, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	

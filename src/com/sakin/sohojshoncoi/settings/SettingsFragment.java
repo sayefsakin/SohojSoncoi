@@ -8,9 +8,12 @@ import com.sakin.sohojshoncoi.daylihisab.AddNewHisab;
 import com.sakin.sohojshoncoi.daylihisab.DailyHisab;
 import com.sakin.sohojshoncoi.filechooser.FileChooser;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -37,7 +40,7 @@ public class SettingsFragment extends ListFragment {
 			ViewGroup parent = (ViewGroup) rootView.getParent();
 			parent.removeView(rootView);
 		}
-		 String[] values = new String[] { "Reminder tone", "Help", "Credits" };
+		 String[] values = new String[] { "Reminder tone", "Add Transaction on Paid Reminder", "About This App", "About Us", "Credits" };
 		 SettingsArrayAdapter adapter = new SettingsArrayAdapter(getActivity(),
 		    R.layout.settings_item, values);
 		setListAdapter(adapter);
@@ -51,14 +54,45 @@ public class SettingsFragment extends ListFragment {
 		if(position == 0){
 			searchFile();
 		} else if(position == 1) {
-			Fragment addNewHisab = new Help();
+//			Fragment addNewHisab = new Help();
+//			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+//			ft.remove(SettingsFragment.this);
+//            ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
+//            ft.addToBackStack("settings");
+//            ft.commit();
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			String builderMessage = "Add Transaction on Paid Reminder";
+			
+		    builder.setMessage(builderMessage)
+		           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		               public void onClick(DialogInterface dialog, int id) {
+		            	   Utils.isAddTransactionOnReminder = true;
+		               }
+		           })
+		           .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		               public void onClick(DialogInterface dialog, int id) {
+		            	   Utils.isAddTransactionOnReminder = false;
+		               }
+		           });
+		    builder.create();
+		    builder.setCancelable(false);
+		    builder.show();
+		} else if(position == 2) {
+			Fragment addNewHisab = new AboutThisApp();
 			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(SettingsFragment.this);
             ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
             ft.addToBackStack("settings");
             ft.commit();
-		} else if(position == 2) {
+		} else if(position == 3) {
 			Fragment addNewHisab = new AboutUs();
+			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+			ft.remove(SettingsFragment.this);
+            ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);
+            ft.addToBackStack("settings");
+            ft.commit();
+		} else if(position == 4) {
+			Fragment addNewHisab = new Credits();
 			FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 			ft.remove(SettingsFragment.this);
             ft.add(R.id.content_frame, addNewHisab, Utils.ADDNEWHISABTAG);

@@ -79,7 +79,7 @@
 		android:layout_alignRight="@id/mulloEditText"
 		android:text="@string/pick_date"
 		android:textColor="@color/white"
-		android:textSize="14sp" />
+		android:textSize="18sp" />
     
     <TextView
         android:id="@+id/descriptionLabel"

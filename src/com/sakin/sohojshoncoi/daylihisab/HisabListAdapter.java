@@ -57,7 +57,7 @@ public class HisabListAdapter extends ArrayAdapter<Transaction>{
             holder.dateView = holder.getDateView();
             holder.dateView.setTextSize(12);
             
-            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             	holder.descriptionView.setTypeface(Utils.banglaTypeFace);
             	holder.amountView.setTypeface(Utils.banglaTypeFace);
             	holder.categoryView.setTypeface(Utils.banglaTypeFace);

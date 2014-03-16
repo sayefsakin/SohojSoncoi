@@ -85,7 +85,7 @@ public class Main extends ActionBarActivity {
 		init(savedInstanceState);
 		//create the drawer
 		drawerItems = getResources().getStringArray(R.array.supportdrawermenulist);
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			drawerItems = getResources().getStringArray(R.array.drawermenulist);
 		}
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -134,7 +134,7 @@ public class Main extends ActionBarActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		
 		Fragment myFragment = (Fragment) getSupportFragmentManager().findFragmentByTag("HOME_PAGE");
-		if (myFragment != null &&  myFragment.isVisible()) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && myFragment != null &&  myFragment.isVisible()) {
 //		   Utils.print("fragment found");
 	    	showExitDialog();
 	    	return false;
@@ -246,9 +246,6 @@ public class Main extends ActionBarActivity {
             	double amount = b.getDouble(Utils.ALARM_AMOUNT);
             	int rep = b.getInt(Utils.ALARM_REPEATED);
             	int alermID = b.getInt(Utils.COME_FROM_ALARM);
-//            	Toast.makeText(c, msg + " " + Double.toString(amount) + "/-", Toast.LENGTH_LONG).show();
-//            	Utils.runAudio(c);
-//            	Utils.startVibrate(c);
             	
             	Intent alarmPopup = new Intent(c, AlarmPopup.class);
             	alarmPopup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -257,28 +254,6 @@ public class Main extends ActionBarActivity {
             	alarmPopup.putExtra(Utils.ALARM_REPEATED, rep);
             	alarmPopup.putExtra(Utils.COME_FROM_ALARM, alermID);
             	c.startActivity(alarmPopup);
-//            	final NotificationManager nm = createNotificationAndNotify(c, msg, amount, rep);
-//            	
-////            	DialogFragment dialog = new FireAlarmDialogFragment();
-////                dialog.show(getSupportFragmentManager(), "FireAlarmDialogFragment");
-//            	AlertDialog.Builder builder = new AlertDialog.Builder(c);
-//                builder.setMessage(msg + " " + Double.toString(amount) + "/-")
-////                       .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
-////                           public void onClick(DialogInterface dialog, int id) {
-////                               // FIRE ZE MISSILES!
-////                           }
-////                       })
-//                       .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                           public void onClick(DialogInterface dialog, int id) {
-//                               Utils.stopAudio();
-//                               Utils.stopVibrate();
-//                               nm.cancelAll();
-//                           }
-//                       });
-//                builder.create();
-//                builder.setCancelable(false);
-//                builder.show();
-                
             }
 		};
 		registerReceiver(Utils.broadcastReceiver, new IntentFilter("com.sakin.sohojshoncoi"));
@@ -289,7 +264,7 @@ public class Main extends ActionBarActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		String builderMessage = "Avcwb wK mwZ¨B †ei n‡Z Pvb?";
 		Typeface tf = Utils.banglaTypeFaceSutonny;
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			builderMessage = "আপনি কি সত্যিই বের হতে চান?";
 			tf = Utils.banglaTypeFace;
 		}

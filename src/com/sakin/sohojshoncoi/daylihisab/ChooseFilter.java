@@ -98,7 +98,7 @@ public class ChooseFilter extends Fragment
 			
 			categoryButton = (Button) view.findViewById(R.id.categoryButton);
 			categoryButton.setBackgroundResource(R.drawable.optionbtn);
-			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 				categoryButton.setTypeface(Utils.banglaTypeFace);
 			}
 			categoryButton.setOnClickListener(new OnClickListener() {

@@ -38,8 +38,8 @@ public class AddValueForOptions extends ListFragment implements
 						CategoryFragment.OnCategorySelectedListener,
 						DatePickerFragment.OnDateSelectedListener {
 
-	String[] list_items=new String[Utils.MAX_AE_INDEX+1];
-	int count=0,Month=0,Year=0,Day=0;
+//	String[] list_items=new String[Utils.MAX_AE_INDEX+1];
+	int Month=0,Year=0,Day=0;
 	private OptionAdapter adapter;
 	private List <OptionList> optionList;
 	Button datebutton, optionbtnay, optionbtnbey, plansave;
@@ -81,20 +81,19 @@ public class AddValueForOptions extends ListFragment implements
 			optionList = new ArrayList<OptionList>();
 			adapter = new OptionAdapter(getActivity(), R.layout.itemoptions, optionList, this);
 			setListAdapter(adapter);
-			
 			if(isEdit) {
 				cal.set(Calendar.MONTH, planning.getMonth());
 				cal.set(Calendar.YEAR, planning.getYear());
 				try {
-					optionList.clear();
+//					optionList.clear();
 					List<PlanningDescription> pdList = SSDAO.getSSdao()
 							.getPlanningDescriptionOfPlanning(planning.getPlanningId());
 					for(PlanningDescription pd : pdList) {
 						Category cat = SSDAO.getSSdao().getCategoryFromID( 
 								pd.getCategory().getCategoryID());
-						list_items[count] = cat.getName();
-						count++;
-						optionList.add(new OptionList(cat.getName(), pd.getAmount()));
+//						list_items[count] = cat.getName();
+//						optionList.add(new OptionList(cat.getName(), pd.getAmount()));
+						adapter.add(new OptionList(cat.getName(), pd.getAmount()));
 					}
 					adapter.notifyDataSetChanged();
 				} catch (SQLException e) {
@@ -161,28 +160,28 @@ public class AddValueForOptions extends ListFragment implements
 	public class OptionList{
 		String category;
 		double amount;
+		public OptionList(){}
 		public OptionList(String id,double amnt){
-			category=id;
-			amount=amnt;
+			category = id;
+			amount = amnt;
+		}
+		public void setAmount(double amnt) {
+			amount = amnt;
 		}
 	}
+	
 	@Override
 	public void onCategorySelected(String cat) {
-		//Utils.print(cat);
-		//list_items=new String[15];
 		updateList();
-		int flag=0,i;
-		for(i=0;i<count;i++){
-			if(cat.equals(list_items[i])){
-				flag=1;break;
+		int flag=0;
+		for(OptionList ol : optionList) {
+			if(cat.equals(ol.category)) {
+				flag = 1;break;
 			}
 		}
 		if(flag==0){
-			list_items[i]=cat;
-			count++;
-			
-			optionList.add(new OptionList(cat,0));
-			adapter.notifyDataSetChanged();
+			adapter.add(new OptionList(cat,0));
+//			adapter.notifyDataSetChanged();
 		}
 	}
 	public void showDatePickerDialog(View v) {
@@ -203,9 +202,6 @@ public class AddValueForOptions extends ListFragment implements
 		                  ((View) dayPicker).setVisibility(View.GONE);
 		               }
 		            }
-//			            Object dayPicker = new Object();
-//			            dayPicker = field.get(datePicker);
-//			            ((View) dayPicker).setVisibility(View.GONE);
 		        }
 		    }
 		} catch (SecurityException e) {
@@ -228,22 +224,25 @@ public class AddValueForOptions extends ListFragment implements
 	}
 	
 	public void deleteRow(int position){
-		optionList.remove(position);
-		adapter.notifyDataSetChanged();
+//		optionList.remove(position);
+		adapter.remove(optionList.get(position));
+//		optionList.remove(position);
+//		adapter.notifyDataSetChanged();
 	}
 	
 	public void updateList() {
-		int i = 0;
-		EditText et;
-		for(OptionList ol : optionList) {
-			ListView ls = (ListView) rootView.findViewById(android.R.id.list);
-			View v = ls.getChildAt(i);
-			et = (EditText) v.findViewById(R.id.OptionEditText);
-			double amount = Double.parseDouble(et.getText().toString());
-			ol.amount = amount;
-			i++;
-		}
-		adapter.notifyDataSetChanged();
+//		int i = 0;
+//		EditText et;
+//		for(OptionList ol : optionList) {
+//			ListView ls = (ListView) rootView.findViewById(android.R.id.list);
+//			View v = ls.getChildAt(i);
+//			et = (EditText) v.findViewById(R.id.OptionEditText);
+//			if(et.getText().toString().length() == 0)continue;
+//			double amount = Double.parseDouble(et.getText().toString());
+//			ol.amount = amount;
+//			i++;
+//		}
+//		adapter.notifyDataSetChanged();
 	}
 	
 	private boolean checkValidity() throws SQLException {
@@ -266,15 +265,25 @@ public class AddValueForOptions extends ListFragment implements
 				SSDAO.getSSdao().removePlanningDescriptionOfPlanning(planning.getPlanningId());
 				double ae, bae;
 				ae = 0.0; bae = 0.0;
+				EditText et;
+				int i = 0;
 				for(OptionList ol : optionList) {
 					Category cat = SSDAO.getSSdao().getCategoryFromName(ol.category);
-					PlanningDescription pd = new PlanningDescription(planning, cat, ol.amount);
+					
+//					ListView ls = (ListView) rootView.findViewById(android.R.id.list);
+//					View v = ls.getChildAt(i);
+//					et = (EditText) v.findViewById(R.id.OptionEditText);
+//					if(et.getText().toString().length() == 0)return;
+					double amount = ol.amount;//Double.parseDouble(et.getText().toString());
+					
+					PlanningDescription pd = new PlanningDescription(planning, cat, amount);
 					SSDAO.getSSdao().getPlanningDescriptionDAO().create(pd);
 					if(cat.getCategoryID() < Utils.MAX_BAE_INDEX) {
-						bae += ol.amount;
+						bae += amount;
 					} else {
-						ae += ol.amount;
+						ae += amount;
 					}
+					i++;
 				}
 				planning.setAeAmount(ae);
 				planning.setBaeAmount(bae);
@@ -292,10 +301,11 @@ public class AddValueForOptions extends ListFragment implements
 				for(OptionList ol : optionList) {
 					Category cat = SSDAO.getSSdao().getCategoryFromName(ol.category);
 					
-					ListView ls = (ListView) rootView.findViewById(android.R.id.list);
-					View v = ls.getChildAt(i);
-					et = (EditText) v.findViewById(R.id.OptionEditText);
-					double amount = Double.parseDouble(et.getText().toString());
+//					ListView ls = (ListView) rootView.findViewById(android.R.id.list);
+//					View v = ls.getChildAt(i);
+//					et = (EditText) v.findViewById(R.id.OptionEditText);
+//					if(et.getText().toString().length() == 0)return;
+					double amount = ol.amount;//Double.parseDouble(et.getText().toString());
 					
 					PlanningDescription pd = new PlanningDescription(plan, cat, amount);
 					SSDAO.getSSdao().getPlanningDescriptionDAO().create(pd);

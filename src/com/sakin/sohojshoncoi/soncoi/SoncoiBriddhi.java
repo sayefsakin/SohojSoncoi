@@ -70,7 +70,7 @@ public class SoncoiBriddhi extends Fragment {
         mTabsAdapter = new TabsAdapter((ActionBarActivity) getActivity(), soncoiPager);
         playlist_url = getResources().getStringArray(R.array.soncoi_tab_url);        
         tab_title = getResources().getStringArray(R.array.support_soncoi_tab_title);
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
         	tab_title = getResources().getStringArray(R.array.soncoi_tab_title);
         }
         int totalTabs = tab_title.length;
@@ -91,7 +91,7 @@ public class SoncoiBriddhi extends Fragment {
 		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout layoutView = (LinearLayout)inflater.inflate(R.layout.tab_title_view, null);
 		TextView title = (TextView)layoutView.findViewById(R.id.tab_title_text);
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			title.setTypeface(Utils.banglaTypeFace);
 		} else {
 			title.setTypeface(Utils.banglaTypeFaceSutonny);

@@ -67,7 +67,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.itemProgressBar);
         progressBar.setProgressDrawable(convertView.getResources().getDrawable(R.drawable.total_progress_bar));
         progressBar.setProgress(1);
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
         	totalLabel.setTypeface(Utils.banglaTypeFace);
         }
         totalLabel.setText(childElement.categoryName);

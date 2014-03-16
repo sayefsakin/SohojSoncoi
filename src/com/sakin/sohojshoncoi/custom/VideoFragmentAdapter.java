@@ -52,7 +52,7 @@ public class VideoFragmentAdapter extends ArrayAdapter<VideoElement> {
         duration.setTypeface(Utils.banglaTypeFaceSutonny);
         duration.setTextColor(Color.WHITE);
         
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
         	title.setTypeface(Utils.banglaTypeFace);
         }
         

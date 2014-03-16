@@ -23,7 +23,7 @@
         android:background="@color/light_gray"
         android:inputType="numberDecimal"
         android:gravity="center_vertical"
-        android:imeOptions="actionDone"
+        android:singleLine="true"
         android:textSize="20sp" />
     
     

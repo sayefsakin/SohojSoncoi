@@ -59,7 +59,7 @@
 		android:layout_alignRight="@id/mulloEditTextReminder"
 		android:text="@string/category_choose"
 		android:textColor="@color/white"
-		android:textSize="14sp" />
+		android:textSize="18sp" />
     
     <TextView
         android:id="@+id/dateLabelReminder"
@@ -80,7 +80,7 @@
 		android:layout_alignRight="@id/mulloEditTextReminder"
 		android:text="@string/pick_date"
 		android:textColor="@color/white"
-		android:textSize="14sp" />
+		android:textSize="18sp" />
     
     <TextView
         android:id="@+id/descriptionLabelReminder"

@@ -196,7 +196,7 @@ public class MonthlyReportFragment extends Fragment {
 	
 	private void setText(View view, int id, String item) {
 		TextView tv = (TextView) view.findViewById(id);
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			tv.setTypeface(Utils.banglaTypeFace);
 		}
 		tv.setTextColor(Color.WHITE);
@@ -226,12 +226,12 @@ public class MonthlyReportFragment extends Fragment {
         listDataHeader.add("e¨q");
         listDataHeader.add("Avq");
         String[] baeTitle = getResources().getStringArray(R.array.support_category_title_bae);
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
         	baeTitle = getResources().getStringArray(R.array.category_title_bae);
         }
         
         String[] aeTitle = getResources().getStringArray(R.array.support_category_title_ae);
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
         	aeTitle = getResources().getStringArray(R.array.category_title_ae);
         }
         // Adding bae data

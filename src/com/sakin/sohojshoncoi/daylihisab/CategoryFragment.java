@@ -65,12 +65,12 @@ public class CategoryFragment extends Fragment {
 		final String[] title;
 		if(aeOrBae) {
 			title = getResources().getStringArray(
-					android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB
+					android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN
 					?R.array.category_title_bae:R.array.support_category_title_bae);
 			thumbs = mThumbIdsBae;
 		} else {
 			title = getResources().getStringArray(
-					android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB
+					android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN
 					?R.array.category_title_ae:R.array.support_category_title_ae);
 			thumbs = mThumbIdsAe;
 		}

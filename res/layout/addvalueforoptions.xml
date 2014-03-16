@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/addvaluerootview"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/custom_color"
-    android:orientation="vertical" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/custom_color" >
 
     <RelativeLayout
+        android:id="@+id/topView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/custom_color"
+        android:layout_alignParentTop="true"
         android:orientation="horizontal" >
         
     	<Button
@@ -47,32 +48,43 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
 	</RelativeLayout>
+        
+	<RelativeLayout 
+	    android:id="@+id/bottomView"
+	    android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentBottom="true"
+    	android:gravity="center"
+    	android:background="@color/custom_color" >
+	    <Button
+	        android:id="@+id/plansavebutton"
+	        android:layout_width="100dp"
+	        android:layout_height="30dp"
+	        android:layout_gravity="center"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="15dp"
+	        android:background="@color/red"
+	        android:text="@string/test_text"
+	        android:textColor="@color/white"
+	        android:textSize="20sp" />
+	    
+	</RelativeLayout>
 
-    <ListView
+	<ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/topView"
+        android:layout_above="@id/bottomView"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:listSelector="@android:color/transparent"               
 		android:cacheColorHint="@android:color/transparent"
 		android:choiceMode="none"
 		android:divider="@android:color/transparent"
   		android:dividerHeight="10.0sp"
-        android:background="@color/custom_color" >
-    </ListView>
-
-        
-
-    <Button
-        android:id="@+id/plansavebutton"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/red"
-        android:text="@string/test_text"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-</LinearLayout>
+        android:background="@color/custom_color"
+        android:descendantFocusability="afterDescendants"
+    	android:focusable="false" />
+	
+</RelativeLayout>

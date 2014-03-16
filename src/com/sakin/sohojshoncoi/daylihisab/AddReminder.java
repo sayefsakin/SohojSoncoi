@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -137,6 +138,16 @@ public class AddReminder extends Fragment
 			setText(R.id.repeatedLabel,"wiwc‡UWt");
 			
 			mulloEditText = (EditText) view.findViewById(R.id.mulloEditTextReminder);
+			mulloEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(mulloEditText.getText().toString().length() > 0){
+						if(Double.compare(Double.parseDouble(mulloEditText.getText().toString()),0.0) == 0) {
+							mulloEditText.setText("");
+						}
+					}
+				}
+			});
 			descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditTextReminder);
 			
 			statusSwitch = (ToggleButton) view.findViewById(R.id.statusButton);
@@ -161,7 +172,7 @@ public class AddReminder extends Fragment
 			});
 			
 			dateButton = (Button) view.findViewById(R.id.dateButtonReminder);
-//			dateButton.setTypeface(Utils.banglaTypeFace);
+			dateButton.setTypeface(Utils.banglaTypeFaceSutonny);
 			dateButton.setBackgroundResource(R.drawable.optionbtn);
 			dateButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -171,7 +182,7 @@ public class AddReminder extends Fragment
 			});
 			
 			timeButton = (Button) view.findViewById(R.id.timeButton);
-//			timeButton.setTypeface(Utils.banglaTypeFace);
+			timeButton.setTypeface(Utils.banglaTypeFaceSutonny);
 			timeButton.setBackgroundResource(R.drawable.optionbtn);
 			timeButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -409,9 +420,9 @@ public class AddReminder extends Fragment
 	public void onTimeSelected(int hour, int minute) {
 		this.dateTime.set(Calendar.HOUR_OF_DAY, hour);
 		this.dateTime.set(Calendar.MINUTE, minute);
-		String AP = "AM";
+		String AP = "G.Gg.";
 		if(hour >= 12){
-			AP = "PM";
+			AP = "wc.Gg.";
 			hour %= 12;
 		}
 		String tm = Integer.toString(hour==0?12:hour) + ":" + 

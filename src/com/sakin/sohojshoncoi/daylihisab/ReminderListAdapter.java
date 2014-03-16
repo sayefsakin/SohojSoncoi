@@ -60,7 +60,7 @@ public class ReminderListAdapter extends ArrayAdapter<Reminder>{
             holder.repeatedImageView = holder.getRepeatedImageView();
             holder.alarmImageView = holder.getAlarmImageView();
             
-            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             	holder.dateView.setTypeface(Utils.banglaTypeFace);
             	holder.dueDateView.setTypeface(Utils.banglaTypeFace);
             	holder.amountView.setTypeface(Utils.banglaTypeFace);

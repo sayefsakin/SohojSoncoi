@@ -36,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -126,6 +127,16 @@ public class AddNewHisab extends Fragment
 			setText(R.id.pictureLabel, "Qwet");
 			
 			mulloEditText = (EditText) view.findViewById(R.id.mulloEditText);
+			mulloEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(mulloEditText.getText().toString().length() > 0){
+						if(Double.compare(Double.parseDouble(mulloEditText.getText().toString()),0.0) == 0) {
+							mulloEditText.setText("");
+						}
+					}
+				}
+			});
 			descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditText);
 			imgPreview = (ImageView) view.findViewById(R.id.imgPreview);
 			imgPreview.setOnClickListener(new OnClickListener() {
@@ -150,7 +161,7 @@ public class AddNewHisab extends Fragment
 						aeBaeSwitch.setBackgroundResource(R.drawable.aebutton);
 					}
 					categoryName = "";
-					if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+					if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 						categoryButton.setText("পছন্দ করুন");
 					} else {
 						categoryButton.setText("Choose");
@@ -160,7 +171,7 @@ public class AddNewHisab extends Fragment
 			
 			categoryButton = (Button) view.findViewById(R.id.categoryButton);
 			categoryButton.setBackgroundResource(R.drawable.optionbtn);
-			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 				categoryButton.setTypeface(Utils.banglaTypeFace);
 			}
 			categoryButton.setOnClickListener(new OnClickListener() {
@@ -176,7 +187,7 @@ public class AddNewHisab extends Fragment
 			});
 			
 			dateButton = (Button) view.findViewById(R.id.dateButton);
-//			dateButton.setTypeface(Utils.banglaTypeFace);
+			dateButton.setTypeface(Utils.banglaTypeFaceSutonny);
 			dateButton.setBackgroundResource(R.drawable.optionbtn);
 			dateButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -353,7 +364,7 @@ public class AddNewHisab extends Fragment
 		descriptionEditText.setText(description);
 		
 		if(categoryName.length() == 0) {
-			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 				categoryButton.setText("পছন্দ করুন");
 			} else {
 				categoryButton.setText("Choose");
@@ -456,7 +467,7 @@ public class AddNewHisab extends Fragment
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		String builderMessage = "Qwe Zzjyb";
 		Typeface tf = Utils.banglaTypeFaceSutonny;
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			builderMessage = "ছবি তুলুন";
 			tf = Utils.banglaTypeFace;
 		}
@@ -491,7 +502,7 @@ public class AddNewHisab extends Fragment
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		String builderMessage = "Qwe †`Lyb";
 		Typeface tf = Utils.banglaTypeFaceSutonny;
-		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			builderMessage = "ছবি দেখুন";
 			tf = Utils.banglaTypeFace;
 		}

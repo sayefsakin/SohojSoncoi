@@ -42,7 +42,7 @@ public class ImageAdapter extends BaseAdapter {
         	gridView = new View(mContext);
         	gridView = inflater.inflate(R.layout.image_adapter_item, null);
         	TextView title = (TextView) gridView.findViewById(R.id.grid_item_label);
-        	if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        	if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
         		title.setTypeface(Utils.banglaTypeFace);
         	}
         	title.setText(mThumbTitle[position]);
